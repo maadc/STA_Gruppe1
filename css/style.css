@@ -1,0 +1,19 @@
+*{
+    box-sizing: border-box;
+}
+
+h1,
+h2{
+ text-align: center;
+}
+.container{
+    display: flex;
+    justify-content: center;
+}
+#spielfeld{
+    min-width: 700px;
+    width: 70vw;
+    min-height: 500px;
+    border: 1px solid black;
+    background-color: peachpuff;
+}
