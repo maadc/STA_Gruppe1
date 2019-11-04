@@ -37,7 +37,7 @@ h2{
     float: right;
 }
 
-.zeitanzeige {
+#zeitanzeige {
     color:white;
     border: 1px solid white;
     padding: 2px 25px;
@@ -45,7 +45,7 @@ h2{
     float: right;
 }
 
-.punktestand {
+#punktestand {
     color:white;
     border: 1px solid white;
     padding: 2px 25px;

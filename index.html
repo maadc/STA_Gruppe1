@@ -3,7 +3,7 @@
     <html lang="de">
     <meta charset="UTF-8">
     <title>Studienarbeit Gruppe 1</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">ƒ
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -17,17 +17,16 @@
         <div id="spielfeld">
             <div class="pongbars" id="pongbar_left"></div>
             <div class="pongbars" id="pongbar_right"></div>
-
-            <div class="zeitanzeige">
-                <p>Zeit: 0:38</p>
+            <span id="zeitanzeige">Zeit:
+                <span id="zeit-minuten">0</span>
+                :
+                <span id="zeit-sekunden">38</span>
+            </span>
+            <div id="punktestand">
+                <span id="punktestandLinks">0</span>
+                :
+                <span id="punktestandRechts">0</span>
             </div>
-
-            <div class="punktestand">
-                <p><span id="punktestandLinks">0</span> : <span id="punktestandRechts">0</span></p> <!-- Punktestand einzeln Anwählbar-->
-            </div>
-
-            <!--Hier alle Spielobjekte rein-->
-
         </div>
     </main>
 
