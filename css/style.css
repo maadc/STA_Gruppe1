@@ -52,3 +52,12 @@ h2{
     margin: 20px 100px;
     float: left; 
 }
+
+#ball {
+    background-color: white;
+    width:30px;
+    height:30px;
+    border-radius:100px;
+    margin-left:100px;
+    margin-top:100px;
+}
