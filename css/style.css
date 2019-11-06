@@ -22,7 +22,7 @@ h2{
 }
 
 .pongbars {
-    width: 20px;
+    width: 1.7vw;
     height: calc(40% - 8px);
     background-color: white;
 }
