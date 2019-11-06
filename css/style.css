@@ -22,7 +22,7 @@ h2{
 }
 
 .pongbars {
-    width: 20px;
+    width: 1.7vw;
     height: calc(40% - 8px);
     background-color: white;
 }
@@ -55,9 +55,9 @@ h2{
 
 #ball {
     background-color: white;
-    width:30px;
-    height:30px;
-    border-radius:100px;
+    width:1.8vw;
+    height:1.8vw;
+    border-radius:100%;
     margin-left:100px;
     margin-top:100px;
 }
