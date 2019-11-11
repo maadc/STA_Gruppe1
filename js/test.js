@@ -1,4 +1,4 @@
-describe("getDirection of 4 different angles", () => {
+describe("getDirection of 6 different angles", () => {
     const getDirection = require('./main.js').getDirection;
     [{
         input: 45,
@@ -20,10 +20,23 @@ describe("getDirection of 4 different angles", () => {
             x: -0.5,
             y: -0.5
         }
-    }
-    ,
+    },
     {
         input: 315,
+        output: {
+            x: -0.5,
+            y: 0.5
+        }
+    },
+    {
+        input: 405,
+        output: {
+            x: 0.5,
+            y: 0.5
+        }
+    },
+    {
+        input: -45,
         output: {
             x: -0.5,
             y: 0.5

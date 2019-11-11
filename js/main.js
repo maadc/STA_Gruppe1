@@ -45,7 +45,13 @@ function moveBall(angle, frametime) {
 function getDirection(directAngle) {
     let x;
     let y;
-    let angle = (Math.PI / 180) * directAngle
+    if (directAngle > 360){
+        directAngle = directAngle - 360;
+    }
+    if (directAngle < 0){
+        directAngle = 360 + directAngle;
+    }
+    let angle = (Math.PI / 180) * directAngle;
 
     if (directAngle <= 90) {
         let xa = Math.sin(angle);
