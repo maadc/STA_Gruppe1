@@ -13,7 +13,14 @@ let ball = {
 }
 
 function ballLogic(frametime) {
-        moveBall(ballPositon.angle, frametime);
+    if (ball.position.left < spielfeld.offsetWidth){
+        //ball is in game
+        moveBall(ball.position.angle, frametime);
+    } else {
+        //touches the right border
+        ball.position.angle = ball.position.angle + 90;
+        moveBall(ball.position.angle, frametime);
+    } 
     
 }
 
@@ -23,10 +30,10 @@ function moveBall(angle, frametime) {
         left: ball.position.left + (getDirection(angle).x * 100 * frametime),
         angle: angle,
     }
-    ball.style.bottom = "" + newBallPosition.bottom;
+    ball.object.style.bottom = "" + newBallPosition.bottom;
     ball.position.bottom = newBallPosition.bottom;
 
-    ball.style.left = "" + newBallPosition.left;
+    ball.object.style.left = "" + newBallPosition.left;
     ball.position.left = newBallPosition.left;
 }
 
