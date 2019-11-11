@@ -7,27 +7,32 @@ let ball = {
     object: document.getElementById("ball"),
     position: {
         bottom: 350, //in px
-        left: 350, //in px
+        left: 200, //in px
         angle: 90, //in degrees.
-    }
+    },
+    speed: 400
 }
 
 function ballLogic(frametime) {
-    if (ball.position.left < spielfeld.offsetWidth){
+    if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
+        //touches the right border
+        ball.position.angle += 90;
+        moveBall(ball.position.angle, frametime);
+    } else if (ball.position.left <= ball.object.offsetWidth) {
+        //touches the left border
+        debugger;
+        ball.position.angle -= 90;
+        moveBall(ball.position.angle, frametime);
+    } else if (ball.position.left < spielfeld.offsetWidth){
         //ball is in game
         moveBall(ball.position.angle, frametime);
-    } else {
-        //touches the right border
-        ball.position.angle = ball.position.angle + 90;
-        moveBall(ball.position.angle, frametime);
     } 
-    
 }
 
 function moveBall(angle, frametime) {
     let newBallPosition = {
-        bottom: ball.position.bottom + (getDirection(angle).y * 100 * frametime),
-        left: ball.position.left + (getDirection(angle).x * 100 * frametime),
+        bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
+        left: ball.position.left + (getDirection(angle).x * ball.speed * frametime),
         angle: angle,
     }
     ball.object.style.bottom = "" + newBallPosition.bottom;
