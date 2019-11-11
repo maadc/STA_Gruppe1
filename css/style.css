@@ -79,7 +79,7 @@ header {
 #ball {
     position:absolute;
     left:50%;
-    top:45%;
+    bottom:45%;
     transform: translateX(-50%);
     background-color: white;
     width:1.8vw;
