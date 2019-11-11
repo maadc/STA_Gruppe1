@@ -1,6 +1,6 @@
 *{
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Space Mono', monospace;
 }
 
 h1,
@@ -9,55 +9,81 @@ h2{
  color:rgb(0, 0, 0);
 }
 
+header {
+    height:10%;
+}
+
 .container{
     display: flex;
     justify-content: center;
+    height:90%;
+    width:100%;
 }
 #spielfeld{
+    position:relative;
     min-width: 700px;
     width: 70vw;
-    height: 500px; /*fixe Höhe, pongbars skalieren mit*/
+    height: 90%;
     border: 4px solid darkred;
     background-color: black;
 }
 
 .pongbars {
     width: 1.7vw;
-    height: calc(40% - 8px);
+    height: calc(30% - 8px);
     background-color: white;
 }
 
 #pongbar_left {
-    margin: 4px 0 4px 7px;
-    float: left;
+    position:absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #pongbar_right {
-    margin: 4px 7px 4px 0px;
-    float: right;
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform: translateY(-50%);
 }
 
 #zeitanzeige {
+    position: absolute;
     color:white;
-    border: 1px solid white;
-    padding: 2px 25px;
-    margin: 20px 100px;
-    float: right;
+    top:3%;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 28pt;
+    
 }
 
-#punktestand {
-    color:white;
-    border: 1px solid white;
-    padding: 2px 25px;
-    margin: 20px 100px;
-    float: left; 
+#punktestandLinks {
+    font-family: sans-serif;
+    position:absolute;
+    top:10%;
+    left:15%;
+    font-size: 50pt;
+    color: rgba(255,255,255,0.7);
+    
+}
+
+#punktestandRechts {
+    font-family:sans-serif;
+    position:absolute;
+    top:10%;
+    right:15%;
+    font-size: 50pt;
+    color: rgba(255,255,255,0.7);
 }
 
 #ball {
+    position:absolute;
+    left:50%;
+    top:45%;
+    transform: translateX(-50%);
     background-color: white;
     width:1.8vw;
     height:1.8vw;
-    border-radius:100%;
-    margin-left:100px;
-    margin-top:100px;
+    border-radius:50%;
 }
