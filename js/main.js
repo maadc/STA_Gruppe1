@@ -7,25 +7,28 @@ let ball = {
     object: document.getElementById("ball"),
     position: {
         bottom: 350, //in px
-        left: 200, //in px
-        angle: 90, //in degrees.
+        left: 600, //in px
+        angle: 20, //in degrees.
     },
-    speed: 400
+    speed: 400,
+    touched: false,
 }
 
 function ballLogic(frametime) {
     if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
         //touches the right border
-        ball.position.angle += 90;
+        ball.position.angle = ball.position.angle - 90;
         moveBall(ball.position.angle, frametime);
+        return;
     } else if (ball.position.left <= ball.object.offsetWidth) {
         //touches the left border
-        debugger;
         ball.position.angle -= 90;
         moveBall(ball.position.angle, frametime);
+        return;
     } else if (ball.position.left < spielfeld.offsetWidth){
         //ball is in game
         moveBall(ball.position.angle, frametime);
+        return;
     } 
 }
 
@@ -43,6 +46,7 @@ function moveBall(angle, frametime) {
 }
 
 function getDirection(directAngle) {
+    //Umrechnung von einem Winkel in den dazugehörigen Vektor
     let x;
     let y;
     if (directAngle > 360){
@@ -84,6 +88,38 @@ function getDirection(directAngle) {
     }
 }
 
+function getAngle(x, y){
+    //Umrechnung von einem Vektor in den dazugehörigen Winkel
+
+    if( (x === 0 && y === 0) || (x === 1 && y === 1) ){
+        //keine Bewegung === keine Richung
+        return; 
+    }
+    //wir können nicht durch 0 teilen, aber durch annähernd 0
+    if(y === 0){
+        y = 0.00000001;
+    }
+    if(x === 0){
+        x = 0.00000001;
+    }
+
+    let alpha = Math.round( (180 / Math.PI) * Math.atan(x/y));
+    let angle;
+
+    //arctan hat nur einen Ergebnisbereich von 0 - 90° -> es müssen noch Anpassungen unternommen werden
+    if(x > 0 && y > 0){
+        angle = alpha;
+    }
+    else if(y < 0){
+        angle = alpha + 180;
+    }
+    else if(x < 0){
+        angle = alpha + 360;
+    }
+
+    return angle;
+}
+
 function round(n) {
     // 2 decimal places
     let number = (Math.round(n * 100) / 100)
@@ -108,5 +144,6 @@ setInterval(gameLoop, 0);
 
 module.exports = {
     getDirection: getDirection,
-    round: round
+    getAngle: getAngle,
+    round: round,
 }
