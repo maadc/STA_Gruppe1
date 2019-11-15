@@ -1,3 +1,6 @@
+//Zukünftig die User-Storx durchdenken und dann einzelne Funktionen vergeben.
+// -> mit funktionaler Programmierung ganz gut möglich
+
 let frametimeBefore = Date.now();
 let frametime; // in ms
 
@@ -6,33 +9,49 @@ let spielfeld = document.getElementById("spielfeld");
 let ball = {
     object: document.getElementById("ball"),
     position: {
-        bottom: 350, //in px
-        left: 600, //in px
-        angle: 20, //in degrees.
+        bottom: spielfeld.offsetWidth / 2, //in px
+        left: spielfeld.offsetHeight / 2, //in px
+        angle: 45, //in degrees.
     },
-    speed: 400,
+    speed: 500,
     touched: false,
 }
 
 function ballLogic(frametime) {
     if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
         //touches the right border
-        ball.position.angle = ball.position.angle - 90;
-        moveBall(ball.position.angle, frametime);
+        let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
+        saveAngle(newAngle);
+        moveBall(newAngle, frametime);
         return;
     } else if (ball.position.left <= ball.object.offsetWidth) {
         //touches the left border
-        ball.position.angle -= 90;
-        moveBall(ball.position.angle, frametime);
+        let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
+        saveAngle(newAngle);
+        moveBall(newAngle, frametime);
         return;
-    } else if (ball.position.left < spielfeld.offsetWidth){
+    } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
+        //touches the top border
+        let newAngle = getAngle(getDirection(ball.position.angle).x,-getDirection(ball.position.angle).y)
+        saveAngle(newAngle);
+        moveBall(newAngle, frametime);
+        return;
+    } else if (ball.position.bottom <= 0) {
+        //touches the top border
+        let newAngle = getAngle(getDirection(ball.position.angle).x,-getDirection(ball.position.angle).y)
+        saveAngle(newAngle);
+        moveBall(newAngle, frametime);
+        return;
+    } else if (ball.position.left < spielfeld.offsetWidth) {
         //ball is in game
         moveBall(ball.position.angle, frametime);
         return;
-    } 
+    }
 }
 
+//Test fehlt
 function moveBall(angle, frametime) {
+    debugger;
     let newBallPosition = {
         bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
         left: ball.position.left + (getDirection(angle).x * ball.speed * frametime),
@@ -49,10 +68,10 @@ function getDirection(directAngle) {
     //Umrechnung von einem Winkel in den dazugehörigen Vektor
     let x;
     let y;
-    if (directAngle > 360){
+    if (directAngle > 360) {
         directAngle = directAngle - 360;
     }
-    if (directAngle < 0){
+    if (directAngle < 0) {
         directAngle = 360 + directAngle;
     }
     let angle = (Math.PI / 180) * directAngle;
@@ -88,32 +107,29 @@ function getDirection(directAngle) {
     }
 }
 
-function getAngle(x, y){
+function getAngle(x, y) {
     //Umrechnung von einem Vektor in den dazugehörigen Winkel
-
-    if( (x === 0 && y === 0) || (x === 1 && y === 1) ){
+    if ((x === 0 && y === 0) || (x === 1 && y === 1)) {
         //keine Bewegung === keine Richung
-        return; 
+        return;
     }
     //wir können nicht durch 0 teilen, aber durch annähernd 0
-    if(y === 0){
+    if (y === 0) {
         y = 0.00000001;
     }
-    if(x === 0){
+    if (x === 0) {
         x = 0.00000001;
     }
 
-    let alpha = Math.round( (180 / Math.PI) * Math.atan(x/y));
+    let alpha = Math.round((180 / Math.PI) * Math.atan(x / y));
     let angle;
 
     //arctan hat nur einen Ergebnisbereich von 0 - 90° -> es müssen noch Anpassungen unternommen werden
-    if(x > 0 && y > 0){
+    if (x > 0 && y > 0) {
         angle = alpha;
-    }
-    else if(y < 0){
+    } else if (y < 0) {
         angle = alpha + 180;
-    }
-    else if(x < 0){
+    } else if (x < 0) {
         angle = alpha + 360;
     }
 
@@ -124,6 +140,10 @@ function round(n) {
     // 2 decimal places
     let number = (Math.round(n * 100) / 100)
     return number;
+}
+
+function saveAngle(angle){
+    ball.position.angle = angle;
 }
 
 function gameLoop() {

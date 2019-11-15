@@ -1,5 +1,5 @@
-describe("getDirection of 6 different angles", () => {
-    const getDirection = require('./main.js').getDirection;
+const getDirection = require('./main.js').getDirection;
+describe("function: getDirection", () => {
     [{
             input: 45,
             output: {
@@ -55,7 +55,7 @@ describe("getDirection of 6 different angles", () => {
     })
 })
 
-describe("getAngle of 2 different vectors", () => {
+describe("function: getAngle", () => {
     const getAngle = require('./main.js').getAngle;
     [{
             input: {
@@ -84,7 +84,26 @@ describe("getAngle of 2 different vectors", () => {
                 y: 0.5
             },
             output: 315
-        }
+        },
+        {
+            input: {
+                x: -getDirection(60).x,
+                y: getDirection(60).y
+            },
+            output: 300
+        },{
+        input: {
+            x: -getDirection(90).x,
+            y: getDirection(90).y
+        },
+        output: 270
+    },{
+        input: {
+            x: getDirection(0).x,
+            y: -getDirection(1).y
+        },
+        output: 180
+    }
     ].forEach(({
         input,
         output
@@ -95,10 +114,10 @@ describe("getAngle of 2 different vectors", () => {
     })
 })
 
-describe("round", () => {
+describe("function: round", () => {
     const round = require('./main.js').round;
 
-    test("round any number", () => {
+    test("round", () => {
         expect(round(0.12345)).toEqual(0.12)
     })
 })
