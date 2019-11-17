@@ -1,4 +1,8 @@
 const getDirection = require('./main.js').getDirection;
+const round = require('./main.js').round;
+const getAngle = require('./main.js').getAngle;
+const saveBallValues = require('./main.js').saveBallValues;
+
 describe("function: getDirection", () => {
     [{
             input: 45,
@@ -56,7 +60,6 @@ describe("function: getDirection", () => {
 })
 
 describe("function: getAngle", () => {
-    const getAngle = require('./main.js').getAngle;
     [{
             input: {
                 x: 0.5,
@@ -115,9 +118,18 @@ describe("function: getAngle", () => {
 })
 
 describe("function: round", () => {
-    const round = require('./main.js').round;
-
     test("round", () => {
         expect(round(0.12345)).toEqual(0.12)
     })
 })
+
+// describe("function: saveBallValues", () => {
+//     let Ball = {
+//         left: 10,
+//         bottom: 20,
+//         angle: 30
+//     }
+//     test("if ballLater has valuses", () => {
+//         expect(saveBallValues(10,20,30)).toEqual(Ball)
+//     })
+// })

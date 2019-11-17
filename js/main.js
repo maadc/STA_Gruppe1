@@ -6,40 +6,36 @@ let frametime; // in ms
 
 let spielfeld = document.getElementById("spielfeld");
 
+//initial objekt
 let ball = {
     object: document.getElementById("ball"),
     position: {
-        bottom: spielfeld.offsetWidth / 2, //in px
         left: spielfeld.offsetHeight / 2, //in px
+        bottom: spielfeld.offsetWidth / 2, //in px
         angle: 45, //in degrees.
     },
-    speed: 500,
-    touched: false,
+    speed: 500
 }
 
 function ballLogic(frametime) {
     if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
         //touches the right border
         let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
-        saveAngle(newAngle);
         moveBall(newAngle, frametime);
         return;
     } else if (ball.position.left <= ball.object.offsetWidth) {
         //touches the left border
         let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
-        saveAngle(newAngle);
         moveBall(newAngle, frametime);
         return;
     } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
         //touches the top border
         let newAngle = getAngle(getDirection(ball.position.angle).x,-getDirection(ball.position.angle).y)
-        saveAngle(newAngle);
         moveBall(newAngle, frametime);
         return;
     } else if (ball.position.bottom <= 0) {
-        //touches the top border
+        //touches the bottom border
         let newAngle = getAngle(getDirection(ball.position.angle).x,-getDirection(ball.position.angle).y)
-        saveAngle(newAngle);
         moveBall(newAngle, frametime);
         return;
     } else if (ball.position.left < spielfeld.offsetWidth) {
@@ -51,17 +47,16 @@ function ballLogic(frametime) {
 
 //Test fehlt
 function moveBall(angle, frametime) {
-    debugger;
     let newBallPosition = {
-        bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
         left: ball.position.left + (getDirection(angle).x * ball.speed * frametime),
+        bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
         angle: angle,
     }
     ball.object.style.bottom = "" + newBallPosition.bottom;
-    ball.position.bottom = newBallPosition.bottom;
-
     ball.object.style.left = "" + newBallPosition.left;
-    ball.position.left = newBallPosition.left;
+
+    saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
+    
 }
 
 function getDirection(directAngle) {
@@ -142,7 +137,9 @@ function round(n) {
     return number;
 }
 
-function saveAngle(angle){
+function saveBallValues(left, bottom, angle){
+    ball.position.left = left;
+    ball.position.bottom = bottom;
     ball.position.angle = angle;
 }
 
@@ -166,4 +163,5 @@ module.exports = {
     getDirection: getDirection,
     getAngle: getAngle,
     round: round,
+    saveBallValues: saveBallValues,
 }
