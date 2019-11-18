@@ -1,0 +1,24 @@
+{
+  "name": "studienarbeit_gruppe1",
+  "version": "1.0.0",
+  "description": "Studienarbeit im Fach Web Engineering",
+  "main": "index.js",
+  "dependencies": {
+    "jest": "^24.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maadc/studienarbeit_gruppe1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maadc/studienarbeit_gruppe1/issues"
+  },
+  "homepage": "https://github.com/maadc/studienarbeit_gruppe1#readme"
+}
