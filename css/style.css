@@ -1,5 +1,4 @@
 *{
-    box-sizing: border-box;
     font-family: 'Space Mono', monospace;
 }
 
@@ -78,7 +77,6 @@ header {
     position:absolute;
     left:50%;
     bottom:45%;
-    transform: translateX(-50%);
     background-color: white;
     width:1.8vw;
     height:1.8vw;
