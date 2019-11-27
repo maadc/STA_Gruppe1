@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/maadc/studienarbeit_gruppe1#readme",
   "jest": {
-    "setupFiles": ["./testHelpers/itWill.js", "./testHelpers/initDom.js"]
+    "setupFiles": [
+      "./testHelpers/itWill.js",
+      "./testHelpers/initDom.js"
+    ]
   }
 }

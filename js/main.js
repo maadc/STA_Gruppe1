@@ -1,24 +1,39 @@
+module.exports = {
+    getDirection: getDirection,
+    getAngle: getAngle,
+    round: round
+}
+
 let frametimeBefore = Date.now();
 let frametime; // in ms
+let spielfeld;
+let pongbar_right;
+let pongbar_left;
+let ball;
 
-const pongbar_right = document.getElementById("pongbar_right");
-pongbar_right.style.top = 250;
-pongbar_right.style.height = 200;
-const pongbar_left = document.getElementById("pongbar_left");
-pongbar_left.style.top = 250;
-pongbar_left.style.height = 200;
+var keysDown = {};
 
-const spielfeld = document.getElementById("spielfeld");
+//initial function
+function init() {
+    spielfeld = document.getElementById("spielfeld")
 
-//initial objekt
-let ball = {
-    object: document.getElementById("ball"),
-    position: {
-        left: spielfeld.offsetHeight / 2, //in px
-        bottom: spielfeld.offsetWidth / 2, //in px
-        angle: 45, //in degrees.
-    },
-    speed: 500
+    pongbar_right = document.getElementById("pongbar_right");
+    pongbar_right.style.top = 250;
+    pongbar_right.style.height = 200;
+
+    pongbar_left = document.getElementById("pongbar_left");
+    pongbar_left.style.top = 250;
+    pongbar_left.style.height = 200;
+
+    ball = {
+        object: document.getElementById("ball"),
+        position: {
+            left: spielfeld.offsetHeight / 2, //in px
+            bottom: spielfeld.offsetWidth / 2, //in px
+            angle: 45, //in degrees.
+        },
+        speed: 500
+    }
 }
 
 function ballLogic(frametime) {
@@ -146,9 +161,6 @@ function saveBallValues(left, bottom, angle) {
     ball.position.bottom = bottom;
     ball.position.angle = angle;
 }
-//TODO: Größen der Pongbars und Spielfeld sollten in einer INIT-Funktion berechnet werden
-
-var keysDown = {};
 
 window.addEventListener("keydown", function (event) {
     keysDown[event.keyCode] = true;
@@ -250,12 +262,6 @@ function gameLoop() {
 }
 
 window.onload = () => {
+    init();
     setInterval(gameLoop, 0);
-}
-
-module.exports = {
-    getDirection: getDirection,
-    getAngle: getAngle,
-    round: round,
-    saveBallValues: saveBallValues,
 }

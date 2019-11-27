@@ -1,16 +1,7 @@
-const {JSDOM, VirtualConsole}  = require('jsdom')
-
-let dom = initDom('index.html');
-
-
-const round = require('./main.js').round;
-describe("function: round", () => {
-    test("round", () => {
-        expect(round(0.12345)).toEqual(0.12)
-    })
-})
-
 const getDirection = require('./main.js').getDirection;
+const round = require('./main.js').round;
+const getAngle = require('./main.js').getAngle;
+
 describe("function: getDirection", () => {
     [{
             input: 45,
@@ -67,7 +58,6 @@ describe("function: getDirection", () => {
     })
 })
 
-const getAngle = require('./main.js').getAngle;
 describe("function: getAngle", () => {
     [{
             input: {
@@ -124,16 +114,10 @@ describe("function: getAngle", () => {
             expect(getAngle(input.x, input.y)).toEqual(output)
         })
     })
-}) 
+})
 
-const saveBallValues = require('./main.js').saveBallValues;
-describe("function: saveBallValues", () => {
-    let Ball = {
-        left: 10,
-        bottom: 20,
-        angle: 30
-    }
-    test("if ballLater has valuses", () => {
-        expect(saveBallValues(10,20,30)).toEqual(Ball)
+describe("function: round", () => {
+    test("round", () => {
+        expect(round(0.12345)).toEqual(0.12)
     })
-}) 
+})
