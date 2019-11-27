@@ -13,13 +13,27 @@ var keysDown = {};
 function init() {
     spielfeld = document.getElementById("spielfeld")
 
-    pongbar_right = document.getElementById("pongbar_right");
-    pongbar_right.style.top = 250;
-    pongbar_right.style.height = 200;
+    pongbar_right = {
+        obejct: document.getElementById("pongbar_right"),
+        position: {
+            right: 20, //in px
+            top: 250, //in px
+        },
+        height: 200, //in px
+    }
+    pongbar_right.style.top = pongbar_right.position.top;
+    pongbar_right.style.height = pongbar_right.height
 
-    pongbar_left = document.getElementById("pongbar_left");
-    pongbar_left.style.top = 250;
-    pongbar_left.style.height = 200;
+    pongbar_left = {
+        obejct: document.getElementById("pongbar_right"),
+        position: {
+            left: 20, //in px
+            top: 250, //in px
+        },
+        height: 200, //in px
+    }
+    pongbar_left.style.top = pongbar_left.position.top;
+    pongbar_left.style.height = pongbar_left.height
 
     ball = {
         object: document.getElementById("ball"),
@@ -275,5 +289,6 @@ window.onload = () => {
 module.exports = {
     getDirection: getDirection,
     getAngle: getAngle,
-    round: round
+    round: round,
+    collision: collision,
 }
