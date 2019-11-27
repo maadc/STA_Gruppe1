@@ -14,40 +14,55 @@ function init() {
     spielfeld = document.getElementById("spielfeld")
 
     pongbar_right = {
-        obejct: document.getElementById("pongbar_right"),
+        object: document.getElementById("pongbar_right"),
         position: {
             right: 20, //in px
             top: 250, //in px
         },
         height: 200, //in px
+        width: 20, //in px
     }
-    pongbar_right.style.top = pongbar_right.position.top;
-    pongbar_right.style.height = pongbar_right.height
+    pongbar_right.object.style.top = pongbar_right.position.top;
+    pongbar_right.object.style.height = pongbar_right.height
 
     pongbar_left = {
-        obejct: document.getElementById("pongbar_right"),
+        object: document.getElementById("pongbar_left"),
         position: {
             left: 20, //in px
             top: 250, //in px
         },
         height: 200, //in px
+        width: 20, //in px
     }
-    pongbar_left.style.top = pongbar_left.position.top;
-    pongbar_left.style.height = pongbar_left.height
+    pongbar_left.object.style.top = pongbar_left.position.top;
+    pongbar_left.object.style.height = pongbar_left.height
 
     ball = {
         object: document.getElementById("ball"),
         position: {
-            left: spielfeld.offsetHeight / 2, //in px
-            bottom: spielfeld.offsetWidth / 2, //in px
-            angle: 45, //in degrees.
+            left: spielfeld.offsetWidth / 2, //in px
+            bottom: spielfeld.offsetHeight / 2, //in px
+            angle: 90, //in degrees.
         },
-        speed: 500
+        speed: 500,
+        radius: 26, //in px
     }
 }
 
 function ballLogic(frametime) {
-    if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
+    if(collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbar_right.object.offsetLeft, pongbar_right.object.offsetTop, pongbar_right.width,pongbar_right.height)){
+        //collision with right pong bar
+        let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
+        moveBall(newAngle, frametime);
+        return
+    }
+    else if(collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbar_left.object.offsetLeft, pongbar_left.object.offsetTop, pongbar_left.width,pongbar_left.height)){
+        //collision with left pong bar
+        let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
+        moveBall(newAngle, frametime);
+        return
+    } 
+    else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
         //touches the right border
         let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
@@ -233,7 +248,7 @@ function movePongbars(pongbar, directionUp) {
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
     const speed = 4;
-    let pos = parseInt(pongbar.style.top);
+    let pos = parseInt(pongbar.object.style.top);
 
     if (directionUp) {
         pos -= speed;
@@ -247,11 +262,11 @@ function movePongbars(pongbar, directionUp) {
     }
 
     //Unterer Rand
-    else if ((parseInt(pongbar.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
-        pos = spielfeld.offsetHeight - pongbar.style.height;
+    else if ((parseInt(pongbar.object.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
+        pos = spielfeld.offsetHeight - pongbar.object.style.height;
     }
 
-    pongbar.style.top = pos;
+    pongbar.object.style.top = pos;
 
 }
 
