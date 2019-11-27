@@ -1,8 +1,4 @@
-module.exports = {
-    getDirection: getDirection,
-    getAngle: getAngle,
-    round: round
-}
+
 
 let frametimeBefore = Date.now();
 let frametime; // in ms
@@ -173,56 +169,56 @@ function checkPressedKeys() {
 
     //DOWN(40) and W(87)
     if (40 in keysDown && 87 in keysDown) {
-        calculatePosition(pongbar_right, false);
-        calculatePosition(pongbar_left, true);
+        movePongbars(pongbar_right, false);
+        movePongbars(pongbar_left, true);
     }
 
     //DOWN(40) AND S(83)
     else if (40 in keysDown && 83 in keysDown) {
-        calculatePosition(pongbar_right, false);
-        calculatePosition(pongbar_left, false);
+        movePongbars(pongbar_right, false);
+        movePongbars(pongbar_left, false);
     }
 
     //UP(38) AND S(83)
     else if (38 in keysDown && 83 in keysDown) {
-        calculatePosition(pongbar_right, true);
-        calculatePosition(pongbar_left, false);
+        movePongbars(pongbar_right, true);
+        movePongbars(pongbar_left, false);
     }
 
     //UP(38) AND W(87)
     else if (38 in keysDown && 87 in keysDown) {
-        calculatePosition(pongbar_right, true);
-        calculatePosition(pongbar_left, true);
+        movePongbars(pongbar_right, true);
+        movePongbars(pongbar_left, true);
     }
 
     //Only UP(38)
     else if (38 in keysDown) {
-        calculatePosition(pongbar_right, true);
+        movePongbars(pongbar_right, true);
     }
 
     //Only DOWN(40)
     else if (40 in keysDown) {
-        calculatePosition(pongbar_right, false);
+        movePongbars(pongbar_right, false);
     }
 
     //Only S(83)
     else if (83 in keysDown) {
-        calculatePosition(pongbar_left, false);
+        movePongbars(pongbar_left, false);
     }
 
     //Only W(87)
     else if (87 in keysDown) {
-        calculatePosition(pongbar_left, true);
+        movePongbars(pongbar_left, true);
     }
 
 }
 
-function calculatePosition(pongbar, directionUp) {
-    /*  CalculatePosition berechnet die neue Position der Pongbar
+function movePongbars(pongbar, directionUp) {
+    /*  movePongbars berechnet die neue Position der Pongbar
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
-    const speed = 12;
+    const speed = 4;
     let pos = parseInt(pongbar.style.top);
 
     if (directionUp) {
@@ -245,6 +241,16 @@ function calculatePosition(pongbar, directionUp) {
 
 }
 
+function collision(aX, aY,aWidth, aHeight,bX, bY,bWidth, bHeight) {
+    if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
+        (bX >= aX && bX <= aX + aWidth && aY >= bY && aY <= bY + bHeight) ||
+        (bX >= aX && bX <= aX + aWidth && bY >= aY && bY <= aY + aHeight) ||
+        (aX >= bX && aX <= bX + bWidth && bY >= aY && bY <= aY + aHeight)) {
+        return true;
+    }
+    return false;
+}
+
 function gameLoop() {
     //in dem Loop sollen alle regelmäßigen Events aufgerufen werden.
 
@@ -264,4 +270,10 @@ function gameLoop() {
 window.onload = () => {
     init();
     setInterval(gameLoop, 0);
+}
+
+module.exports = {
+    getDirection: getDirection,
+    getAngle: getAngle,
+    round: round
 }
