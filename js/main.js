@@ -42,7 +42,7 @@ function init() {
         position: {
             left: spielfeld.offsetWidth / 2, //in px
             bottom: spielfeld.offsetHeight / 2, //in px
-            angle: 90, //in degrees.
+            angle: 30, //in degrees.
         },
         speed: 500,
         radius: 26, //in px
@@ -50,8 +50,10 @@ function init() {
 }
 
 function ballLogic(frametime) {
-    if(collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbar_right.object.offsetLeft, pongbar_right.object.offsetTop, pongbar_right.width,pongbar_right.height)){
+    if(collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbar_right.object.offsetLeft, pongbar_right.object.offsetTop, pongbar_right.width,pongbar_right.height)){
+        //26 because the balls cooardinates start at the bottom right, insteat of the bottom left??
         //collision with right pong bar
+        debugger;
         let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
         return
@@ -96,8 +98,8 @@ function moveBall(angle, frametime) {
         bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
         angle: angle,
     }
-    ball.object.style.bottom = "" + newBallPosition.bottom;
-    ball.object.style.left = "" + newBallPosition.left;
+    ball.object.style.bottom = "" + Math.round(newBallPosition.bottom);
+    ball.object.style.left = "" + Math.round(newBallPosition.left);
 
     saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
 

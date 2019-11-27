@@ -30,7 +30,7 @@ header {
 .pongbars {
     position: absolute;
     width: 20px;
-    height: calc(30% - 8px);
+    height: 200px;
     background-color: white;
 }
 
@@ -79,7 +79,7 @@ header {
     bottom:45%;
     transform: translateX(-50%);
     background-color: white;
-    width:1.8vw;
-    height:1.8vw;
+    width: 26px;
+    height:26px;
     border-radius:50%;
 }
