@@ -1,6 +1,4 @@
-const getDirection = require('./main.js').getDirection;
-const round = require('./main.js').round;
-const getAngle = require('./main.js').getAngle;
+const {getDirection, round, getAngle } = require('./calc.js');
 
 describe("function: getDirection", () => {
     [{

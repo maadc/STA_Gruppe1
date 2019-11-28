@@ -1,5 +1,3 @@
-const { JSDOM,VirtualConsole} = require('jsdom')
-
 describe('DOM Tests', () => {
     let dom
     let document
@@ -10,7 +8,7 @@ describe('DOM Tests', () => {
         document = dom.window.document
     })
 
-    test(`if spielfeld exists`, () => {
+    it(`if spielfeld exists`, () => {
         const spielfeld = document.getElementById("spielfeld");
         expect(spielfeld).toBeDefined();
     })

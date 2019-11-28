@@ -9,7 +9,9 @@
     "jsdom": "^15.2.1"
   },
   "scripts": {
-    "test": "jest"
+    "start": "ws",
+    "test": "jest",
+    "tdd": "jest --watch"
   },
   "repository": {
     "type": "git",
