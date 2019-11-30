@@ -18,7 +18,8 @@ let ball = {
     position: {
         left: spielfeld.offsetHeight / 2, //in px
         bottom: spielfeld.offsetWidth / 2, //in px
-        angle: 45, //in degrees.
+        angle: calcRandomAngle()
+        //angle: Math.floor(Math.random() * 360), //in degrees.
     },
     speed: 500
 }
@@ -26,13 +27,11 @@ let ball = {
 function ballLogic(frametime) {
     if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
         //touches the right border
-        let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
-        moveBall(newAngle, frametime);
+        ballReset();
         return;
     } else if (ball.position.left <= ball.object.offsetWidth) {
         //touches the left border
-        let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
-        moveBall(newAngle, frametime);
+        ballReset();
         return;
     } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
         //touches the top border
@@ -49,6 +48,21 @@ function ballLogic(frametime) {
         moveBall(ball.position.angle, frametime);
         return;
     }
+}
+
+function calcRandomAngle() {
+    do
+    randomAngle = Math.floor(Math.random() * 360);
+    while (randomAngle < 30 || (randomAngle > 160 && randomAngle < 200) || randomAngle > 330);
+    console.log(randomAngle);
+    return randomAngle;
+}
+
+function ballReset(angle) {
+    ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
+    ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
+    ball.position.angle = calcRandomAngle();
+
 }
 
 //Test fehlt
@@ -157,6 +171,8 @@ function gameLoop() {
     // Abhängigkeit von Frametime ist wichtig, weil selbst bei geringer Prozessorgeschwindigkeit
     // das Spiel nicht schneller laufen soll, als der Spieler es spielen kann. 
     // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
+
+
     
     checkPressedKeys();
     
