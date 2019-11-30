@@ -1,0 +1,107 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Space Mono', monospace;
+}
+
+h1{
+ text-align: center;
+ color:rgb(0, 0, 0);
+}
+
+header {
+    height:10%;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    height:90%;
+    width:100%;
+}
+#spielfeld{
+    position:relative;
+    min-width: 700px;
+    width: 70vw;
+    height: 90%;
+    border: 4px solid darkred;
+    background-color: black;
+}
+
+.pongbars {
+    width: 1.7vw;
+    height: calc(30% - 8px);
+    background-color: white;
+}
+
+#pongbar_left {
+    position:absolute;
+    left: 20px;
+    top:250px;
+}
+
+#pongbar_right {
+    position:absolute;
+    right:20px;
+    top:250px;
+}
+
+#tracker {
+    position: absolute;
+    color:white;
+    top:3%;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 28pt;
+}
+
+#time {
+    /* position: absolute;
+    color:white;
+    top:10%;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 28pt; */
+    display: none;
+}
+
+/*
+#zeitanzeige {
+    position: absolute;
+    color:white;
+    top:3%;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 28pt;
+    
+}
+*/
+
+#punktestandLinks {
+    font-family: sans-serif;
+    position:absolute;
+    top:10%;
+    left:15%;
+    font-size: 50pt;
+    color: rgba(255,255,255,0.7);
+    
+}
+
+#punktestandRechts {
+    font-family:sans-serif;
+    position:absolute;
+    top:10%;
+    right:15%;
+    font-size: 50pt;
+    color: rgba(255,255,255,0.7);
+}
+
+#ball {
+    position:absolute;
+    left:50%;
+    bottom:45%;
+    transform: translateX(-50%);
+    background-color: white;
+    width:1.8vw;
+    height:1.8vw;
+    border-radius:50%;
+}
