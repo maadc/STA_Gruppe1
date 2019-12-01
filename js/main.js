@@ -24,22 +24,26 @@ let ball = {
 }
 
 function ballLogic(frametime) {
-    if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
+    // tolerance = the max amount of pixel a ball can move each iteration + 1 for safty
+    const tolerance = ball.speed * frametime + 1;
+    // border around the gamefield
+    const spielfeldBorder = 8;
+    if (ball.position.left + tolerance >= spielfeld.offsetWidth  - ball.object.offsetWidth) {
         //touches the right border
         let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
         return;
-    } else if (ball.position.left <= ball.object.offsetWidth) {
+    } else if (ball.position.left <= 0 + tolerance) {
         //touches the left border
         let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
         return;
-    } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
+    } else if (ball.position.bottom + ball.object.offsetHeight + tolerance >= spielfeld.offsetHeight - spielfeldBorder) {
         //touches the top border
         let newAngle = getAngle(getDirection(ball.position.angle).x,-getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
         return;
-    } else if (ball.position.bottom <= 0) {
+    } else if (ball.position.bottom <= 0 + tolerance) {
         //touches the bottom border
         let newAngle = getAngle(getDirection(ball.position.angle).x,-getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
@@ -58,8 +62,8 @@ function moveBall(angle, frametime) {
         bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
         angle: angle,
     }
-    ball.object.style.bottom = "" + newBallPosition.bottom;
-    ball.object.style.left = "" + newBallPosition.left;
+    ball.object.style.bottom = "" + Math.round(newBallPosition.bottom);
+    ball.object.style.left = "" + Math.round(newBallPosition.left);
 
     saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
     
@@ -230,7 +234,7 @@ function gameLoop() {
             Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
         */
         const speed = 12;
-        const pos = parseInt(pongbar.style.top);
+        let pos = parseInt(pongbar.style.top);
 
         if (directionUp) {
             pos -= speed;
