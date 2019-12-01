@@ -234,7 +234,7 @@ function gameLoop() {
             Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
         */
         const speed = 12;
-        const pos = parseInt(pongbar.style.top);
+        let pos = parseInt(pongbar.style.top);
 
         if (directionUp) {
             pos -= speed;
