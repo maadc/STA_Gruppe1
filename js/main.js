@@ -32,11 +32,13 @@ function ballLogic(frametime) {
         //touches the right border
         let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
+        countPointRight();
         return;
     } else if (ball.position.left <= 0 + tolerance) {
         //touches the left border
         let newAngle = getAngle( -getDirection(ball.position.angle).x,getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
+        countPointLeft();
         return;
     } else if (ball.position.bottom + ball.object.offsetHeight + tolerance >= spielfeld.offsetHeight - spielfeldBorder) {
         //touches the top border
@@ -227,6 +229,19 @@ function gameLoop() {
         }
 
     }
+    
+    function countPointRight() {
+        const score_right = document.getElementById("punktestandRechts");
+        let scoreRight = parseInt(score_right.textContent);
+        score_right.textContent = scoreRight + 1;
+    }
+
+    function countPointLeft() {
+        const score_left = document.getElementById("punktestandLinks");
+        let scoreLeft = parseInt(score_left.textContent);
+        score_left.textContent = scoreLeft + 1;
+    }
+
 
     function calculatePosition(pongbar, directionUp) {
         /*  CalculatePosition berechnet die neue Position der Pongbar
