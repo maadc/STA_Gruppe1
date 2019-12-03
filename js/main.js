@@ -272,9 +272,3 @@ function gameLoop() {
     
 };
 
-    module.exports = {
-        getDirection: getDirection,
-        getAngle: getAngle,
-        round: round,
-        saveBallValues: saveBallValues,
-    }
