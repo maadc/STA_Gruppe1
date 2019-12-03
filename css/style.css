@@ -55,26 +55,9 @@ header {
 }
 
 #time {
-    /* position: absolute;
-    color:white;
-    top:10%;
-    left:50%;
-    transform: translateX(-50%);
-    font-size: 28pt; */
     display: none;
 }
 
-/*
-#zeitanzeige {
-    position: absolute;
-    color:white;
-    top:3%;
-    left:50%;
-    transform: translateX(-50%);
-    font-size: 28pt;
-    
-}
-*/
 
 #punktestandLinks {
     font-family: sans-serif;
