@@ -9,51 +9,73 @@ window.onload = () => {
     var keysDown = {};
 
     //initial function
+    //initial function
     function init() {
         spielfeld = document.getElementById("spielfeld")
 
-        pongbar_right = document.getElementById("pongbar_right");
-        pongbar_right.style.top = 250;
-        pongbar_right.style.height = 200;
+        pongbar_right = {
+            object: document.getElementById("pongbar_right"),
+            position: {
+                right: 20, //in px
+                top: 250, //in px
+            },
+            height: 200, //in px
+            width: 20, //in px
+        }
+        pongbar_right.object.style.top = pongbar_right.position.top;
+        pongbar_right.object.style.height = pongbar_right.height
 
-        pongbar_left = document.getElementById("pongbar_left");
-        pongbar_left.style.top = 250;
-        pongbar_left.style.height = 200;
+        pongbar_left = {
+            object: document.getElementById("pongbar_left"),
+            position: {
+                left: 20, //in px
+                top: 250, //in px
+            },
+            height: 200, //in px
+            width: 20, //in px
+        }
+        pongbar_left.object.style.top = pongbar_left.position.top;
+        pongbar_left.object.style.height = pongbar_left.height
 
         ball = {
             object: document.getElementById("ball"),
             position: {
-                left: spielfeld.offsetHeight / 2, //in px
-                bottom: spielfeld.offsetWidth / 2, //in px
-                angle: 45, //in degrees.
+                left: spielfeld.offsetWidth / 2, //in px
+                bottom: spielfeld.offsetHeight / 2, //in px
+                angle: 30, //in degrees.
             },
-            speed: 500
+            speed: 500,
+            radius: 26, //in px
         }
     }
 
     function ballLogic(frametime) {
-        // tolerance = the max amount of pixel a ball can move each iteration + 1 for safty
-        const tolerance = ball.speed * frametime + 1;
-        // border around the gamefield
-        const spielfeldBorder = 8;
-        if (ball.position.left + tolerance >= spielfeld.offsetWidth - ball.object.offsetWidth) {
-            //touches the right border
+        if (collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbar_right.object.offsetLeft, pongbar_right.object.offsetTop, pongbar_right.width, pongbar_right.height)) {
+            //26 because the balls cooardinates start at the bottom right, insteat of the bottom left??
+            //collision with right pong bar
+            debugger;
             let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
             moveBall(newAngle, frametime);
+            return
+        } else if (collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbar_left.object.offsetLeft, pongbar_left.object.offsetTop, pongbar_left.width, pongbar_left.height)) {
+            //collision with left pong bar
+            let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
+            moveBall(newAngle, frametime);
+            return
+        } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
+            //touches the right border
             countPointRight();
             return;
-        } else if (ball.position.left <= 0 + tolerance) {
+        } else if (ball.position.left <= ball.object.offsetWidth) {
             //touches the left border
-            let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
-            moveBall(newAngle, frametime);
             countPointLeft();
             return;
-        } else if (ball.position.bottom + ball.object.offsetHeight + tolerance >= spielfeld.offsetHeight - spielfeldBorder) {
+        } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
             //touches the top border
             let newAngle = getAngle(getDirection(ball.position.angle).x, -getDirection(ball.position.angle).y)
             moveBall(newAngle, frametime);
             return;
-        } else if (ball.position.bottom <= 0 + tolerance) {
+        } else if (ball.position.bottom <= 0) {
             //touches the bottom border
             let newAngle = getAngle(getDirection(ball.position.angle).x, -getDirection(ball.position.angle).y)
             moveBall(newAngle, frametime);
@@ -64,7 +86,6 @@ window.onload = () => {
             return;
         }
     }
-
     //Test fehlt
     function moveBall(angle, frametime) {
         let newBallPosition = {
@@ -321,6 +342,16 @@ window.onload = () => {
 
     }
 
+    function collision(aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight) {
+        if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
+            (bX >= aX && bX <= aX + aWidth && aY >= bY && aY <= bY + bHeight) ||
+            (bX >= aX && bX <= aX + aWidth && bY >= aY && bY <= aY + aHeight) ||
+            (aX >= bX && aX <= bX + bWidth && bY >= aY && bY <= aY + aHeight)) {
+            return true;
+        }
+        return false;
+    }
+
     function countPointRight() {
         const score_right = document.getElementById("punktestandRechts");
         let scoreRight = parseInt(score_right.textContent);
@@ -340,7 +371,7 @@ window.onload = () => {
             Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
         */
         const speed = 2;
-        let pos = parseInt(pongbar.style.top);
+        let pos = parseInt(pongbar.object.style.top);
 
         if (directionUp) {
             pos -= speed;
@@ -354,11 +385,11 @@ window.onload = () => {
         }
 
         //Unterer Rand
-        else if ((parseInt(pongbar.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
-            pos = spielfeld.offsetHeight - pongbar.style.height;
+        else if ((parseInt(pongbar.object.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
+            pos = spielfeld.offsetHeight - pongbar.object.style.height;
         }
 
-        pongbar.style.top = pos;
+        pongbar.object.style.top = pos;
 
     }
 

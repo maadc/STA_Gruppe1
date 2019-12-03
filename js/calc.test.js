@@ -1,6 +1,7 @@
 const getDirection = require('./main.js').getDirection;
 const round = require('./main.js').round;
 const getAngle = require('./main.js').getAngle;
+const collision = require('./main.js').collision;
 
 describe("function: getDirection", () => {
     [{
@@ -119,5 +120,24 @@ describe("function: getAngle", () => {
 describe("function: round", () => {
     test("round", () => {
         expect(round(0.12345)).toEqual(0.12)
+    })
+})
+
+describe("function: collision", () => {
+    test("collision", () => {
+        a = {
+            x: 100,
+            y: 100,
+            width: 10,
+            height: 10,
+        }
+        b = {
+            x: 100,
+            y: 110,
+            width: 10,
+            height: 10,
+        }
+        //parameter: X, aY,aWidth, aHeight,bX, bY,bWidth, bHeight
+        expect(collision(a.x, a.y, a.width, a.height, b.x, b.y, b.width, b.height)).toBe(true);
     })
 })
