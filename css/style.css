@@ -27,19 +27,18 @@ header {
 }
 
 .pongbars {
+    position: absolute;
     width: 1.7vw;
     height: calc(30% - 8px);
     background-color:#FFFFFB;
 }
 
 #pongbar_left {
-    position:absolute;
     left: 20px;
     top:250px;
 }
 
 #pongbar_right {
-    position:absolute;
     right:20px;
     top:250px;
 }
