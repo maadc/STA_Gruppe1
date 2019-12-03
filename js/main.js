@@ -19,7 +19,6 @@ let ball = {
         left: spielfeld.offsetWidth / 2, //in px
         bottom: spielfeld.offsetHeight / 2, //in px
         angle: calcRandomAngle()
-        //angle: Math.floor(Math.random() * 360), //in degrees.
     },
     speed: 500
 }
@@ -50,14 +49,14 @@ function ballLogic(frametime) {
     }
 }
 
-function calcRandomAngle() {
+function calcRandomAngle() { //Zufälliger Winkel, der senkrechte Winkel ausschließt.
     do
     randomAngle = Math.floor(Math.random() * 360);
     while (randomAngle < 30 || (randomAngle > 160 && randomAngle < 200) || randomAngle > 330);
     return randomAngle;
 }
 
-function ballReset(angle) {
+function ballReset(angle) { // Ball teleports to center and gets a new random Angle
     ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
     ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
     ball.position.angle = calcRandomAngle();
