@@ -76,8 +76,8 @@ header {
     left:50%;
     bottom:45%;
     transform: translateX(-50%);
-    background-color:#F8090A;
-    width:1.8vw;
-    height:1.8vw;
+    background-color: white;
+    width: 26px;
+    height:26px;
     border-radius:50%;
 }

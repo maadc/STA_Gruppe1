@@ -1,34 +1,55 @@
 window.onload = () => {
-    let frametimeBefore = Date.now();
-    let frametime; // in ms
-    let spielfeld;
-    let pongbar_right;
-    let pongbar_left;
-    let ball;
+   
+let frametimeBefore = Date.now();
+let frametime; // in ms
+let spielfeld;
+let pongbar_right;
+let pongbar_left;
+let ball;
 
-    var keysDown = {};
+var keysDown = {};
+
+//initial function
 
     //initial function
     function init() {
-        spielfeld = document.getElementById("spielfeld")
+    spielfeld = document.getElementById("spielfeld")
 
-        pongbar_right = document.getElementById("pongbar_right");
-        pongbar_right.style.top = 250;
-        pongbar_right.style.height = 200;
+    pongbar_right = {
+        object: document.getElementById("pongbar_right"),
+        position: {
+            right: 20, //in px
+            top: 250, //in px
+        },
+        height: 200, //in px
+        width: 20, //in px
+    }
+    pongbar_right.object.style.top = pongbar_right.position.top;
+    pongbar_right.object.style.height = pongbar_right.height
 
-        pongbar_left = document.getElementById("pongbar_left");
-        pongbar_left.style.top = 250;
-        pongbar_left.style.height = 200;
+    pongbar_left = {
+        object: document.getElementById("pongbar_left"),
+        position: {
+            left: 20, //in px
+            top: 250, //in px
+        },
+        height: 200, //in px
+        width: 20, //in px
+    }
+    pongbar_left.object.style.top = pongbar_left.position.top;
+    pongbar_left.object.style.height = pongbar_left.height
 
-        ball = {
-            object: document.getElementById("ball"),
-            position: {
-                left: spielfeld.offsetHeight / 2, //in px
-                bottom: spielfeld.offsetWidth / 2, //in px
-                angle: 45, //in degrees.
-            },
-            speed: 500
-        }
+    ball = {
+        object: document.getElementById("ball"),
+        position: {
+            left: spielfeld.offsetWidth / 2, //in px
+            bottom: spielfeld.offsetHeight / 2, //in px
+            angle: 30, //in degrees.
+        },
+        speed: 500,
+        radius: 26, //in px
+    }
+}
     }
 
     function ballLogic(frametime) {
@@ -244,6 +265,48 @@ window.onload = () => {
 
         pongbar.style.top = pos;
 
+    //DOWN(40) and W(87)
+    if (40 in keysDown && 87 in keysDown) {
+        movePongbars(pongbar_right, false);
+        movePongbars(pongbar_left, true);
+    }
+
+    //DOWN(40) AND S(83)
+    else if (40 in keysDown && 83 in keysDown) {
+        movePongbars(pongbar_right, false);
+        movePongbars(pongbar_left, false);
+    }
+
+    //UP(38) AND S(83)
+    else if (38 in keysDown && 83 in keysDown) {
+        movePongbars(pongbar_right, true);
+        movePongbars(pongbar_left, false);
+    }
+
+    //UP(38) AND W(87)
+    else if (38 in keysDown && 87 in keysDown) {
+        movePongbars(pongbar_right, true);
+        movePongbars(pongbar_left, true);
+    }
+
+    //Only UP(38)
+    else if (38 in keysDown) {
+        movePongbars(pongbar_right, true);
+    }
+
+    //Only DOWN(40)
+    else if (40 in keysDown) {
+        movePongbars(pongbar_right, false);
+    }
+
+    //Only S(83)
+    else if (83 in keysDown) {
+        movePongbars(pongbar_left, false);
+    }
+
+    //Only W(87)
+    else if (87 in keysDown) {
+        movePongbars(pongbar_left, true);
     }
 
     function gameLoop() {
@@ -333,6 +396,19 @@ window.onload = () => {
         score_left.textContent = scoreLeft + 1;
     }
 
+function movePongbars(pongbar, directionUp) {
+    /*  movePongbars berechnet die neue Position der Pongbar
+        Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
+        Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
+    */
+    const speed = 4;
+    let pos = parseInt(pongbar.object.style.top);
+
+    if (directionUp) {
+        pos -= speed;
+    } else {
+        pos += speed;
+    }
 
     function calculatePosition(pongbar, directionUp) {
         /*  CalculatePosition berechnet die neue Position der Pongbar
@@ -360,6 +436,23 @@ window.onload = () => {
 
         pongbar.style.top = pos;
 
+    //Unterer Rand
+    else if ((parseInt(pongbar.object.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
+        pos = spielfeld.offsetHeight - pongbar.object.style.height;
+    }
+
+    pongbar.object.style.top = pos;
+
+}
+function collision(aX, aY,aWidth, aHeight,bX, bY,bWidth, bHeight) {
+    if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
+        (bX >= aX && bX <= aX + aWidth && aY >= bY && aY <= bY + bHeight) ||
+        (bX >= aX && bX <= aX + aWidth && bY >= aY && bY <= aY + aHeight) ||
+        (aX >= bX && aX <= bX + bWidth && bY >= aY && bY <= aY + aHeight)) {
+        return true;
+    }
+    return false;
+}
     }
 
     //Timer-Funktionen
@@ -413,8 +506,10 @@ window.onload = () => {
     init();
     setInterval(gameLoop, 0);
 }
+      
 module.exports = {
     getDirection: getDirection,
     getAngle: getAngle,
-    round: round
+    round: round,
+    collision: collision,
 }
