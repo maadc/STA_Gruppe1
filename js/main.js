@@ -1,9 +1,3 @@
-module.exports = {
-    getDirection: getDirection,
-    getAngle: getAngle,
-    round: round
-}
-
 window.onload = () => {
     let frametimeBefore = Date.now();
     let frametime; // in ms
@@ -418,4 +412,9 @@ window.onload = () => {
 
     init();
     setInterval(gameLoop, 0);
+}
+module.exports = {
+    getDirection: getDirection,
+    getAngle: getAngle,
+    round: round
 }
