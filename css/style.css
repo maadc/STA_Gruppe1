@@ -1,5 +1,4 @@
 *{
-    box-sizing: border-box;
     font-family: 'Space Mono', monospace;
 }
 
@@ -52,12 +51,6 @@ header {
     left:50%;
     transform: translateX(-50%);
     font-size: 28pt;
-}
-
-#time {
-    display: none;
-}
-
 
 #punktestandLinks {
     font-family: sans-serif;
@@ -82,7 +75,6 @@ header {
     position:absolute;
     left:50%;
     bottom:45%;
-    transform: translateX(-50%);
     background-color: white;
     width:1.8vw;
     height:1.8vw;
