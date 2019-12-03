@@ -16,8 +16,8 @@ const pongbar_left = document.getElementById("pongbar_left");
 let ball = {
     object: document.getElementById("ball"),
     position: {
-        left: spielfeld.offsetHeight / 2, //in px
-        bottom: spielfeld.offsetWidth / 2, //in px
+        left: spielfeld.offsetWidth / 2, //in px
+        bottom: spielfeld.offsetHeight / 2, //in px
         angle: calcRandomAngle()
         //angle: Math.floor(Math.random() * 360), //in degrees.
     },
