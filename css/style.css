@@ -44,15 +44,13 @@ header {
     top:250px;
 }
 
-#zeitanzeige {
+#tracker {
     position: absolute;
     color:white;
     top:3%;
     left:50%;
     transform: translateX(-50%);
     font-size: 28pt;
-    
-}
 
 #punktestandLinks {
     font-family: sans-serif;
