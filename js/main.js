@@ -110,7 +110,10 @@ window.onload = () => {
             bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
             angle: angle,
         }
+        ball.object.style.bottom = "" + Math.round(newBallPosition.bottom);
+        ball.object.style.left = "" + Math.round(newBallPosition.left);
 
+        saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
     }
 
     function getDirection(directAngle) {
