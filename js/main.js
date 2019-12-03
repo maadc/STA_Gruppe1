@@ -37,22 +37,28 @@ function init() {
 }
 
 function ballLogic(frametime) {
-    if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
+    // tolerance = the max amount of pixel a ball can move each iteration + 1 for safty
+    const tolerance = ball.speed * frametime + 1;
+    // border around the gamefield
+    const spielfeldBorder = 8;
+    if (ball.position.left + tolerance >= spielfeld.offsetWidth  - ball.object.offsetWidth) {
         //touches the right border
         let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
+        countPointRight();
         return;
-    } else if (ball.position.left <= ball.object.offsetWidth) {
+    } else if (ball.position.left <= 0 + tolerance) {
         //touches the left border
         let newAngle = getAngle(-getDirection(ball.position.angle).x, getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
+        countPointLeft();
         return;
-    } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
+    } else if (ball.position.bottom + ball.object.offsetHeight + tolerance >= spielfeld.offsetHeight - spielfeldBorder) {
         //touches the top border
         let newAngle = getAngle(getDirection(ball.position.angle).x, -getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
         return;
-    } else if (ball.position.bottom <= 0) {
+    } else if (ball.position.bottom <= 0 + tolerance) {
         //touches the bottom border
         let newAngle = getAngle(getDirection(ball.position.angle).x, -getDirection(ball.position.angle).y)
         moveBall(newAngle, frametime);
@@ -71,8 +77,8 @@ function moveBall(angle, frametime) {
         bottom: ball.position.bottom + (getDirection(angle).y * ball.speed * frametime),
         angle: angle,
     }
-    ball.object.style.bottom = "" + newBallPosition.bottom;
-    ball.object.style.left = "" + newBallPosition.left;
+    ball.object.style.bottom = "" + Math.round(newBallPosition.bottom);
+    ball.object.style.left = "" + Math.round(newBallPosition.left);
 
     saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
 
@@ -261,6 +267,151 @@ function gameLoop() {
     frametimeBefore = now;
 }
 
+    //TODO: Größen der Pongbars und Spielfeld sollten in einer INIT-Funktion berechnet werden
+ 
+    var keysDown = {};
+
+    window.addEventListener("keydown", function (event) {
+        keysDown[event.keyCode] = true;
+    }, false);
+    window.addEventListener("keyup", function (event) {
+        delete keysDown[event.keyCode];
+    }, false);
+
+    function checkPressedKeys() {
+
+        //DOWN(40) and W(87)
+        if (40 in keysDown && 87 in keysDown) {
+            calculatePosition(pongbar_right, false);
+            calculatePosition(pongbar_left, true);
+        }
+
+        //DOWN(40) AND S(83)
+        else if (40 in keysDown && 83 in keysDown) {
+            calculatePosition(pongbar_right, false);
+            calculatePosition(pongbar_left, false);
+        }
+
+        //UP(38) AND S(83)
+        else if (38 in keysDown && 83 in keysDown) {
+            calculatePosition(pongbar_right, true);
+            calculatePosition(pongbar_left, false);
+        }
+
+        //UP(38) AND W(87)
+        else if (38 in keysDown && 87 in keysDown) {
+            calculatePosition(pongbar_right, true);
+            calculatePosition(pongbar_left, true);
+        }
+
+        //Only UP(38)
+        else if (38 in keysDown) {
+            calculatePosition(pongbar_right, true);
+        }
+
+        //Only DOWN(40)
+        else if (40 in keysDown) {
+            calculatePosition(pongbar_right, false);
+        }
+
+        //Only S(83)
+        else if (83 in keysDown) {
+            calculatePosition(pongbar_left, false);
+        }
+
+        //Only W(87)
+        else if (87 in keysDown) {
+            calculatePosition(pongbar_left, true);
+        }
+
+    }
+    
+    function countPointRight() {
+        const score_right = document.getElementById("punktestandRechts");
+        let scoreRight = parseInt(score_right.textContent);
+        score_right.textContent = scoreRight + 1;
+    }
+
+    function countPointLeft() {
+        const score_left = document.getElementById("punktestandLinks");
+        let scoreLeft = parseInt(score_left.textContent);
+        score_left.textContent = scoreLeft + 1;
+    }
+
+
+    function calculatePosition(pongbar, directionUp) {
+        /*  CalculatePosition berechnet die neue Position der Pongbar
+            Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
+            Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
+        */
+        const speed = 2;
+        let pos = parseInt(pongbar.style.top);
+
+        if (directionUp) {
+            pos -= speed;
+        } else {
+            pos += speed;
+        }
+
+        //Oberer Rand
+        if (pos < 0) {
+            pos = 0;
+        }
+
+        //Unterer Rand
+        else if ((parseInt(pongbar.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
+            pos = spielfeld.offsetHeight - pongbar.style.height;
+        }
+
+        pongbar.style.top = pos;
+
+    }
+  
+  //Timer-Funktionen
+  $(function() {
+    registerClock();
+    setTime();
+  });
+
+  function registerClock() {
+    setInterval(updateClock, 1000);
+  }
+
+  function updateClock() {
+    setTime();
+    setStopWatch();
+  }
+
+  var currentdate;
+  function setTime() {
+    currentdate = new Date();
+    var datetime = + currentdate.getMinutes() + ":"
+                  + currentdate.getSeconds();
+   /* $("#time").text(datetime); */
+    console.log(datetime);
+  }
+
+var stopWatchRunning = false;
+var startTime;
+
+$("#spielfeld").click(function() {
+  if (stopWatchRunning == false) {
+    startTime = new Date();
+    stopWatchRunning = true;
+  }
+});
+
+function setStopWatch() {
+  if (stopWatchRunning == false) {
+    return;
+  }
+  var duration = new Date(currentdate - startTime);
+  var showDuration = (duration.getMinutes()<10?'0':'')  
+                + duration.getMinutes() + ":"
+                + (duration.getSeconds() <10?'0':'')
+                + duration.getSeconds();
+  $("#tracker").text(showDuration);
+}
 window.onload = () => {
     init();
     setInterval(gameLoop, 0);
