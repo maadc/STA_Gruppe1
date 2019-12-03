@@ -54,7 +54,6 @@ function calcRandomAngle() {
     do
     randomAngle = Math.floor(Math.random() * 360);
     while (randomAngle < 30 || (randomAngle > 160 && randomAngle < 200) || randomAngle > 330);
-    console.log(randomAngle);
     return randomAngle;
 }
 
