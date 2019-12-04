@@ -369,13 +369,13 @@ window.onload = () => {
     }
 
     function countPointRight() {
-        const score_right = document.getElementById("punktestandRechts");
+        const score_right = document.getElementById("punktestandLinks");
         let scoreRight = parseInt(score_right.textContent);
         score_right.textContent = scoreRight + 1;
     }
 
     function countPointLeft() {
-        const score_left = document.getElementById("punktestandLinks");
+        const score_left = document.getElementById("punktestandRechts");
         let scoreLeft = parseInt(score_left.textContent);
         score_left.textContent = scoreLeft + 1;
     }
