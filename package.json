@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "Studienarbeit im Fach Web Engineering",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "browserify": "^16.5.0",
+    "js-base64": "^2.5.1"
+  },
   "devDependencies": {
     "jest": "^24.9.0",
-    "jsdom": "^15.2.1"
+    "jsdom": "^15.2.1",
+    "watchify": "^3.11.1"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "watch" : "npx watchify js/main.js -o js/bundle.js"
   },
   "repository": {
     "type": "git",

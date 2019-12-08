@@ -1,3 +1,69 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+var stopWatchRunning = false;
+var startTime;
+var currentdate;
+
+//Timer-Funktionen
+function initTimer() {
+    registerClock();
+    setTime();
+};
+
+function registerClock() {
+    setInterval(updateClock, 1000);
+}
+
+function updateClock() {
+    setTime();
+    setStopWatch();
+}
+
+function setTime() {
+    currentdate = new Date();
+    var datetime = +currentdate.getMinutes() + ":" +
+        currentdate.getSeconds();
+}
+
+$("#spielfeld").click(function () {
+    if (stopWatchRunning == false) {
+        startTime = new Date();
+        stopWatchRunning = true;
+    }
+});
+
+function setStopWatch() {
+    if (stopWatchRunning == false) {
+        return;
+    }
+    var duration = new Date(currentdate - startTime);
+    var showDuration = (duration.getMinutes() < 10 ? '0' : '') +
+        duration.getMinutes() + ":" +
+        (duration.getSeconds() < 10 ? '0' : '') +
+        duration.getSeconds();
+    $("#tracker").text(showDuration);
+}
+
+//Counter
+const countPointRight = () => {
+    const score_right = document.getElementById("punktestandLinks");
+    let scoreRight = parseInt(score_right.textContent);
+    score_right.textContent = scoreRight + 1;
+}
+
+const countPointLeft = () => {
+    const score_left = document.getElementById("punktestandRechts");
+    let scoreLeft = parseInt(score_left.textContent);
+    score_left.textContent = scoreLeft + 1;
+}
+
+module.exports = {
+    countPointRight: countPointRight,
+    countPointLeft: countPointLeft,
+    initTimer: initTimer
+}
+
+
+},{}],2:[function(require,module,exports){
 window.onload = () => {
     let frametimeBefore = Date.now();
     let frametime; // in ms
@@ -406,3 +472,5 @@ module.exports = {
     getAngle: getAngle,
     round: round,
 }
+
+},{"./date_counter.js":1}]},{},[2]);
