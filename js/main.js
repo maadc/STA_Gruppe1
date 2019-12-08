@@ -53,12 +53,12 @@ window.onload = () => {
         if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbar_right.object.offsetLeft, pongbar_right.object.offsetTop, pongbar_right.width, pongbar_right.height)) {
             //26 because the balls cooardinates start at the bottom right, insteat of the bottom left??
             //collision with right pong bar
-            let newAngle = getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
+            let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
             moveBall(newAngle, frametime);
             return
         } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbar_left.object.offsetLeft, pongbar_left.object.offsetTop, pongbar_left.width, pongbar_left.height)) {
             //collision with left pong bar
-            let newAngle = getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
+            let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
             moveBall(newAngle, frametime);
             return
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
@@ -73,12 +73,12 @@ window.onload = () => {
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
             //touches the top border
-            let newAngle = getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
+            let newAngle = calculation.getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
             moveBall(newAngle, frametime);
             return;
         } else if (ball.position.bottom <= 0) {
             //touches the bottom border
-            let newAngle = getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
+            let newAngle = calculation.getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
             moveBall(newAngle, frametime);
             return;
         } else if (ball.position.left < spielfeld.offsetWidth) {
@@ -109,34 +109,7 @@ window.onload = () => {
     }
 
     
-    function getAngle(x, y) {
-        //Umrechnung von einem Vektor in den dazugehörigen Winkel
-        if ((x === 0 && y === 0) || (x === 1 && y === 1)) {
-            //keine Bewegung === keine Richung
-            return;
-        }
-        //wir können nicht durch 0 teilen, aber durch annähernd 0
-        if (y === 0) {
-            y = 0.00000001;
-        }
-        if (x === 0) {
-            x = 0.00000001;
-        }
-
-        let alpha = Math.round((180 / Math.PI) * Math.atan(x / y));
-        let angle;
-
-        //arctan hat nur einen Ergebnisbereich von 0 - 90° -> es müssen noch Anpassungen unternommen werden
-        if (x > 0 && y > 0) {
-            angle = alpha;
-        } else if (y < 0) {
-            angle = alpha + 180;
-        } else if (x < 0) {
-            angle = alpha + 360;
-        }
-
-        return angle;
-    }
+    
 
     function saveBallValues(left, bottom, angle) {
         ball.position.left = left;

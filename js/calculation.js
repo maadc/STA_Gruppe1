@@ -51,6 +51,34 @@ function getDirection(directAngle) {
     }
 }
 
+function getAngle(x, y) {
+    //Umrechnung von einem Vektor in den dazugehörigen Winkel
+    if ((x === 0 && y === 0) || (x === 1 && y === 1)) {
+        //keine Bewegung === keine Richung
+        return;
+    }
+    //wir können nicht durch 0 teilen, aber durch annähernd 0
+    if (y === 0) {
+        y = 0.00000001;
+    }
+    if (x === 0) {
+        x = 0.00000001;
+    }
+
+    let alpha = Math.round((180 / Math.PI) * Math.atan(x / y));
+    let angle;
+
+    //arctan hat nur einen Ergebnisbereich von 0 - 90° -> es müssen noch Anpassungen unternommen werden
+    if (x > 0 && y > 0) {
+        angle = alpha;
+    } else if (y < 0) {
+        angle = alpha + 180;
+    } else if (x < 0) {
+        angle = alpha + 360;
+    }
+
+    return angle;
+}
 
 function round(n) {
     // 2 decimal places
@@ -68,6 +96,7 @@ function calcRandomAngle() { //Zufälliger Winkel, der senkrechte Winkel ausschl
 module.exports = {
     collision: collision,
     getDirection: getDirection,
+    getAngle: getAngle,
     round: round,
     calcRandomAngle: calcRandomAngle,
 }
