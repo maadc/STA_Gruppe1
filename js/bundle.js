@@ -146,51 +146,6 @@ module.exports = {
     calcRandomAngle: calcRandomAngle,
 }
 },{}],3:[function(require,module,exports){
-var stopWatchRunning = false;
-var startTime;
-var currentdate;
-
-//Timer-Funktionen
-function initTimer() {
-    registerClock();
-    setTime();
-};
-
-function registerClock() {
-    setInterval(updateClock, 1000);
-}
-
-function updateClock() {
-    setTime();
-    setStopWatch();
-}
-
-function setTime() {
-    currentdate = new Date();
-    var datetime = +currentdate.getMinutes() + ":" +
-        currentdate.getSeconds();
-}
-
-$("#spielfeld").click(function () {
-    if (stopWatchRunning == false) {
-        startTime = new Date();
-        stopWatchRunning = true;
-    }
-});
-
-function setStopWatch() {
-    if (stopWatchRunning == false) {
-        return;
-    }
-    var duration = new Date(currentdate - startTime);
-    var showDuration = (duration.getMinutes() < 10 ? '0' : '') +
-        duration.getMinutes() + ":" +
-        (duration.getSeconds() < 10 ? '0' : '') +
-        duration.getSeconds();
-    $("#tracker").text(showDuration);
-}
-
-//Counter
 const countPointRight = () => {
     const score_right = document.getElementById("punktestandLinks");
     let scoreRight = parseInt(score_right.textContent);
@@ -206,13 +161,13 @@ const countPointLeft = () => {
 module.exports = {
     countPointRight: countPointRight,
     countPointLeft: countPointLeft,
-    initTimer: initTimer
 }
 
 
 },{}],4:[function(require,module,exports){
 //import all required functions
-let date_counter = require("./date_counter.js");
+let timer = require("./timer.js");
+let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
@@ -239,12 +194,12 @@ window.onload = () => {
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
             ballJS.ballReset();
-            date_counter.countPointRight();
+            counter.countPointRight();
             return;
         } else if (ball.position.left <= ball.object.offsetWidth) {
             //touches the left border
             ballJS.ballReset();
-            date_counter.countPointLeft();
+            counter.countPointLeft();
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
             //touches the top border
@@ -273,16 +228,16 @@ window.onload = () => {
         // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
 
         pongbars.checkPressedKeys();
-
         ballLogic(frametime);
 
         frametimeBefore = now;
     }
-    date_counter.initTimer();
+
+    timer();
     setInterval(gameLoop, 0);
 }
 
-},{"./ball.js":1,"./calculation.js":2,"./date_counter.js":3,"./pongbar.js":5}],5:[function(require,module,exports){
+},{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":5,"./timer.js":6}],5:[function(require,module,exports){
 var keysDown = {};
 
 let pongbar_right = {
@@ -398,4 +353,50 @@ module.exports = {
     left: pongbar_left,
     right: pongbar_right
 }
+},{}],6:[function(require,module,exports){
+var stopWatchRunning = false;
+var startTime;
+var currentdate;
+
+//Timer-Funktionen
+function initTimer() {
+    registerClock();
+    setTime();
+};
+
+function registerClock() {
+    setInterval(updateClock, 1000);
+}
+
+function updateClock() {
+    setTime();
+    setStopWatch();
+}
+
+function setTime() {
+    currentdate = new Date();
+    var datetime = +currentdate.getMinutes() + ":" +
+        currentdate.getSeconds();
+}
+
+$("#spielfeld").click(function () {
+    if (stopWatchRunning == false) {
+        startTime = new Date();
+        stopWatchRunning = true;
+    }
+});
+
+function setStopWatch() {
+    if (stopWatchRunning == false) {
+        return;
+    }
+    var duration = new Date(currentdate - startTime);
+    var showDuration = (duration.getMinutes() < 10 ? '0' : '') +
+        duration.getMinutes() + ":" +
+        (duration.getSeconds() < 10 ? '0' : '') +
+        duration.getSeconds();
+    $("#tracker").text(showDuration);
+}
+
+module.exports = initTimer;
 },{}]},{},[4]);

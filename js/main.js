@@ -1,5 +1,6 @@
 //import all required functions
-let date_counter = require("./date_counter.js");
+let timer = require("./timer.js");
+let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
@@ -26,12 +27,12 @@ window.onload = () => {
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
             ballJS.ballReset();
-            date_counter.countPointRight();
+            counter.countPointRight();
             return;
         } else if (ball.position.left <= ball.object.offsetWidth) {
             //touches the left border
             ballJS.ballReset();
-            date_counter.countPointLeft();
+            counter.countPointLeft();
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
             //touches the top border
@@ -60,11 +61,11 @@ window.onload = () => {
         // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
 
         pongbars.checkPressedKeys();
-
         ballLogic(frametime);
 
         frametimeBefore = now;
     }
-    date_counter.initTimer();
+
+    timer();
     setInterval(gameLoop, 0);
 }
