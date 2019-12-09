@@ -12,7 +12,7 @@ let ball = {
     radius: 26, //in px
 }
 
-function ballReset(angle) { // Ball teleports to center and gets a new random Angle
+function ballReset() { // Ball teleports to center and gets a new random Angle
     ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
     ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
     ball.position.angle = calculation.calcRandomAngle();
