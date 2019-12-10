@@ -13,7 +13,7 @@ let ball = {
     radius: 26, //in px
 }
 
-function ballReset(angle) { // Ball teleports to center and gets a new random Angle
+function ballReset() { // Ball teleports to center and gets a new random Angle
     ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
     ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
     ball.position.angle = calculation.calcRandomAngle();
@@ -24,6 +24,7 @@ function saveBallValues(left, bottom, angle) {
     ball.position.bottom = bottom;
     ball.position.angle = angle;
 }
+
 function moveBall(angle, frametime) {
     let newBallPosition = {
         left: ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime),
@@ -36,10 +37,16 @@ function moveBall(angle, frametime) {
     saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
 }
 
+function speedIncrease() { // Increases the speed of the ball by 50
+    ball.speed = ball.speed + 50;
+    console.log(ball.speed);
+}
+
 module.exports = {
     ball: ball,
     ballReset: ballReset,
     moveBall: moveBall,
+    speedIncrease: speedIncrease,
 }
 
 },{"./calculation.js":2}],2:[function(require,module,exports){
@@ -193,13 +200,13 @@ window.onload = () => {
             return
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
-            ballJS.ballReset();
             counter.countPointRight();
+            ballJS.ballReset();
             return;
         } else if (ball.position.left <= ball.object.offsetWidth) {
             //touches the left border
-            ballJS.ballReset();
             counter.countPointLeft();
+            ballJS.ballReset();
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
             //touches the top border
@@ -235,6 +242,7 @@ window.onload = () => {
 
     timer();
     setInterval(gameLoop, 0);
+    setInterval(ballJS.speedIncrease, 10000); // Increases the speed of the ball every 10 seconds
 }
 
 },{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":5,"./timer.js":6}],5:[function(require,module,exports){

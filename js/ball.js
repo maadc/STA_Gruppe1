@@ -23,6 +23,7 @@ function saveBallValues(left, bottom, angle) {
     ball.position.bottom = bottom;
     ball.position.angle = angle;
 }
+
 function moveBall(angle, frametime) {
     let newBallPosition = {
         left: ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime),
@@ -35,8 +36,14 @@ function moveBall(angle, frametime) {
     saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
 }
 
+function speedIncrease() { // Increases the speed of the ball by 50
+    ball.speed = ball.speed + 50;
+    console.log(ball.speed);
+}
+
 module.exports = {
     ball: ball,
     ballReset: ballReset,
     moveBall: moveBall,
+    speedIncrease: speedIncrease,
 }

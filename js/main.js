@@ -26,13 +26,13 @@ window.onload = () => {
             return
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
-            ballJS.ballReset();
             counter.countPointRight();
+            ballJS.ballReset();
             return;
         } else if (ball.position.left <= ball.object.offsetWidth) {
             //touches the left border
-            ballJS.ballReset();
             counter.countPointLeft();
+            ballJS.ballReset();
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
             //touches the top border
@@ -68,4 +68,5 @@ window.onload = () => {
 
     timer();
     setInterval(gameLoop, 0);
+    setInterval(ballJS.speedIncrease, 10000); // Increases the speed of the ball every 10 seconds
 }
