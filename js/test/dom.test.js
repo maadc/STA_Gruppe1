@@ -11,17 +11,23 @@ test(`if spielfeld exists`, () => {
 })
 
 test(`test`, () => {
+    //Simuliere das Spielfeld 100px x 100px ist
     centerHalf.mockImplementation(() => 100);
+    //hole das ball-Objekt
     let ball = require("../ball.js").ball;
     
+    //Erstelle ein Test-DOM
     document.body.innerHTML =
     '<div>' +
     '  <div id="ball" style="left: 100px"/></div>' +
     '</div>';
 
     ball.object = document.getElementById("ball");
+
+    //setze ein Stil. Hier könnte auch ein Funktionsaufruf sein.
     ball.object.style.setProperty('left', '10px');
-    expect(ball.object.style.left).toBe("10px"); // SUCCESS
+
+    expect(ball.object.style.left).toBe("10px");
 })
 
 test(`ballReset`, () => {
