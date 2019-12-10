@@ -93,6 +93,7 @@ function calcRandomAngle() { //Zufälliger Winkel, der senkrechte Winkel ausschl
     return randomAngle;
 }
 
+
 module.exports = {
     collision: collision,
     getDirection: getDirection,

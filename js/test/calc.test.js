@@ -145,8 +145,8 @@ describe("function: collision", () => {
 
 describe("function: checkPressedKeys", () =>{
     test("checkPressedKeys", () => {
-        let down = 40;
-        let w = 87;
-        checkPressedKeys(down, w).toBe(0);
+        let keysDown = {87: true,};
+        let testing = true;
+        expect(checkPressedKeys(keysDown, testing)).toBe(0);
     })
 })

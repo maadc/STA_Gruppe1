@@ -1,4 +1,5 @@
 const { JSDOM,VirtualConsole} = require('jsdom')
+const checkPressedKeys = require('../pongbar.js').checkPressedKeys;
 
 describe('DOM Tests', () => {
     let dom

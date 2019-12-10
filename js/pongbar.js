@@ -28,12 +28,13 @@ window.addEventListener("keyup", function (event) {
     delete keysDown[event.keyCode];
 }, false);
 
-function checkPressedKeys() {
+function checkPressedKeys(keysDown, testing) {
     let down = 40;
     let w = 87;
     let up = 38;
     let s = 83;
     if (down in keysDown && w in keysDown) {
+        
         calculatePosition(pongbar_right, false);
         calculatePosition(pongbar_left, true);
     }
@@ -66,19 +67,22 @@ function checkPressedKeys() {
     }
 
     else if (w in keysDown) {
+        if (testing){
+            return 0;
+        }
         calculatePosition(pongbar_left, true);
     }
-
 }
 
-function calculatePosition(pongbar, directionUp) {
+
+function calculatePosition(pongbar, directionUp, pongbarPosition) {
     /*  CalculatePosition berechnet die neue Position der Pongbar
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
     const speed = 2;
     let spielfeld = document.getElementById("spielfeld");
-    let pos = parseInt(pongbar.object.style.top);
+    let pos = parseInt(pongbarPosition);
 
     if (directionUp) {
         pos -= speed;
@@ -99,6 +103,8 @@ function calculatePosition(pongbar, directionUp) {
     pongbar.object.style.top = pos;
 
 }
+
+
 
 module.exports = {
     checkPressedKeys: checkPressedKeys,

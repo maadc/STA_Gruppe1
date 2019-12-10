@@ -138,6 +138,7 @@ function calcRandomAngle() { //Zufälliger Winkel, der senkrechte Winkel ausschl
     return randomAngle;
 }
 
+
 module.exports = {
     collision: collision,
     getDirection: getDirection,
@@ -236,7 +237,6 @@ window.onload = () => {
     timer();
     setInterval(gameLoop, 0);
 }
-
 },{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":5,"./timer.js":6}],5:[function(require,module,exports){
 var keysDown = {};
 
@@ -244,25 +244,22 @@ let pongbar_right = {
     object: document.getElementById("pongbar_right"),
     position: {
         right: 20, //in px
-        top: 250, //in px
+        top:250, //in px
     },
-    height: 200, //in px
+    height:250, //in px
     width: 20, //in px
 }
-pongbar_right.object.style.top = pongbar_right.position.top;
-pongbar_right.object.style.height = pongbar_right.height
 
 let pongbar_left = {
     object: document.getElementById("pongbar_left"),
+
     position: {
         left: 20, //in px
-        top: 250, //in px
+        top:250, //in px
     },
-    height: 200, //in px
+    height: 250, //in px    
     width: 20, //in px
 }
-pongbar_left.object.style.top = pongbar_left.position.top;
-pongbar_left.object.style.height = pongbar_left.height
 
 window.addEventListener("keydown", function (event) {
     keysDown[event.keyCode] = true;
@@ -272,50 +269,46 @@ window.addEventListener("keyup", function (event) {
 }, false);
 
 function checkPressedKeys() {
-    //DOWN(40) and W(87)
-    if (40 in keysDown && 87 in keysDown) {
+    let down = 40;
+    let w = 87;
+    let up = 38;
+    let s = 83;
+    if (down in keysDown && w in keysDown) {
         calculatePosition(pongbar_right, false);
         calculatePosition(pongbar_left, true);
     }
 
-    //DOWN(40) AND S(83)
-    else if (40 in keysDown && 83 in keysDown) {
+    else if (down in keysDown && s in keysDown) {
         calculatePosition(pongbar_right, false);
         calculatePosition(pongbar_left, false);
     }
 
-    //UP(38) AND S(83)
-    else if (38 in keysDown && 83 in keysDown) {
+    else if (up in keysDown && s in keysDown) {
         calculatePosition(pongbar_right, true);
         calculatePosition(pongbar_left, false);
     }
 
-    //UP(38) AND W(87)
-    else if (38 in keysDown && 87 in keysDown) {
+    else if (up in keysDown && w in keysDown) {
         calculatePosition(pongbar_right, true);
         calculatePosition(pongbar_left, true);
     }
 
-    //Only UP(38)
-    else if (38 in keysDown) {
+    else if (up in keysDown) {
         calculatePosition(pongbar_right, true);
     }
 
-    //Only DOWN(40)
-    else if (40 in keysDown) {
+    else if (down in keysDown) {
         calculatePosition(pongbar_right, false);
     }
 
-    //Only S(83)
-    else if (83 in keysDown) {
+    else if (s in keysDown) {
         calculatePosition(pongbar_left, false);
     }
 
-    //Only W(87)
-    else if (87 in keysDown) {
+    else if (w in keysDown) {
         calculatePosition(pongbar_left, true);
+        return 0;
     }
-
 }
 
 function calculatePosition(pongbar, directionUp) {
