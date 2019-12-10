@@ -1,4 +1,5 @@
 const { JSDOM,VirtualConsole} = require('jsdom')
+const ballReset = require("../ball.js").ballReset;
 
 describe('DOM Tests', () => {
     let dom
