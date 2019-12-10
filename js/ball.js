@@ -16,6 +16,9 @@ function ballReset() { // Ball teleports to center and gets a new random Angle
     ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
     ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
     ball.position.angle = calculation.calcRandomAngle();
+    if(ball.speed > 700) { // Ball slows down when a point is scored and the Ball is very fast already
+        ball.speed = Math.round((ball.speed / 1.5) / 50) * 50; // Rundet die Ballgeschwindigkeit auf ein Vielfaches von 50
+    } 
 }
 
 function saveBallValues(left, bottom, angle) {
