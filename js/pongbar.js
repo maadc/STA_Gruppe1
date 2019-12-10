@@ -10,20 +10,16 @@ let pongbar_right = {
     width: 20, //in px
 }
 
-pongbar_right.object.style.top = pongbar_right.position.top;
-pongbar_right.object.style.height = pongbar_right.height
-
 let pongbar_left = {
     object: document.getElementById("pongbar_left"),
+
     position: {
         left: 20, //in px
-        top:(spielfeld.offsetHeight / 2) - pongbar_left.height, //in px
+        top:250, //in px
     },
-    height: (spielfeld.offsetHeight / 2) - pongbar_left.height, //in px    
+    height: 250, //in px    
     width: 20, //in px
 }
-pongbar_left.object.style.top = pongbar_left.position.top;
-pongbar_left.object.style.height = pongbar_left.height
 
 window.addEventListener("keydown", function (event) {
     keysDown[event.keyCode] = true;

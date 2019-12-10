@@ -2,6 +2,7 @@ const getDirection = require('../calculation.js').getDirection;
 const round = require('../calculation.js').round;
 const getAngle = require('../calculation.js').getAngle;
 const collision = require('../calculation.js').collision;
+const checkPressedKeys = require('../pongbar.js').checkPressedKeys;
 
 describe("function: getDirection", () => {
     [{
@@ -139,5 +140,13 @@ describe("function: collision", () => {
         }
         //parameter: X, aY,aWidth, aHeight,bX, bY,bWidth, bHeight
         expect(collision(a.x, a.y, a.width, a.height, b.x, b.y, b.width, b.height)).toBe(true);
+    })
+})
+
+describe("function: checkPressedKeys", () =>{
+    test("checkPressedKeys", () => {
+        let down = 40;
+        let w = 87;
+        checkPressedKeys(down, w).toBe(0);
     })
 })
