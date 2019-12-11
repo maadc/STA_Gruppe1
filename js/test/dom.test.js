@@ -1,7 +1,7 @@
 //Simuliere die Funktion, die aus getterDOM.js kommt
 jest.mock("../getterDOM.js");
 //Speichere die Funktion, die aus getterDOM.js kommt
-let centerHalf = require("../getterDOM.js");
+let getterDOM = require("../getterDOM.js");
 
 
 test(`if spielfeld exists`, () => {
@@ -12,7 +12,7 @@ test(`if spielfeld exists`, () => {
 
 test(`test`, () => {
     //Simuliere das Spielfeld 100px x 100px ist
-    centerHalf.mockImplementation(() => 100);
+    getterDOM.mockImplementation(() => 100);
     //hole das ball-Objekt
     let ball = require("../ball.js").ball;
     
@@ -35,11 +35,29 @@ test(`ballReset`, () => {
     let ballReset = require("../ball.js").ballReset;
 
     //Simuliere das Spielfeld 300 x 300px ist
-    centerHalf.mockImplementation(() => 300);
+    getterDOM.mockImplementation(() => 300);
     //hole ball
     let ball = require("../ball.js").ball;
 
     //Platziere den Ball in der Mitte
     ballReset();
     expect(ball.position.left && ball.position.bottom).toBe(150);
+})
+
+test("saveBallValues", () => {
+    let saveBallValues = require("../ball.js").saveBallValues;
+    let ball = require("../ball.js").ball;
+
+    saveBallValues(100, 100, 20);
+    expect(ball.position).toHaveProperty('left', 10, 'bottom', 100, 'angle', 20); //?
+
+})
+
+test("moveBall", () => {
+    let moveBall = require("../ball.js").moveBall;
+    let ball = require("../ball.js").ball;
+
+    moveBall(10, 0.005);
+    expect(ball.position).toHaveProperty('left', 10, 'bottom', 100, 'angle', 10);
+
 })
