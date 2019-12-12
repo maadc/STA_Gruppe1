@@ -81,3 +81,12 @@ header {
     height:1.8vw;
     border-radius:50%;
 }
+
+#geschwindigkeit {
+    position: absolute;
+    left:50%;
+    bottom:3%;
+    transform: translateX(-50%);
+    color:#FFFFFB;
+    font-size: 20pt;
+}

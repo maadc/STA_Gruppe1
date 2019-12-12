@@ -42,6 +42,7 @@ function moveBall(angle, frametime) {
 function speedIncrease() { // Increases the speed of the ball by 50
     ball.speed = ball.speed + 50;
     console.log(ball.speed);
+    document.getElementById("geschwindigkeit").innerHTML = ball.speed;
 }
 
 module.exports = {

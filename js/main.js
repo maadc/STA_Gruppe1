@@ -64,6 +64,7 @@ window.onload = () => {
         ballLogic(frametime);
 
         frametimeBefore = now;
+        
     }
 
     timer();
