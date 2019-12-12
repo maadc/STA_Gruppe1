@@ -1,7 +1,8 @@
+let getterDOM = require("./getterDOM.js");
 var keysDown = {};
 
 let pongbar_right = {
-    object: document.getElementById("pongbar_right"),
+    object: getterDOM("pongbar_right"),
     position: {
         right: 20, //in px
         top:250, //in px
@@ -11,7 +12,7 @@ let pongbar_right = {
 }
 
 let pongbar_left = {
-    object: document.getElementById("pongbar_left"),
+    object: getterDOM("pongbar_left"),
 
     position: {
         left: 20, //in px
@@ -34,35 +35,55 @@ function checkPressedKeys(keysDown, testing) {
     let up = 38;
     let s = 83;
     if (down in keysDown && w in keysDown) {
-        
+        if (testing){
+            return 0;
+        }
         calculatePosition(pongbar_right, false);
         calculatePosition(pongbar_left, true);
     }
 
     else if (down in keysDown && s in keysDown) {
+        if (testing){
+            return 0;
+        }
         calculatePosition(pongbar_right, false);
         calculatePosition(pongbar_left, false);
     }
 
     else if (up in keysDown && s in keysDown) {
+        if (testing){
+            return 0;
+        }
         calculatePosition(pongbar_right, true);
         calculatePosition(pongbar_left, false);
     }
 
     else if (up in keysDown && w in keysDown) {
+        if (testing){
+            return 0;
+        }
         calculatePosition(pongbar_right, true);
         calculatePosition(pongbar_left, true);
     }
 
     else if (up in keysDown) {
+        if (testing){
+            return 0;
+        }
         calculatePosition(pongbar_right, true);
     }
 
     else if (down in keysDown) {
+        if(testing) {
+            return 0;
+        }
         calculatePosition(pongbar_right, false);
     }
 
     else if (s in keysDown) {
+        if (testing){
+            return 0;
+        }
         calculatePosition(pongbar_left, false);
     }
 
@@ -75,14 +96,14 @@ function checkPressedKeys(keysDown, testing) {
 }
 
 
-function calculatePosition(pongbar, directionUp, pongbarPosition) {
+function calculatePosition(pongbar, directionUp) {
     /*  CalculatePosition berechnet die neue Position der Pongbar
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
     const speed = 2;
     let spielfeld = document.getElementById("spielfeld");
-    let pos = parseInt(pongbarPosition);
+    let pos = parseInt(pongbar.object.style.top);
 
     if (directionUp) {
         pos -= speed;
@@ -99,12 +120,8 @@ function calculatePosition(pongbar, directionUp, pongbarPosition) {
     else if ((parseInt(pongbar.object.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
         pos = spielfeld.offsetHeight - pongbar.object.style.height;
     }
-
     pongbar.object.style.top = pos;
-
 }
-
-
 
 module.exports = {
     checkPressedKeys: checkPressedKeys,

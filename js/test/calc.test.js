@@ -142,11 +142,3 @@ describe("function: collision", () => {
         expect(collision(a.x, a.y, a.width, a.height, b.x, b.y, b.width, b.height)).toBe(true);
     })
 })
-
-describe("function: checkPressedKeys", () =>{
-    test("checkPressedKeys", () => {
-        let keysDown = {87: true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)).toBe(0);
-    })
-})
