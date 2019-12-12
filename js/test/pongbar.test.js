@@ -41,10 +41,9 @@ describe("function: checkPressedKeys", () =>{
         let testing = true;
         expect(checkPressedKeys(keysDown, testing)). toBe(0);
     })
-    test ("checkedPressedKeys", ()=>{
+    test ("Pressing W", ()=>{
         let keysDown = {38:true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)). toBe(0);
+        expect(checkPressedKeys(keysDown)). toBe(0);
     })
     
     
