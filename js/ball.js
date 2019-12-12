@@ -14,8 +14,8 @@ let ball = {
 }
 
 function ballReset() { // Ball teleports to center and gets a new random Angle
-    let newBottom = getterDOM(true) / 2;
-    let newLeft = getterDOM(false) / 2;
+    let newBottom = getterDOM("spielfeld.offsetHeight") / 2;
+    let newLeft = getterDOM("spielfeld.offsetWidth") / 2;
     let newAngle = calculation.calcRandomAngle();
     
     ball.object.style.bottom = newBottom;

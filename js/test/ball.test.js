@@ -31,13 +31,13 @@ test(`test`, () => {
 })
 
 test(`ballReset`, () => {
-    //hole ballReset()
-    let ballReset = require("../ball.js").ballReset;
-
     //Simuliere das Spielfeld 300 x 300px ist
     getterDOM.mockImplementation(() => 300);
     //hole ball
     let ball = require("../ball.js").ball;
+
+    //hole ballReset()
+    let ballReset = require("../ball.js").ballReset;
 
     //Platziere den Ball in der Mitte
     ballReset();
@@ -56,7 +56,7 @@ test("saveBallValues", () => {
 test("moveBall", () => {
     let moveBall = require("../ball.js").moveBall;
     let ball = require("../ball.js").ball;
-
+    debugger;
     moveBall(10, 0.005);
     expect(ball.position).toHaveProperty('left', 10, 'bottom', 100, 'angle', 10);
 
