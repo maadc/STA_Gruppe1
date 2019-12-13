@@ -1,6 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 let spielfeld = document.getElementById("spielfeld");
 let calculation = require("./calculation.js");
+let mainJS = require("./main.js");
 
 let ball = {
     object: document.getElementById("ball"),
@@ -25,7 +26,6 @@ function ballSlowdown() {
         ball.speed = Math.round((ball.speed / 1.5) / 50) * 50; // Rundet die Ballgeschwindigkeit auf ein Vielfaches von 50
     }
 }
-
 
 function saveBallValues(left, bottom, angle) {
     ball.position.left = left;
@@ -57,7 +57,7 @@ module.exports = {
     moveBall: moveBall,
     speedIncrease: speedIncrease,
 }
-},{"./calculation.js":2}],2:[function(require,module,exports){
+},{"./calculation.js":2,"./main.js":4}],2:[function(require,module,exports){
 function collision(aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight) {
     if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
         (bX >= aX && bX <= aX + aWidth && aY >= bY && aY <= bY + bHeight) ||
@@ -181,11 +181,16 @@ module.exports = {
 
 },{}],4:[function(require,module,exports){
 //import all required functions
-let timer = require("./timer.js");
+let startCounter = require("./timer.js").startCounter;
 let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
+let ballMoving = false;
+
+function setBallMovingTrue() {
+    ballMoving = true;
+}
 
 window.onload = () => {
     
@@ -193,6 +198,24 @@ window.onload = () => {
     let frametime; // in ms
     let spielfeld = document.getElementById("spielfeld");
     let ball = ballJS.ball;
+
+    function go() {
+        document.onkeydown = function (e) {
+          if (e.keyCode == 32) {
+          ballMoving = true;
+            startCounter();
+            document.getElementById("starttext").innerHTML = "";
+          }
+        }
+        spielfeld.onclick = function () {
+         ballMoving = true;
+          startCounter();
+          document.getElementById("starttext").innerHTML = "";
+        }
+        if(ballMoving === true){
+          ballLogic(frametime);
+        }
+      }
 
     function ballLogic(frametime) {
         if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbars.right.object.offsetLeft, pongbars.right.object.offsetTop, pongbars.right.width, pongbars.right.height)) {
@@ -209,11 +232,15 @@ window.onload = () => {
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
             counter.countPointRight();
+            ballMoving = false;
+            setTimeout(setBallMovingTrue,1000);
             ballJS.ballReset();
             return;
         } else if (ball.position.left <= ball.object.offsetWidth) {
             //touches the left border
             counter.countPointLeft();
+            ballMoving = false;
+            setTimeout(setBallMovingTrue,1000);
             ballJS.ballReset();
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
@@ -243,16 +270,18 @@ window.onload = () => {
         // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
 
         pongbars.checkPressedKeys();
-        ballLogic(frametime);
+        
+        go();
 
         frametimeBefore = now;
 
     }
 
-    timer();
     setInterval(gameLoop, 0);
     setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
+
 }
+
 
 },{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":5,"./timer.js":6}],5:[function(require,module,exports){
 var keysDown = {};
@@ -371,49 +400,39 @@ module.exports = {
     right: pongbar_right
 }
 },{}],6:[function(require,module,exports){
-var stopWatchRunning = false;
-var startTime;
-var currentdate;
-
 //Timer-Funktionen
-function initTimer() {
-    registerClock();
-    setTime();
-};
+let start;
+var timerRunning = false;
 
-function registerClock() {
-    setInterval(updateClock, 1000);
+function startCounter() {
+  if (timerRunning == false) {
+    start = new Date().getTime();
+    setTime();
+    timerRunning = true;
+  }
 }
 
-function updateClock() {
-    setTime();
-    setStopWatch();
+function updateCounter() {
+  var dif = new Date().getTime() - start;
+  var sec = Math.floor(dif / 1000);
+  var min = Math.floor(sec / 60);
+  sec %= 60;
+  if (min < 10) {
+    min = "0" + min;
+  }
+  if (sec < 10) {
+    sec = "0" + sec;
+  }
+  return { min, sec };
 }
 
 function setTime() {
-    currentdate = new Date();
-    var datetime = +currentdate.getMinutes() + ":" +
-        currentdate.getSeconds();
+  document.getElementById("tracker").innerHTML = updateCounter().min + ":" + updateCounter().sec;
+  setTimeout(setTime, 1000);
+  console.log(updateCounter().sec);
 }
 
-$("#spielfeld").click(function () {
-    if (stopWatchRunning == false) {
-        startTime = new Date();
-        stopWatchRunning = true;
-    }
-});
-
-function setStopWatch() {
-    if (stopWatchRunning == false) {
-        return;
-    }
-    var duration = new Date(currentdate - startTime);
-    var showDuration = (duration.getMinutes() < 10 ? '0' : '') +
-        duration.getMinutes() + ":" +
-        (duration.getSeconds() < 10 ? '0' : '') +
-        duration.getSeconds();
-    $("#tracker").text(showDuration);
+module.exports = {
+  startCounter: startCounter,
 }
-
-module.exports = initTimer;
 },{}]},{},[4]);

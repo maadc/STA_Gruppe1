@@ -90,3 +90,12 @@ header {
     color:#FFFFFB;
     font-size: 20pt;
 }
+
+#starttext {
+    left:50%;
+    transform: translateX(-50%);
+    bottom:60%;
+    position: absolute;
+    color:#FFFFFB;
+    font-size: 20pt;
+}

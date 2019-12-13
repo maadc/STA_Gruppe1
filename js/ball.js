@@ -1,5 +1,6 @@
 let spielfeld = document.getElementById("spielfeld");
 let calculation = require("./calculation.js");
+let mainJS = require("./main.js");
 
 let ball = {
     object: document.getElementById("ball"),
@@ -24,7 +25,6 @@ function ballSlowdown() {
         ball.speed = Math.round((ball.speed / 1.5) / 50) * 50; // Rundet die Ballgeschwindigkeit auf ein Vielfaches von 50
     }
 }
-
 
 function saveBallValues(left, bottom, angle) {
     ball.position.left = left;

@@ -1,9 +1,14 @@
 //import all required functions
-let timer = require("./timer.js");
+let startCounter = require("./timer.js").startCounter;
 let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
+let ballMoving = false;
+
+function setBallMovingTrue() {
+    ballMoving = true;
+}
 
 window.onload = () => {
     
@@ -11,6 +16,24 @@ window.onload = () => {
     let frametime; // in ms
     let spielfeld = document.getElementById("spielfeld");
     let ball = ballJS.ball;
+
+    function go() {
+        document.onkeydown = function (e) {
+          if (e.keyCode == 32) {
+          ballMoving = true;
+            startCounter();
+            document.getElementById("starttext").innerHTML = "";
+          }
+        }
+        spielfeld.onclick = function () {
+         ballMoving = true;
+          startCounter();
+          document.getElementById("starttext").innerHTML = "";
+        }
+        if(ballMoving === true){
+          ballLogic(frametime);
+        }
+      }
 
     function ballLogic(frametime) {
         if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbars.right.object.offsetLeft, pongbars.right.object.offsetTop, pongbars.right.width, pongbars.right.height)) {
@@ -27,11 +50,15 @@ window.onload = () => {
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
             counter.countPointRight();
+            ballMoving = false;
+            setTimeout(setBallMovingTrue,1000);
             ballJS.ballReset();
             return;
         } else if (ball.position.left <= ball.object.offsetWidth) {
             //touches the left border
             counter.countPointLeft();
+            ballMoving = false;
+            setTimeout(setBallMovingTrue,1000);
             ballJS.ballReset();
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
@@ -61,13 +88,15 @@ window.onload = () => {
         // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
 
         pongbars.checkPressedKeys();
-        ballLogic(frametime);
+        
+        go();
 
         frametimeBefore = now;
 
     }
 
-    timer();
     setInterval(gameLoop, 0);
     setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
+
 }
+
