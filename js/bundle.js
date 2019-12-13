@@ -17,10 +17,15 @@ function ballReset() { // Ball teleports to center and gets a new random Angle
     ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
     ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
     ball.position.angle = calculation.calcRandomAngle();
+    ballSlowdown();
+}
+
+function ballSlowdown() {
     if(ball.speed > 700) { // Ball slows down when a point is scored and the Ball is very fast already
         ball.speed = Math.round((ball.speed / 1.5) / 50) * 50; // Rundet die Ballgeschwindigkeit auf ein Vielfaches von 50
-    } 
+    }
 }
+
 
 function saveBallValues(left, bottom, angle) {
     ball.position.left = left;
@@ -40,10 +45,10 @@ function moveBall(angle, frametime) {
     saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
 }
 
-function speedIncrease() { // Increases the speed of the ball by 50
-    ball.speed = ball.speed + 50;
-    console.log(ball.speed);
+function speedIncrease() { // Increases the speed of the ball by 1
+    ball.speed = ball.speed + 1;
     document.getElementById("geschwindigkeit").innerHTML = ball.speed;
+    return ball.speed;
 }
 
 module.exports = {
@@ -52,7 +57,6 @@ module.exports = {
     moveBall: moveBall,
     speedIncrease: speedIncrease,
 }
-
 },{"./calculation.js":2}],2:[function(require,module,exports){
 function collision(aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight) {
     if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
@@ -196,12 +200,12 @@ window.onload = () => {
             //collision with right pong bar
             let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
             ballJS.moveBall(newAngle, frametime);
-            return
+            return;
         } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbars.left.object.offsetLeft, pongbars.left.object.offsetTop, pongbars.left.width, pongbars.left.height)) {
             //collision with left pong bar
             let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
             ballJS.moveBall(newAngle, frametime);
-            return
+            return;
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
             counter.countPointRight();
@@ -242,12 +246,12 @@ window.onload = () => {
         ballLogic(frametime);
 
         frametimeBefore = now;
-        
+
     }
 
     timer();
     setInterval(gameLoop, 0);
-    setInterval(ballJS.speedIncrease, 10000); // Increases the speed of the ball every 10 seconds
+    setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
 }
 
 },{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":5,"./timer.js":6}],5:[function(require,module,exports){

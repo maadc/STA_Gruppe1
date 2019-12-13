@@ -111,7 +111,7 @@ describe("function: getAngle", () => {
         input,
         output
     }) => {
-        test(`Angel of ${input.x} & ${input.y}`, () => {
+        test(`Angle of ${input.x} & ${input.y}`, () => {
             expect(getAngle(input.x, input.y)).toEqual(output)
         })
     })
@@ -141,3 +141,4 @@ describe("function: collision", () => {
         expect(collision(a.x, a.y, a.width, a.height, b.x, b.y, b.width, b.height)).toBe(true);
     })
 })
+
