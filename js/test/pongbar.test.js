@@ -1,7 +1,9 @@
 //Simuliere die Funktion, die aus getterDOM.js kommt
 jest.mock("../getterDOM.js");
+jest.mock("../setterDOM.js");
 //Speichere die Funktion, die aus getterDOM.js kommt
 let getterDOM = require("../getterDOM.js");
+let setterDOM = require("../setterDOM.js");
 
 const calculatePosition = require('../pongbar.js').calculatePosition;
 
@@ -21,10 +23,13 @@ describe("function: calculatePosition", () =>{
 })
 
 describe("function: checkedPressedKeys", () => {
+    const checkPressedKeys = require("../pongbar.js").checkPressedKeys;
+    const pongbar_left = require("../pongbar.js").left;
     it("should pongbar move up, when w is pressed", () =>{
-        let pongbar_left = require("../pongbar.js").left;
-        let checkPressedKeys = require("../pongbar.js").checkPressedKeys;
-        let keysDown = {40:true};
-    }
-    )
+        let keysDown = {87:true};
+        setterDOM.mockImplementation(() => 700);
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_left.position.top).toBe(1);
+    })
 })
