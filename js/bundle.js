@@ -202,7 +202,6 @@ let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
 
-
 window.onload = () => {
     
     let frametimeBefore = Date.now();
@@ -281,6 +280,7 @@ let pongbar_right = {
     },
     height: 250, //in px
     width: 20, //in px
+    speed: 2,
 }
 
 let pongbar_left = {
@@ -292,6 +292,7 @@ let pongbar_left = {
     },
     height: 250, //in px    
     width: 20, //in px
+    speed: 2,
 }
 
 window.addEventListener("keydown", function (event) {
@@ -309,46 +310,47 @@ function checkPressedKeys(keysDown) {
     let s = 83;
 
     if (down in keysDown && w in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
-        setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left.position.top, pongbar_left.height));
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right));
+        setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left));
 
     } else if (down in keysDown && s in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
-        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right));
+        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left));
 
     } else if (up in keysDown && s in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
-        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
+        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right));
+        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left));
 
     } else if (up in keysDown && w in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
-        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
+        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right));
+        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left));
 
     } else if (up in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
+        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right));
 
     } else if (down in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right));
 
     } else if (s in keysDown) {
-        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
+        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left));
 
     } else if (w in keysDown) {
-        setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left.position.top, pongbar_left.height));
+        setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left));
 
     }
 }
 
 
-function calculatePosition(directionUp, position, pongbarHeight) {
+function calculatePosition(directionUp, pongbar) {
     /*  CalculatePosition berechnet die neue Position der Pongbar
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
     /* Position beinhaltet y Koordinaten*/
-    const speed = 2;
-    let spielfeld = getterDOM("spielfeld");
-    /*let pos = parseInt(pongbar.object.style.top);*/
+
+    let position = pongbar.position.top;
+    const pongbarHeight = pongbar.height;
+    const speed = pongbar.speed;
 
     if (directionUp) {
         position -= speed;
@@ -374,7 +376,7 @@ function setPongbarPosition(pongbar, position) {
     } else {
         setterDOM("pongbar_right", "style_top", position);
     }
-    pongbar.object.style.top = pongbar.position.top = position;
+    pongbar.position.top = position;
 }
 
 module.exports = {
