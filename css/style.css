@@ -88,7 +88,9 @@ header {
     bottom:3%;
     transform: translateX(-50%);
     color:#FFFFFB;
-    font-size: 20pt;
+    font-size: 12pt;
+}
+
 }
 
 #starttext {

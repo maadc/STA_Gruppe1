@@ -27,7 +27,6 @@ function updateCounter() {
 function setTime() {
   document.getElementById("tracker").innerHTML = updateCounter().min + ":" + updateCounter().sec;
   setTimeout(setTime, 1000);
-  console.log(updateCounter().sec);
 }
 
 module.exports = {
