@@ -174,22 +174,25 @@ module.exports = {
 },{}],4:[function(require,module,exports){
 module.exports = (Kommando) => {
 
-        let spielfeld = document.getElementById("spielfeld");
-        let pongbar_right = document.getElementById("pongbar_right");
-        let pongbar_left = document.getElementById("pongbar_left");
+    let spielfeld = document.getElementById("spielfeld");
+    let pongbar_right = document.getElementById("pongbar_right");
+    let pongbar_left = document.getElementById("pongbar_left");
 
-        if (Kommando === "spielfeld.offsetHeight"){
-            return spielfeld.offsetHeight;
-        } else if (Kommando === "spielfeld.offsetWidth") {
-            return spielfeld.offsetWidth;
-        } else if (Kommando === "spielfeld") {
-            return spielfeld;
-        } else if (Kommando === "pongbar_right") {
-            return pongbar_right;
-        } else if (Kommando==="pongbar_left") {
-            return pongbar_left;
-        }
-
+    if (Kommando === "spielfeld.offsetHeight"){
+        return spielfeld.offsetHeight;
+    } else if (Kommando === "spielfeld.offsetWidth") {
+        return spielfeld.offsetWidth;
+    } else if (Kommando === "spielfeld") {
+        return spielfeld;
+    } else if (Kommando === "pongbar_right") {
+        return pongbar_right;
+    } else if (Kommando==="pongbar_left") {
+        return pongbar_left;
+    } else if (Kommando === "pongbar_right.style.top") {
+        return pongbar_right.style.top;
+    } else if (Kommando==="pongbar_left.style.top") {
+        return pongbar_left.style.top;
+    }
 }
 },{}],5:[function(require,module,exports){
 //import all required functions
@@ -198,6 +201,7 @@ let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
+
 
 window.onload = () => {
     
@@ -254,7 +258,8 @@ window.onload = () => {
         // das Spiel nicht schneller laufen soll, als der Spieler es spielen kann. 
         // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
 
-        pongbars.checkPressedKeys();
+        pongbars.checkPressedKeys(pongbars.pressedKeys);
+
         ballLogic(frametime);
 
         frametimeBefore = now;
@@ -263,17 +268,18 @@ window.onload = () => {
     timer();
     setInterval(gameLoop, 0);
 }
-},{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":6,"./timer.js":7}],6:[function(require,module,exports){
+},{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":6,"./timer.js":8}],6:[function(require,module,exports){
 let getterDOM = require("./getterDOM.js");
-var keysDown = {};
+let setterDOM = require("./setterDOM.js");
+var pressedKeys = {};
 
 let pongbar_right = {
     object: getterDOM("pongbar_right"),
     position: {
         right: 20, //in px
-        top:250, //in px
+        top: 250, //in px
     },
-    height:250, //in px
+    height: 250, //in px
     width: 20, //in px
 }
 
@@ -282,63 +288,54 @@ let pongbar_left = {
 
     position: {
         left: 20, //in px
-        top:250, //in px
+        top: 250, //in px
     },
     height: 250, //in px    
     width: 20, //in px
 }
 
 window.addEventListener("keydown", function (event) {
-    keysDown[event.keyCode] = true;
-}, false);
-window.addEventListener("keyup", function (event) {
-    delete keysDown[event.keyCode];
+    pressedKeys[event.keyCode] = true;
 }, false);
 
-function checkPressedKeys() {
+window.addEventListener("keyup", function (event) {
+    delete pressedKeys[event.keyCode];
+}, false);
+
+function checkPressedKeys(keysDown) {
     let down = 40;
     let w = 87;
     let up = 38;
     let s = 83;
-    
+
     if (down in keysDown && w in keysDown) {
         setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
         setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left.position.top, pongbar_left.height));
-    }
 
-    else if (down in keysDown && s in keysDown) {
+    } else if (down in keysDown && s in keysDown) {
         setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
         setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
-    }
 
-    else if (up in keysDown && s in keysDown) {
+    } else if (up in keysDown && s in keysDown) {
         setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
         setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
-    }
 
-    else if (up in keysDown && w in keysDown) {
+    } else if (up in keysDown && w in keysDown) {
         setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
         setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
 
-        calculatePosition(pongbar_right, true);
-        calculatePosition(pongbar_left, true);
-    }
+    } else if (up in keysDown) {
+        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
 
-    else if (up in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
-    }
-
-    else if (down in keysDown) {
+    } else if (down in keysDown) {
         setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
 
-    }
-
-    else if (s in keysDown) {
+    } else if (s in keysDown) {
         setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
-    }
 
-    else if (w in keysDown) {
+    } else if (w in keysDown) {
         setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left.position.top, pongbar_left.height));
+
     }
 }
 
@@ -348,7 +345,7 @@ function calculatePosition(directionUp, position, pongbarHeight) {
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
-   /* Position beinhaltet y Koordinaten*/
+    /* Position beinhaltet y Koordinaten*/
     const speed = 2;
     let spielfeld = getterDOM("spielfeld");
     /*let pos = parseInt(pongbar.object.style.top);*/
@@ -366,22 +363,53 @@ function calculatePosition(directionUp, position, pongbarHeight) {
 
     //Unterer Rand
     else if ((pongbarHeight + position) > getterDOM("spielfeld.offsetHeight")) {
-        pos = getterDOM("spielfeld.offsetHeight") - pongbarHeight;
+        position = getterDOM("spielfeld.offsetHeight") - pongbarHeight;
     }
     return position;
 }
 
-function setPongbarPosition (pongbar, position){
+function setPongbarPosition(pongbar, position) {
+    if (pongbar == pongbar_left) {
+        setterDOM("pongbar_left", "style_top", position);
+    } else {
+        setterDOM("pongbar_right", "style_top", position);
+    }
     pongbar.object.style.top = pongbar.position.top = position;
 }
 
 module.exports = {
     checkPressedKeys: checkPressedKeys,
     calculatePosition: calculatePosition,
+    setPongbarPosition: setPongbarPosition,
+    pressedKeys: pressedKeys,
     left: pongbar_left,
     right: pongbar_right
 }
-},{"./getterDOM.js":4}],7:[function(require,module,exports){
+},{"./getterDOM.js":4,"./setterDOM.js":7}],7:[function(require,module,exports){
+module.exports = (object,parameter, value) => {
+
+    let spielfeld = document.getElementById("spielfeld");
+    let pongbar_right = document.getElementById("pongbar_right");
+    let pongbar_left = document.getElementById("pongbar_left");
+
+    if (object === "spielfeld"){
+
+    }
+
+    if (object === "pongbar_left"){
+        if (parameter === "style_top"){
+            pongbar_left.style.top = value;
+        }
+    }
+
+    if (object === "pongbar_right"){
+        if (parameter === "style_top"){
+            pongbar_right.style.top = value;
+        }
+    }
+   
+}
+},{}],8:[function(require,module,exports){
 var stopWatchRunning = false;
 var startTime;
 var currentdate;
