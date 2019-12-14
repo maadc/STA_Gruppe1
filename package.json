@@ -24,11 +24,5 @@
   "bugs": {
     "url": "https://github.com/maadc/studienarbeit_gruppe1/issues"
   },
-  "homepage": "https://github.com/maadc/studienarbeit_gruppe1#readme",
-  "jest": {
-    "setupFiles": [
-      "./testHelpers/itWill.js",
-      "./testHelpers/initDom.js"
-    ]
-  }
+  "homepage": "https://github.com/maadc/studienarbeit_gruppe1#readme"
 }
