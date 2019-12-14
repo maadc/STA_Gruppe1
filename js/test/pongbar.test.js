@@ -3,48 +3,28 @@ jest.mock("../getterDOM.js");
 //Speichere die Funktion, die aus getterDOM.js kommt
 let getterDOM = require("../getterDOM.js");
 
-const checkPressedKeys = require('../pongbar.js').checkPressedKeys;
+const calculatePosition = require('../pongbar.js').calculatePosition;
 
-describe("function: checkPressedKeys", () =>{
-    test ("checkedPressedKeys", ()=>{
-        let keysDown = {40:true, 87:true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)).toBe(0);
+describe("function: calculatePosition", () =>{
+    test("obererRand", () => {
+        expect (calculatePosition (true,-10,250)).toBe(0);
     })
-    test ("checkedPressedKeys", ()=>{
-        let keysDown = {40:true, 83:true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)).toBe(0);
+    test("if spielfeld exists", () => {
+        const spielfeld = document.createElement("spielfeld");
+        spielfeld.style.height = "500px";
+        expect(spielfeld.style.height).toBe("500px");
     })
-    test ("checkedPressedKeys", ()=>{
-        let keysDown = {38:true, 83:true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)).toBe(0);
+    test("untererRand", () =>{
+        getterDOM.mockImplementation(() => 500);
+        expect (calculatePosition (false,1000,250)).toBe(250);
     })
-    test ("checkedPressedKeys", ()=>{
-        let keysDown = {38:true, 87:true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)).toBe(0);
-    })
-    test("checkPressedKeys", () => {
-        let keysDown = {87: true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)).toBe(0);
-    })
-    test ("checkedPressedKeys", ()=>{
-        let keysDown = {83:true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)). toBe(0);
-    })
-    test ("checkedPressedKeys", ()=>{
-        let keysDown = {40:true,};
-        let testing = true;
-        expect(checkPressedKeys(keysDown, testing)). toBe(0);
-    })
-    test ("Pressing W", ()=>{
-        let keysDown = {38:true,};
-        expect(checkPressedKeys(keysDown)). toBe(0);
-    })
-    
-    
+})
+
+describe("function: checkedPressedKeys", () => {
+    it("should pongbar move up, when w is pressed", () =>{
+        let pongbar_left = require("../pongbar.js").left;
+        let checkPressedKeys = require("../pongbar.js").checkPressedKeys;
+        let keysDown = {40:true};
+    }
+    )
 })

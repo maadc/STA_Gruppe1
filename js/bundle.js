@@ -1,22 +1,28 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 let spielfeld = document.getElementById("spielfeld");
 let calculation = require("./calculation.js");
+let getterDOM = require("./getterDOM.js");
 
 let ball = {
     object: document.getElementById("ball"),
     position: {
-        left: spielfeld.offsetWidth / 2, //in px
-        bottom: spielfeld.offsetHeight / 2, //in px
+        left: getterDOM("spielfeld.offsetWidth") / 2, //in px
+        bottom: getterDOM("spielfeld.offsetHeight") / 2, //in px
         angle: calculation.calcRandomAngle(), //in degrees.
     },
     speed: 500,
     radius: 26, //in px
 }
 
-function ballReset(angle) { // Ball teleports to center and gets a new random Angle
-    ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
-    ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
-    ball.position.angle = calculation.calcRandomAngle();
+function ballReset() { // Ball teleports to center and gets a new random Angle
+    let newBottom = getterDOM(true) / 2;
+    let newLeft = getterDOM(false) / 2;
+    let newAngle = calculation.calcRandomAngle();
+    
+    ball.object.style.bottom = newBottom;
+    ball.object.style.left = newLeft;
+   
+    saveBallValues(newLeft, newBottom, newAngle);
 }
 
 function saveBallValues(left, bottom, angle) {
@@ -24,25 +30,25 @@ function saveBallValues(left, bottom, angle) {
     ball.position.bottom = bottom;
     ball.position.angle = angle;
 }
-function moveBall(angle, frametime) {
-    let newBallPosition = {
-        left: ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime),
-        bottom: ball.position.bottom + (calculation.getDirection(angle).y * ball.speed * frametime),
-        angle: angle,
-    }
-    ball.object.style.bottom = "" + Math.round(newBallPosition.bottom);
-    ball.object.style.left = "" + Math.round(newBallPosition.left);
 
-    saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
+function moveBall(angle, frametime) {
+    let newLeft = ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime);
+    let newBottom = ball.position.bottom + (calculation.getDirection(angle).y * ball.speed * frametime);
+
+    ball.object.style.bottom = Math.round(newBottom);
+    ball.object.style.left = Math.round(newLeft);
+
+    saveBallValues(newLeft, newBottom, angle);
 }
 
 module.exports = {
     ball: ball,
+    saveBallValues: saveBallValues,
     ballReset: ballReset,
     moveBall: moveBall,
 }
 
-},{"./calculation.js":2}],2:[function(require,module,exports){
+},{"./calculation.js":2,"./getterDOM.js":4}],2:[function(require,module,exports){
 function collision(aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight) {
     if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
         (bX >= aX && bX <= aX + aWidth && aY >= bY && aY <= bY + bHeight) ||
@@ -166,6 +172,26 @@ module.exports = {
 
 
 },{}],4:[function(require,module,exports){
+module.exports = (Kommando) => {
+
+        let spielfeld = document.getElementById("spielfeld");
+        let pongbar_right = document.getElementById("pongbar_right");
+        let pongbar_left = document.getElementById("pongbar_left");
+
+        if (Kommando === "spielfeld.offsetHeight"){
+            return spielfeld.offsetHeight;
+        } else if (Kommando === "spielfeld.offsetWidth") {
+            return spielfeld.offsetWidth;
+        } else if (Kommando === "spielfeld") {
+            return spielfeld;
+        } else if (Kommando === "pongbar_right") {
+            return pongbar_right;
+        } else if (Kommando==="pongbar_left") {
+            return pongbar_left;
+        }
+
+}
+},{}],5:[function(require,module,exports){
 //import all required functions
 let timer = require("./timer.js");
 let counter = require("./counter.js");
@@ -237,11 +263,12 @@ window.onload = () => {
     timer();
     setInterval(gameLoop, 0);
 }
-},{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":5,"./timer.js":6}],5:[function(require,module,exports){
+},{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":6,"./timer.js":7}],6:[function(require,module,exports){
+let getterDOM = require("./getterDOM.js");
 var keysDown = {};
 
 let pongbar_right = {
-    object: document.getElementById("pongbar_right"),
+    object: getterDOM("pongbar_right"),
     position: {
         right: 20, //in px
         top:250, //in px
@@ -251,7 +278,7 @@ let pongbar_right = {
 }
 
 let pongbar_left = {
-    object: document.getElementById("pongbar_left"),
+    object: getterDOM("pongbar_left"),
 
     position: {
         left: 20, //in px
@@ -273,71 +300,79 @@ function checkPressedKeys() {
     let w = 87;
     let up = 38;
     let s = 83;
+    
     if (down in keysDown && w in keysDown) {
-        calculatePosition(pongbar_right, false);
-        calculatePosition(pongbar_left, true);
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
+        setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left.position.top, pongbar_left.height));
     }
 
     else if (down in keysDown && s in keysDown) {
-        calculatePosition(pongbar_right, false);
-        calculatePosition(pongbar_left, false);
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
+        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
     }
 
     else if (up in keysDown && s in keysDown) {
-        calculatePosition(pongbar_right, true);
-        calculatePosition(pongbar_left, false);
+        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
+        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
     }
 
     else if (up in keysDown && w in keysDown) {
+        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right.position.top, pongbar_right.height));
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
+
         calculatePosition(pongbar_right, true);
         calculatePosition(pongbar_left, true);
     }
 
     else if (up in keysDown) {
-        calculatePosition(pongbar_right, true);
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
     }
 
     else if (down in keysDown) {
-        calculatePosition(pongbar_right, false);
+        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right.position.top, pongbar_right.height));
+
     }
 
     else if (s in keysDown) {
-        calculatePosition(pongbar_left, false);
+        setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left.position.top, pongbar_left.height));
     }
 
     else if (w in keysDown) {
-        calculatePosition(pongbar_left, true);
-        return 0;
+        setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left.position.top, pongbar_left.height));
     }
 }
 
-function calculatePosition(pongbar, directionUp) {
+
+function calculatePosition(directionUp, position, pongbarHeight) {
     /*  CalculatePosition berechnet die neue Position der Pongbar
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
+   /* Position beinhaltet y Koordinaten*/
     const speed = 2;
-    let spielfeld = document.getElementById("spielfeld");
-    let pos = parseInt(pongbar.object.style.top);
+    let spielfeld = getterDOM("spielfeld");
+    /*let pos = parseInt(pongbar.object.style.top);*/
 
     if (directionUp) {
-        pos -= speed;
+        position -= speed;
     } else {
-        pos += speed;
+        position += speed;
     }
 
     //Oberer Rand
-    if (pos < 0) {
-        pos = 0;
+    if (position < 0) {
+        position = 0;
     }
 
     //Unterer Rand
-    else if ((parseInt(pongbar.object.style.height) + pos) > parseInt(spielfeld.offsetHeight)) {
-        pos = spielfeld.offsetHeight - pongbar.object.style.height;
+    else if ((pongbarHeight + position) > getterDOM("spielfeld.offsetHeight")) {
+        pos = getterDOM("spielfeld.offsetHeight") - pongbarHeight;
     }
+    return position;
+}
 
-    pongbar.object.style.top = pos;
-
+function setPongbarPosition (pongbar, position){
+    pongbar.object.style.top = pongbar.position.top = position;
 }
 
 module.exports = {
@@ -346,7 +381,7 @@ module.exports = {
     left: pongbar_left,
     right: pongbar_right
 }
-},{}],6:[function(require,module,exports){
+},{"./getterDOM.js":4}],7:[function(require,module,exports){
 var stopWatchRunning = false;
 var startTime;
 var currentdate;
@@ -392,4 +427,4 @@ function setStopWatch() {
 }
 
 module.exports = initTimer;
-},{}]},{},[4]);
+},{}]},{},[5]);
