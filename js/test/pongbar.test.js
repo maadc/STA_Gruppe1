@@ -105,3 +105,20 @@ describe("function: checkedPressedKeys", () => {
         expect(pongbar_left.position.top).toBe(predictedPostionLeft);
     })
 })
+
+describe('function: setPongbarPosition', () => {
+    const setPongbarPosition = require("../pongbar.js").setPongbarPosition;  
+    const pongbar_left = require("../pongbar.js").left;
+    const pongbar_right = require("../pongbar.js").right;
+
+    test("Postion to 100px", () => {
+        setPongbarPosition(pongbar_left, 100);
+        expect(setterDOM).toBeCalledWith("pongbar_left", "style_top", 100);
+        expect(pongbar_left.position.top).toBe(100);
+    })
+    test("Postion to -100px", () => {
+        setPongbarPosition(pongbar_right, -100);
+        expect(setterDOM).toBeCalledWith("pongbar_right", "style_top", -100);
+        expect(pongbar_right.position.top).toBe(-100);
+    })
+});
