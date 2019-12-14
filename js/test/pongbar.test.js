@@ -37,10 +37,71 @@ describe("function: calculatePosition", () =>{
 describe("function: checkedPressedKeys", () => {
     const checkPressedKeys = require("../pongbar.js").checkPressedKeys;
     const pongbar_left = require("../pongbar.js").left;
-    it("should pongbar move up, when w is pressed", () =>{
+    const pongbar_right = require("../pongbar.js").right;
+
+    test("W-Key", () =>{
         let keysDown = {87:true};
+        const predictedPostion = pongbar_left.position.top - pongbar_left.speed;
 
         checkPressedKeys(keysDown);
-        expect(pongbar_left.position.top).toBe(1);
+        expect(pongbar_left.position.top).toBe(predictedPostion);
+    })
+    test("S-Key", () =>{
+        let keysDown = {83:true};
+        const predictedPostion = pongbar_left.position.top + pongbar_left.speed;
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_left.position.top).toBe(predictedPostion);
+    })
+    test("Arrow-Key UP", () =>{
+        let keysDown = {38:true};
+        const predictedPostion = pongbar_right.position.top - pongbar_right.speed;
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_right.position.top).toBe(predictedPostion);
+    })
+    test("Arrow-Key DOWN", () =>{
+        let keysDown = {40:true};
+        const predictedPostion = pongbar_right.position.top + pongbar_right.speed;
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_right.position.top).toBe(predictedPostion);
+    })
+    test("Arrow-Key UP + W-Key", () =>{
+        let keysDown = {38:true, 87: true};
+        const predictedPostionRight = pongbar_right.position.top - pongbar_right.speed;
+        const predictedPostionLeft = pongbar_left.position.top - pongbar_left.speed;
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_right.position.top).toBe(predictedPostionRight);
+        expect(pongbar_left.position.top).toBe(predictedPostionLeft);
+        
+    })
+    test("Arrow-Key UP + S-Key", () =>{
+        let keysDown = {38:true, 83: true};
+        const predictedPostionRight = pongbar_right.position.top - pongbar_right.speed;
+        const predictedPostionLeft = pongbar_left.position.top + pongbar_left.speed;
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_right.position.top).toBe(predictedPostionRight);
+        expect(pongbar_left.position.top).toBe(predictedPostionLeft);
+    })
+    test("Arrow-Key DOWN + S-Key", () =>{
+        let keysDown = {40:true, 83: true};
+        const predictedPostionRight = pongbar_right.position.top + pongbar_right.speed;
+        const predictedPostionLeft = pongbar_left.position.top + pongbar_left.speed;
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_right.position.top).toBe(predictedPostionRight);
+        expect(pongbar_left.position.top).toBe(predictedPostionLeft);
+    })
+    test("Arrow-Key DOWN + W-Key", () =>{
+        let keysDown = {40:true, 87: true};
+        const predictedPostionRight = pongbar_right.position.top + pongbar_right.speed;
+        const predictedPostionLeft = pongbar_left.position.top - pongbar_left.speed;
+
+        checkPressedKeys(keysDown);
+        expect(pongbar_right.position.top).toBe(predictedPostionRight);
+        expect(pongbar_left.position.top).toBe(predictedPostionLeft);
     })
 })

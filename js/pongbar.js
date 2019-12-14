@@ -15,7 +15,6 @@ let pongbar_right = {
 
 let pongbar_left = {
     object: getterDOM("pongbar_left"),
-
     position: {
         left: 20, //in px
         top: 250, //in px
@@ -52,7 +51,7 @@ function checkPressedKeys(keysDown) {
         setPongbarPosition(pongbar_left, calculatePosition(false, pongbar_left));
 
     } else if (up in keysDown && w in keysDown) {
-        setPongbarPosition(pongbar_right, calculatePosition(false, pongbar_right));
+        setPongbarPosition(pongbar_right, calculatePosition(true, pongbar_right));
         setPongbarPosition(pongbar_left, calculatePosition(true, pongbar_left));
 
     } else if (up in keysDown) {
