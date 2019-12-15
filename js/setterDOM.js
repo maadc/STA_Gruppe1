@@ -1,7 +1,6 @@
 
 module.exports = (object,parameter, value) => {
     let ball = document.getElementById("ball");
-    let spielfeld = document.getElementById("spielfeld");
     let pongbar_right = document.getElementById("pongbar_right");
     let pongbar_left = document.getElementById("pongbar_left");
 

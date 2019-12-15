@@ -26,14 +26,16 @@ function updateCounter(dif) {
   if (sec < 10) {
     sec = "0" + sec;
   }
-  return { min, sec };
+  return {
+    min, sec
+  };
 }
 
 //setzt min und sec zusammen
 //wiederholt setTime jede Sekunde
 function setTime() {
-var dif = new Date().getTime() - startTime;
- let timeTracker = getterDOM("tracker");
+  var dif = new Date().getTime() - startTime;
+  let timeTracker = getterDOM("tracker");
   timeTracker.innerHTML = updateCounter(dif).min + ":" + updateCounter(dif).sec;
   setTimeout(setTime, 1000);
 }
