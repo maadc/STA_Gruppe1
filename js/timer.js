@@ -1,45 +1,34 @@
-var stopWatchRunning = false;
-var startTime;
-var currentdate;
-
 //Timer-Funktionen
-function initTimer() {
-    registerClock();
-    setTime();
-};
+let start;
+var timerRunning = false;
 
-function registerClock() {
-    setInterval(updateClock, 1000);
+function startCounter() {
+  if (timerRunning == false) {
+    start = new Date().getTime();
+    setTime();
+    timerRunning = true;
+  }
 }
 
-function updateClock() {
-    setTime();
-    setStopWatch();
+function updateCounter() {
+  var dif = new Date().getTime() - start;
+  var sec = Math.floor(dif / 1000);
+  var min = Math.floor(sec / 60);
+  sec %= 60;
+  if (min < 10) {
+    min = "0" + min;
+  }
+  if (sec < 10) {
+    sec = "0" + sec;
+  }
+  return { min, sec };
 }
 
 function setTime() {
-    currentdate = new Date();
-    var datetime = +currentdate.getMinutes() + ":" +
-        currentdate.getSeconds();
+  document.getElementById("tracker").innerHTML = updateCounter().min + ":" + updateCounter().sec;
+  setTimeout(setTime, 1000);
 }
 
-$("#spielfeld").click(function () {
-    if (stopWatchRunning == false) {
-        startTime = new Date();
-        stopWatchRunning = true;
-    }
-});
-
-function setStopWatch() {
-    if (stopWatchRunning == false) {
-        return;
-    }
-    var duration = new Date(currentdate - startTime);
-    var showDuration = (duration.getMinutes() < 10 ? '0' : '') +
-        duration.getMinutes() + ":" +
-        (duration.getSeconds() < 10 ? '0' : '') +
-        duration.getSeconds();
-    $("#tracker").text(showDuration);
+module.exports = {
+  startCounter: startCounter,
 }
-
-module.exports = initTimer;

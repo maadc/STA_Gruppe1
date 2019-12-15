@@ -2,7 +2,7 @@ const getDirection = require('../calculation.js').getDirection;
 const round = require('../calculation.js').round;
 const getAngle = require('../calculation.js').getAngle;
 const collision = require('../calculation.js').collision;
-const checkPressedKeys = require('../pongbar.js').checkPressedKeys;
+const randomAngle = require('../calculation.js').calcRandomAngle;
 
 describe("function: getDirection", () => {
     [{
@@ -112,7 +112,7 @@ describe("function: getAngle", () => {
         input,
         output
     }) => {
-        test(`Angel of ${input.x} & ${input.y}`, () => {
+        test(`Angle of ${input.x} & ${input.y}`, () => {
             expect(getAngle(input.x, input.y)).toEqual(output)
         })
     })
@@ -142,3 +142,12 @@ describe("function: collision", () => {
         expect(collision(a.x, a.y, a.width, a.height, b.x, b.y, b.width, b.height)).toBe(true);
     })
 })
+
+describe("function: calcRandomAngle", () => {
+    test("Number should be 30 or higher", () => {
+        expect(randomAngle()).toBeGreaterThanOrEqual(30);
+    })
+    test("Number should be 330 or lower", () => {
+        expect(randomAngle()).toBeLessThanOrEqual(330);
+    })
+}) 

@@ -1,7 +1,5 @@
-//Simuliere die Funktion, die aus getterDOM.js kommt
 jest.mock("../getterDOM.js");
 jest.mock("../setterDOM.js");
-//Speichere die Funktion, die aus getterDOM.js kommt
 let getterDOM = require("../getterDOM.js");
 let setterDOM = require("../setterDOM.js");
 
@@ -42,3 +40,28 @@ describe('function: moveBall', () => {
         expect(ball.position).toEqual({'left': 153, 'bottom': 150, 'angle': 90});
     })
 });
+
+describe("Function: ballSlowdown", () => {
+    test ("It should divide Ball speed by 1.5 if higher than 700", () => {
+        let ball = require("../ball.js").ball;
+        let ballSlowdown = require("../ball.js").ballSlowdown;
+        ball.speed = 1500;
+        expect(ballSlowdown()).toBe(1000);
+    })
+    
+    test ("It should do nothing with ball.speed if lower than 700", () => {
+        let ball = require("../ball.js").ball;
+        let ballSlowdown = require("../ball.js").ballSlowdown;
+        ball.speed = 100;
+        expect(ballSlowdown()).toBe(100);
+    })
+})
+
+describe("Function: speedIncrease", () => {
+    test ("speed should increase by 1", () => {
+        let speedIncrease = require("../ball.js").speedIncrease
+        let ball = require("../ball.js").ball;
+        ball.speed = 100;
+        expect(speedIncrease()).toBe(101);
+    })
+})
