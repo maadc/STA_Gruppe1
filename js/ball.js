@@ -1,42 +1,45 @@
-let spielfeld = document.getElementById("spielfeld");
 let calculation = require("./calculation.js");
+let getterDOM = require("./getterDOM.js");
+let setterDOM = require("./setterDOM.js");
 
 let ball = {
     object: document.getElementById("ball"),
     position: {
-        left: spielfeld.offsetWidth / 2, //in px
-        bottom: spielfeld.offsetHeight / 2, //in px
+        left: getterDOM("spielfeld.offsetWidth") / 2, //in px
+        bottom: getterDOM("spielfeld.offsetHeight") / 2, //in px
         angle: calculation.calcRandomAngle(), //in degrees.
     },
     speed: 500,
     radius: 26, //in px
 }
 
-function ballReset(angle) { // Ball teleports to center and gets a new random Angle
-    ball.position.bottom = ball.object.style.bottom = spielfeld.offsetHeight / 2;
-    ball.position.left = ball.object.style.left = spielfeld.offsetWidth / 2;
-    ball.position.angle = calculation.calcRandomAngle();
+function ballReset() { // Ball teleports to center and gets a new random Angle
+    let newBottom = getterDOM("spielfeld.offsetHeight") / 2;
+    let newLeft = getterDOM("spielfeld.offsetWidth") / 2;
+    let newAngle = calculation.calcRandomAngle();
+   
+    saveBallValues(newLeft, newBottom, newAngle);
 }
 
 function saveBallValues(left, bottom, angle) {
+    setterDOM("ball", "style_left", left)
+    setterDOM("ball", "style_bottom", bottom)
+    
     ball.position.left = left;
     ball.position.bottom = bottom;
     ball.position.angle = angle;
 }
-function moveBall(angle, frametime) {
-    let newBallPosition = {
-        left: ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime),
-        bottom: ball.position.bottom + (calculation.getDirection(angle).y * ball.speed * frametime),
-        angle: angle,
-    }
-    ball.object.style.bottom = "" + Math.round(newBallPosition.bottom);
-    ball.object.style.left = "" + Math.round(newBallPosition.left);
 
-    saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
+function moveBall(angle, frametime) {
+    let newLeft = ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime);
+    let newBottom = ball.position.bottom + (calculation.getDirection(angle).y * ball.speed * frametime);
+
+    saveBallValues(Math.round(newLeft), Math.round(newBottom), angle);
 }
 
 module.exports = {
     ball: ball,
+    saveBallValues: saveBallValues,
     ballReset: ballReset,
     moveBall: moveBall,
 }

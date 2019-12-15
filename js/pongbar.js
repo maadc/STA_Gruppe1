@@ -1,7 +1,9 @@
+let getterDOM = require("./getterDOM.js");
+
 var keysDown = {};
 
 let pongbar_right = {
-    object: document.getElementById("pongbar_right"),
+    object: getterDOM("pongbar_right"),
     position: {
         right: 20, //in px
         top: 250, //in px
