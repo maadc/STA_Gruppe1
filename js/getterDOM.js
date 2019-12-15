@@ -5,7 +5,7 @@ module.exports = (Kommando) => {
     let pongbar_left = document.getElementById("pongbar_left");
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
-
+    
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
     } else if (Kommando === "spielfeld.offsetWidth") {
@@ -20,6 +20,9 @@ module.exports = (Kommando) => {
         return ball;
     } else if (Kommando==="speed") {
         return speed;
+    } else if (Kommando === "pongbar_right.style.top") {
+        return pongbar_right.style.top;
+    } else if (Kommando==="pongbar_left.style.top") {
+        return pongbar_left.style.top;
     }
-
 }
