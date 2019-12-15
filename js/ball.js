@@ -1,6 +1,6 @@
-let spielfeld = document.getElementById("spielfeld");
 let calculation = require("./calculation.js");
 let getterDOM = require("./getterDOM.js");
+let setterDOM = require("./setterDOM.js");
 
 let ball = {
     object: document.getElementById("ball"),
@@ -14,17 +14,17 @@ let ball = {
 }
 
 function ballReset() { // Ball teleports to center and gets a new random Angle
-    let newBottom = getterDOM(true) / 2;
-    let newLeft = getterDOM(false) / 2;
+    let newBottom = getterDOM("spielfeld.offsetHeight") / 2;
+    let newLeft = getterDOM("spielfeld.offsetWidth") / 2;
     let newAngle = calculation.calcRandomAngle();
-    
-    ball.object.style.bottom = newBottom;
-    ball.object.style.left = newLeft;
    
     saveBallValues(newLeft, newBottom, newAngle);
 }
 
 function saveBallValues(left, bottom, angle) {
+    setterDOM("ball", "style_left", left)
+    setterDOM("ball", "style_bottom", bottom)
+    
     ball.position.left = left;
     ball.position.bottom = bottom;
     ball.position.angle = angle;
@@ -34,10 +34,7 @@ function moveBall(angle, frametime) {
     let newLeft = ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime);
     let newBottom = ball.position.bottom + (calculation.getDirection(angle).y * ball.speed * frametime);
 
-    ball.object.style.bottom = Math.round(newBottom);
-    ball.object.style.left = Math.round(newLeft);
-
-    saveBallValues(newLeft, newBottom, angle);
+    saveBallValues(Math.round(newLeft), Math.round(newBottom), angle);
 }
 
 module.exports = {
