@@ -60,7 +60,8 @@ window.onload = () => {
         // das Spiel nicht schneller laufen soll, als der Spieler es spielen kann. 
         // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
 
-        pongbars.checkPressedKeys();
+        pongbars.checkPressedKeys(pongbars.pressedKeys);
+
         ballLogic(frametime);
 
         frametimeBefore = now;

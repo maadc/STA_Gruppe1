@@ -2,6 +2,7 @@ const getDirection = require('../calculation.js').getDirection;
 const round = require('../calculation.js').round;
 const getAngle = require('../calculation.js').getAngle;
 const collision = require('../calculation.js').collision;
+const checkPressedKeys = require('../pongbar.js').checkPressedKeys;
 
 describe("function: getDirection", () => {
     [{
