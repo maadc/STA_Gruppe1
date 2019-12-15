@@ -1,17 +1,22 @@
 //Timer-Funktionen
-let start;
+let startTime;
 var timerRunning = false;
+let getterDOM = require("./getterDOM.js");
 
+//ruft die Funktion setTime() auf wenn timerRunning false ist
+//ändert Variable start, setzt timerRunning auf true und returned timerRunning
 function startCounter() {
   if (timerRunning == false) {
-    start = new Date().getTime();
+    startTime = new Date().getTime();
     setTime();
     timerRunning = true;
+    return timerRunning;
   }
 }
 
-function updateCounter() {
-  var dif = new Date().getTime() - start;
+//berechnet die Variablen min und sec
+//setzt jeweils eine Null davor, solange der Wert <10 ist
+function updateCounter(dif) {
   var sec = Math.floor(dif / 1000);
   var min = Math.floor(sec / 60);
   sec %= 60;
@@ -24,11 +29,17 @@ function updateCounter() {
   return { min, sec };
 }
 
+//setzt min und sec zusammen
+//wiederholt setTime jede Sekunde
 function setTime() {
-  document.getElementById("tracker").innerHTML = updateCounter().min + ":" + updateCounter().sec;
+var dif = new Date().getTime() - startTime;
+ let timeTracker = getterDOM("tracker");
+  timeTracker.innerHTML = updateCounter(dif).min + ":" + updateCounter(dif).sec;
   setTimeout(setTime, 1000);
 }
 
 module.exports = {
   startCounter: startCounter,
+  timerRunning: timerRunning,
+  updateCounter: updateCounter,
 }
