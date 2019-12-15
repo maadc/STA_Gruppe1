@@ -6,7 +6,7 @@ module.exports = (Kommando) => {
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
     let tracker = document.getElementById("tracker");
-
+  
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
     } else if (Kommando === "spielfeld.offsetWidth") {
@@ -23,6 +23,9 @@ module.exports = (Kommando) => {
         return speed;
     } else if (Kommando==="tracker") {
         return tracker;
+    } else if (Kommando === "pongbar_right.style.top") {
+        return pongbar_right.style.top;
+    } else if (Kommando==="pongbar_left.style.top") {
+        return pongbar_left.style.top;
     }
-
 }

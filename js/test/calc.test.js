@@ -151,6 +151,3 @@ describe("function: calcRandomAngle", () => {
         expect(randomAngle()).toBeLessThanOrEqual(330);
     })
 }) 
-
-
-

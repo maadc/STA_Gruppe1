@@ -1,5 +1,6 @@
 let calculation = require("./calculation.js");
 let getterDOM = require("./getterDOM.js");
+let setterDOM = require("./setterDOM.js");
 
 let ball = {
     object: getterDOM("ball"),
@@ -16,10 +17,6 @@ function ballReset() { // Ball teleports to center and gets a new random Angle
     let newBottom = getterDOM("spielfeld.offsetHeight") / 2;
     let newLeft = getterDOM("spielfeld.offsetWidth") / 2;
     let newAngle = calculation.calcRandomAngle();
-    
-    ball.object.style.bottom = newBottom;
-    ball.object.style.left = newLeft;
-   
     saveBallValues(newLeft, newBottom, newAngle);
     ballSlowdown();
 }
@@ -32,21 +29,19 @@ function ballSlowdown() {
 }
 
 function saveBallValues(left, bottom, angle) {
+    setterDOM("ball", "style_left", left)
+    setterDOM("ball", "style_bottom", bottom)
+    
     ball.position.left = left;
     ball.position.bottom = bottom;
     ball.position.angle = angle;
 }
 
 function moveBall(angle, frametime) {
-    let newBallPosition = {
-        left: ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime),
-        bottom: ball.position.bottom + (calculation.getDirection(angle).y * ball.speed * frametime),
-        angle: angle,
-    }
-    ball.object.style.bottom = "" + Math.round(newBallPosition.bottom);
-    ball.object.style.left = "" + Math.round(newBallPosition.left);
+    let newLeft = ball.position.left + (calculation.getDirection(angle).x * ball.speed * frametime);
+    let newBottom = ball.position.bottom + (calculation.getDirection(angle).y * ball.speed * frametime);
 
-    saveBallValues(newBallPosition.left, newBallPosition.bottom, newBallPosition.angle);
+    saveBallValues(Math.round(newLeft), Math.round(newBottom), angle);
 }
 
 function speedIncrease() { // Increases the speed of the ball by 1
@@ -57,6 +52,7 @@ function speedIncrease() { // Increases the speed of the ball by 1
 
 module.exports = {
     ball: ball,
+    saveBallValues: saveBallValues,
     ballReset: ballReset,
     moveBall: moveBall,
     speedIncrease: speedIncrease,
