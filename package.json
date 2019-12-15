@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "jest",
-    "watch": "npx browserify js/main.js -o js/bundle.js"
+    "bundle": "npx browserify js/main.js -o dist/bundle.js"
   },
   "repository": {
     "type": "git",
