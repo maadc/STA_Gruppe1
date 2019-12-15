@@ -1,7 +1,5 @@
-//Simuliere die Funktion, die aus getterDOM.js kommt
 jest.mock("../getterDOM.js");
 jest.mock("../setterDOM.js");
-//Speichere die Funktion, die aus getterDOM.js kommt
 let getterDOM = require("../getterDOM.js");
 let setterDOM = require("../setterDOM.js");
 

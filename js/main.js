@@ -6,13 +6,7 @@ let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
 let ballMoving = false;
 
-function setBallMovingTrue() {
-    ballMoving = true;
-    return ballMoving;
-}
-
 window.onload = () => {
-
     let frametimeBefore = Date.now();
     let frametime; // in ms
     let spielfeld = document.getElementById("spielfeld");
@@ -36,6 +30,11 @@ window.onload = () => {
         if (ballMoving === true) {
             ballLogic(frametime);
         }
+    }
+
+    function setBallMovingTrue() {
+        ballMoving = true;
+        return ballMoving;
     }
 
     function ballLogic(frametime) {
@@ -94,8 +93,6 @@ window.onload = () => {
         pongbars.checkPressedKeys(pongbars.pressedKeys);
 
         frametimeBefore = now;
-
     }
-
     setInterval(gameLoop, 0);
 }
