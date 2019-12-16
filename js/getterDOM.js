@@ -6,6 +6,8 @@ module.exports = (Kommando) => {
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
     let tracker = document.getElementById("tracker");
+    let punktestandLinks = document.getElementById ("punktestandLinks");
+    let punktestandRechts = document.getElementById ("punktestandRechts");
   
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
@@ -36,5 +38,9 @@ module.exports = (Kommando) => {
 
     } else if (Kommando==="tracker") {
         return tracker;
+    } else if (Kommando==="punktestandLinks") {
+        return punktestandLinks;
+    } else if (Kommando ==="punktestandRechts") {
+        return punktestandRechts;
     }
 }
