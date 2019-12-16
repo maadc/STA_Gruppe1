@@ -165,25 +165,44 @@ module.exports = {
 }
 
 },{}],3:[function(require,module,exports){
+let getterDOM = require("./getterDOM.js");
+/*
 const countPointRight = () => {
-    const score_right = document.getElementById("punktestandLinks");
-    let scoreRight = parseInt(score_right.textContent);
-    score_right.textContent = scoreRight + 1;
+    let score_right = getterDOM("punktestandLinks");
+    let scoreRight = parseInt(score_right);
+    score_right = scoreRight + 1;
+    return score_right;
 }
 
 const countPointLeft = () => {
-    const score_left = document.getElementById("punktestandRechts");
-    let scoreLeft = parseInt(score_left.textContent);
-    score_left.textContent = scoreLeft + 1;
-}
+    let score_left = getterDOM("punktestandRechts");
+    let scoreLeft = parseInt(score_left);
+    score_left = scoreLeft + 1;
+    return score_left;
+}*/
 
 module.exports = {
     countPointRight: countPointRight,
     countPointLeft: countPointLeft,
 }
 
+function countPointRight() {
+    const score_right = getterDOM("punktestandLinks");
+    let scoreRight = parseInt(score_right.innerHTML);
+    score_right.innerHTML = scoreRight + 1;
+    let scoreRightNumber = parseInt(score_right + 1);
+    return scoreRightNumber;
+}
 
-},{}],4:[function(require,module,exports){
+function countPointLeft() {
+    const score_left = getterDOM("punktestandRechts");
+    let scoreLeft = parseInt(score_left.innerHTML);
+    score_left.innerHTML = scoreLeft + 1;
+    let scoreLeftNumber = parseInt(score_left + 1);
+    return scoreLeftNumber;
+    
+}
+},{"./getterDOM.js":4}],4:[function(require,module,exports){
 module.exports = (Kommando) => {
 
     let spielfeld = document.getElementById("spielfeld");
@@ -192,6 +211,8 @@ module.exports = (Kommando) => {
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
     let tracker = document.getElementById("tracker");
+    let punktestandLinks = document.getElementById ("punktestandLinks");
+    let punktestandRechts = document.getElementById ("punktestandRechts");
   
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
@@ -222,6 +243,10 @@ module.exports = (Kommando) => {
 
     } else if (Kommando==="tracker") {
         return tracker;
+    } else if (Kommando==="punktestandLinks") {
+        return punktestandLinks;
+    } else if (Kommando ==="punktestandRechts") {
+        return punktestandRechts;
     }
 }
 },{}],5:[function(require,module,exports){
