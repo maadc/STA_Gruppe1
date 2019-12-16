@@ -165,25 +165,44 @@ module.exports = {
 }
 
 },{}],3:[function(require,module,exports){
+let getterDOM = require("./getterDOM.js");
+/*
 const countPointRight = () => {
-    const score_right = document.getElementById("punktestandLinks");
-    let scoreRight = parseInt(score_right.textContent);
-    score_right.textContent = scoreRight + 1;
+    let score_right = getterDOM("punktestandLinks");
+    let scoreRight = parseInt(score_right);
+    score_right = scoreRight + 1;
+    return score_right;
 }
 
 const countPointLeft = () => {
-    const score_left = document.getElementById("punktestandRechts");
-    let scoreLeft = parseInt(score_left.textContent);
-    score_left.textContent = scoreLeft + 1;
-}
+    let score_left = getterDOM("punktestandRechts");
+    let scoreLeft = parseInt(score_left);
+    score_left = scoreLeft + 1;
+    return score_left;
+}*/
 
 module.exports = {
     countPointRight: countPointRight,
     countPointLeft: countPointLeft,
 }
 
+function countPointRight() {
+    const score_right = getterDOM("punktestandLinks");
+    let scoreRight = parseInt(score_right.innerHTML);
+    score_right.innerHTML = scoreRight + 1;
+    let scoreRightNumber = parseInt(score_right + 1);
+    return scoreRightNumber;
+}
 
-},{}],4:[function(require,module,exports){
+function countPointLeft() {
+    const score_left = getterDOM("punktestandRechts");
+    let scoreLeft = parseInt(score_left.innerHTML);
+    score_left.innerHTML = scoreLeft + 1;
+    let scoreLeftNumber = parseInt(score_left + 1);
+    return scoreLeftNumber;
+    
+}
+},{"./getterDOM.js":4}],4:[function(require,module,exports){
 module.exports = (Kommando) => {
 
     let spielfeld = document.getElementById("spielfeld");
@@ -192,27 +211,42 @@ module.exports = (Kommando) => {
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
     let tracker = document.getElementById("tracker");
+    let punktestandLinks = document.getElementById ("punktestandLinks");
+    let punktestandRechts = document.getElementById ("punktestandRechts");
   
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
+
     } else if (Kommando === "spielfeld.offsetWidth") {
         return spielfeld.offsetWidth;
+
     } else if (Kommando === "spielfeld") {
         return spielfeld;
+
     } else if (Kommando === "pongbar_right") {
         return pongbar_right;
+
     } else if (Kommando==="pongbar_left") {
         return pongbar_left;
-    } else if  (Kommando==="ball") {
-        return ball;
-    } else if (Kommando==="speed") {
-        return speed;
-    } else if (Kommando==="tracker") {
-        return tracker;
+
     } else if (Kommando === "pongbar_right.style.top") {
         return pongbar_right.style.top;
+
     } else if (Kommando==="pongbar_left.style.top") {
         return pongbar_left.style.top;
+
+    } else if  (Kommando==="ball") {
+        return ball;
+
+    } else if (Kommando==="speed") {
+        return speed;
+
+    } else if (Kommando==="tracker") {
+        return tracker;
+    } else if (Kommando==="punktestandLinks") {
+        return punktestandLinks;
+    } else if (Kommando ==="punktestandRechts") {
+        return punktestandRechts;
     }
 }
 },{}],5:[function(require,module,exports){
@@ -224,13 +258,7 @@ let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
 let ballMoving = false;
 
-function setBallMovingTrue() {
-    ballMoving = true;
-    return ballMoving;
-}
-
 window.onload = () => {
-
     let frametimeBefore = Date.now();
     let frametime; // in ms
     let spielfeld = document.getElementById("spielfeld");
@@ -254,6 +282,11 @@ window.onload = () => {
         if (ballMoving === true) {
             ballLogic(frametime);
         }
+    }
+
+    function setBallMovingTrue() {
+        ballMoving = true;
+        return ballMoving;
     }
 
     function ballLogic(frametime) {
@@ -312,9 +345,7 @@ window.onload = () => {
         pongbars.checkPressedKeys(pongbars.pressedKeys);
 
         frametimeBefore = now;
-
     }
-
     setInterval(gameLoop, 0);
 }
 },{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":6,"./timer.js":8}],6:[function(require,module,exports){
@@ -440,7 +471,6 @@ module.exports = {
 
 module.exports = (object,parameter, value) => {
     let ball = document.getElementById("ball");
-    let spielfeld = document.getElementById("spielfeld");
     let pongbar_right = document.getElementById("pongbar_right");
     let pongbar_left = document.getElementById("pongbar_left");
 
@@ -495,14 +525,16 @@ function updateCounter(dif) {
   if (sec < 10) {
     sec = "0" + sec;
   }
-  return { min, sec };
+  return {
+    min, sec
+  };
 }
 
 //setzt min und sec zusammen
 //wiederholt setTime jede Sekunde
 function setTime() {
-var dif = new Date().getTime() - startTime;
- let timeTracker = getterDOM("tracker");
+  var dif = new Date().getTime() - startTime;
+  let timeTracker = getterDOM("tracker");
   timeTracker.innerHTML = updateCounter(dif).min + ":" + updateCounter(dif).sec;
   setTimeout(setTime, 1000);
 }
