@@ -20,14 +20,24 @@ function updateCounter(dif) {
   var sec = Math.floor(dif / 1000);
   var min = Math.floor(sec / 60);
   sec %= 60;
-  if (min < 10) {
-    min = "0" + min;
-  }
-  if (sec < 10) {
-    sec = "0" + sec;
-  }
+ 
   return {
     min, sec
+  };
+}
+
+function translateTime(dif) {
+  var minString;
+  var secString;
+  if (updateCounter(dif).min < 10) {
+    minString = "0" + String(updateCounter(dif).min);
+  }
+  if (updateCounter(dif).sec < 10) {
+    secString = "0" + String(updateCounter(dif).sec);
+  }
+
+  return {
+    minString, secString
   };
 }
 
@@ -36,7 +46,8 @@ function updateCounter(dif) {
 function setTime() {
   var dif = new Date().getTime() - startTime;
   let timeTracker = getterDOM("tracker");
-  timeTracker.innerHTML = updateCounter(dif).min + ":" + updateCounter(dif).sec;
+  
+  timeTracker.innerHTML = translateTime(dif).minString + ":" + translateTime(dif).secString;
   setTimeout(setTime, 1000);
 }
 
@@ -44,4 +55,5 @@ module.exports = {
   startCounter: startCounter,
   timerRunning: timerRunning,
   updateCounter: updateCounter,
+  translateTime: translateTime,
 }

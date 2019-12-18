@@ -166,20 +166,6 @@ module.exports = {
 
 },{}],3:[function(require,module,exports){
 let getterDOM = require("./getterDOM.js");
-/*
-const countPointRight = () => {
-    let score_right = getterDOM("punktestandLinks");
-    let scoreRight = parseInt(score_right);
-    score_right = scoreRight + 1;
-    return score_right;
-}
-
-const countPointLeft = () => {
-    let score_left = getterDOM("punktestandRechts");
-    let scoreLeft = parseInt(score_left);
-    score_left = scoreLeft + 1;
-    return score_left;
-}*/
 
 module.exports = {
     countPointRight: countPointRight,
@@ -519,12 +505,7 @@ function updateCounter(dif) {
   var sec = Math.floor(dif / 1000);
   var min = Math.floor(sec / 60);
   sec %= 60;
-  if (min < 10) {
-    min = "0" + min;
-  }
-  if (sec < 10) {
-    sec = "0" + sec;
-  }
+ 
   return {
     min, sec
   };
@@ -535,7 +516,16 @@ function updateCounter(dif) {
 function setTime() {
   var dif = new Date().getTime() - startTime;
   let timeTracker = getterDOM("tracker");
-  timeTracker.innerHTML = updateCounter(dif).min + ":" + updateCounter(dif).sec;
+  var minString;
+  var secString;
+  if (updateCounter(dif).min < 10) {
+    minString = "0" + String(updateCounter(dif).min);
+  }
+  if (updateCounter(dif).sec < 10) {
+    secString = "0" + String(updateCounter(dif).sec);
+  }
+
+  timeTracker.innerHTML = minString + ":" + secString;
   setTimeout(setTime, 1000);
 }
 

@@ -2,6 +2,9 @@ jest.mock("../getterDOM.js");
 let getterDOM = require("../getterDOM.js");
 let startCounter = require("../timer.js").startCounter;
 let updateCounter = require("../timer.js").updateCounter;
+let translateTime = require("../timer.js").translateTime;
+let setTime = require("../timer.js").setTime;
+//let dif = require("../timer.js").;
 
 test("Function: timerRunning", () => {
     getterDOM.mockImplementation( ()=> document.createElement("tracker") )
@@ -10,20 +13,34 @@ test("Function: timerRunning", () => {
 
 describe('function: updateCounter', () => {
     test("sec should be +1", () => {
-        expect(updateCounter(1000)).toEqual({"min": "00", "sec": "01"});
+        expect(updateCounter(1000)).toEqual({"min": 0, "sec": 1});
     })
 
     test("min should be +1", () => {
-        expect(updateCounter(60000)).toEqual({"min": "01", "sec": "00"});
+        expect(updateCounter(60000)).toEqual({"min": 1, "sec": 0});
     })
 
     test("min should be +1 and sec should be +30", () => {
-        expect(updateCounter(90000)).toEqual({"min": "01", "sec": 30});
+        expect(updateCounter(90000)).toEqual({"min": 1, "sec": 30});
     })
 });
 
-/* test("Function: setTime", () => {
+describe('function: translateTime', () => {
+    test("sec should be +1", () => {
+        expect(translateTime(1000)).toEqual({"minString": "00", "secString": "01"});
+    })
+
+    test("min should be +1", () => {
+        expect(updateCounter(60000)).toEqual({"min": 1, "sec": 0});
+    })
+
+    test("min should be +1 and sec should be +30", () => {
+        expect(updateCounter(90000)).toEqual({"min": 1, "sec": 30});
+    })
+});
+
+   /* test("Function: setTime", () => {
     getterDOM.mockImplementation( ()=> document.createElement("tracker") )
-    expect(tracker).toEqual({"Min:"});
-})
-*/
+    expect(setTime).toEqual({"Min:"});
+})*/
+
