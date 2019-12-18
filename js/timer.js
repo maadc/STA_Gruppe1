@@ -8,7 +8,7 @@ let getterDOM = require("./getterDOM.js");
 function startCounter() {
   if (timerRunning == false) {
     startTime = new Date().getTime();
-    setTime();
+    timeLoop();
     timerRunning = true;
     return timerRunning;
   }
@@ -43,11 +43,16 @@ function translateTime(dif) {
 
 //setzt min und sec zusammen
 //wiederholt setTime jede Sekunde
-function setTime() {
-  var dif = new Date().getTime() - startTime;
+function setTime(dif) {
   let timeTracker = getterDOM("tracker");
   timeTracker.innerHTML = translateTime(dif).minString + ":" + translateTime(dif).secString;
-  setTimeout(setTime, 1000);
+  return timeTracker.innerHTML;
+}
+
+function timeLoop(){
+  var dif = new Date().getTime() - startTime;
+  setTime(dif);
+  setTimeout(timeLoop, 1000);
 }
 
 module.exports = {

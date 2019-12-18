@@ -39,8 +39,7 @@ describe('function: translateTime', () => {
 });
 
    test("function: setTime", () => {
-    getterDOM.mockImplementation( ()=> document.createElement("tracker") )
-    setTime();
-    expect(document.getElementById("tracker").innerHTML).toBe("00:00") 
+    let dif = 1000
+    expect(setTime(dif)).toBe("00:02") 
 })
 
