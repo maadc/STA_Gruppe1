@@ -166,20 +166,6 @@ module.exports = {
 
 },{}],3:[function(require,module,exports){
 let getterDOM = require("./getterDOM.js");
-/*
-const countPointRight = () => {
-    let score_right = getterDOM("punktestandLinks");
-    let scoreRight = parseInt(score_right);
-    score_right = scoreRight + 1;
-    return score_right;
-}
-
-const countPointLeft = () => {
-    let score_left = getterDOM("punktestandRechts");
-    let scoreLeft = parseInt(score_left);
-    score_left = scoreLeft + 1;
-    return score_left;
-}*/
 
 module.exports = {
     countPointRight: countPointRight,
@@ -502,46 +488,72 @@ let startTime;
 var timerRunning = false;
 let getterDOM = require("./getterDOM.js");
 
-//ruft die Funktion setTime() auf wenn timerRunning false ist
+//ruft die Funktion timeLoop() auf wenn timerRunning false ist
 //ändert Variable start, setzt timerRunning auf true und returned timerRunning
 function startCounter() {
   if (timerRunning == false) {
     startTime = new Date().getTime();
-    setTime();
+    timeLoop();
     timerRunning = true;
     return timerRunning;
   }
 }
 
 //berechnet die Variablen min und sec
-//setzt jeweils eine Null davor, solange der Wert <10 ist
+//returned min und sec
 function updateCounter(dif) {
   var sec = Math.floor(dif / 1000);
   var min = Math.floor(sec / 60);
   sec %= 60;
-  if (min < 10) {
-    min = "0" + min;
-  }
-  if (sec < 10) {
-    sec = "0" + sec;
-  }
+ 
   return {
     min, sec
   };
 }
 
-//setzt min und sec zusammen
-//wiederholt setTime jede Sekunde
-function setTime() {
-  var dif = new Date().getTime() - startTime;
+//wandelt min und sec in String-Werte um
+//setzt jeweils eine Null davor, solange der Wert <10 ist
+//returned minString und secString
+function translateTime(dif) {
+  var minString;
+  var secString;
+  if (updateCounter(dif).min < 10) {
+    minString = "0" + String(updateCounter(dif).min);
+  } else {
+    minString = String(updateCounter(dif).min);
+  }
+
+  if (updateCounter(dif).sec < 10) {
+    secString = "0" + String(updateCounter(dif).sec);
+  } else {
+    secString = String(updateCounter(dif).sec);
+  }
+
+  return {
+    minString, secString
+  };
+}
+
+//setzt minString und secString zusammen
+function setTime(dif) {
   let timeTracker = getterDOM("tracker");
-  timeTracker.innerHTML = updateCounter(dif).min + ":" + updateCounter(dif).sec;
-  setTimeout(setTime, 1000);
+  timeTracker.innerHTML = translateTime(dif).minString + ":" + translateTime(dif).secString;
+  return timeTracker.innerHTML;
+}
+
+//aktualisiert Variable dif
+//wiederholt setTime jede Sekunde
+function timeLoop(){
+  var dif = new Date().getTime() - startTime;
+  setTime(dif);
+  setTimeout(timeLoop, 1000);
 }
 
 module.exports = {
   startCounter: startCounter,
   timerRunning: timerRunning,
   updateCounter: updateCounter,
+  translateTime: translateTime,
+  setTime: setTime,
 }
 },{"./getterDOM.js":4}]},{},[5]);
