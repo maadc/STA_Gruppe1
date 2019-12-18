@@ -3,7 +3,7 @@ let startTime;
 var timerRunning = false;
 let getterDOM = require("./getterDOM.js");
 
-//ruft die Funktion setTime() auf wenn timerRunning false ist
+//ruft die Funktion timeLoop() auf wenn timerRunning false ist
 //ändert Variable start, setzt timerRunning auf true und returned timerRunning
 function startCounter() {
   if (timerRunning == false) {
@@ -15,7 +15,7 @@ function startCounter() {
 }
 
 //berechnet die Variablen min und sec
-//setzt jeweils eine Null davor, solange der Wert <10 ist
+//returned min und sec
 function updateCounter(dif) {
   var sec = Math.floor(dif / 1000);
   var min = Math.floor(sec / 60);
@@ -26,14 +26,22 @@ function updateCounter(dif) {
   };
 }
 
+//wandelt min und sec in String-Werte um
+//setzt jeweils eine Null davor, solange der Wert <10 ist
+//returned minString und secString
 function translateTime(dif) {
   var minString;
   var secString;
   if (updateCounter(dif).min < 10) {
     minString = "0" + String(updateCounter(dif).min);
+  } else {
+    minString = String(updateCounter(dif).min);
   }
+
   if (updateCounter(dif).sec < 10) {
     secString = "0" + String(updateCounter(dif).sec);
+  } else {
+    secString = String(updateCounter(dif).sec);
   }
 
   return {
@@ -41,14 +49,15 @@ function translateTime(dif) {
   };
 }
 
-//setzt min und sec zusammen
-//wiederholt setTime jede Sekunde
+//setzt minString und secString zusammen
 function setTime(dif) {
   let timeTracker = getterDOM("tracker");
   timeTracker.innerHTML = translateTime(dif).minString + ":" + translateTime(dif).secString;
   return timeTracker.innerHTML;
 }
 
+//aktualisiert Variable dif
+//wiederholt setTime jede Sekunde
 function timeLoop(){
   var dif = new Date().getTime() - startTime;
   setTime(dif);
