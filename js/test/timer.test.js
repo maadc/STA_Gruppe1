@@ -4,7 +4,6 @@ let startCounter = require("../timer.js").startCounter;
 let updateCounter = require("../timer.js").updateCounter;
 let translateTime = require("../timer.js").translateTime;
 let setTime = require("../timer.js").setTime;
-//let dif = require("../timer.js").;
 
 test("Function: timerRunning", () => {
     getterDOM.mockImplementation( ()=> document.createElement("tracker") )
@@ -39,8 +38,9 @@ describe('function: translateTime', () => {
     })
 });
 
-   /* test("Function: setTime", () => {
+   test("function: setTime", () => {
     getterDOM.mockImplementation( ()=> document.createElement("tracker") )
-    expect(setTime).toEqual({"Min:"});
-})*/
+    setTime();
+    expect(document.getElementById("tracker").innerHTML).toBe("00:00") 
+})
 

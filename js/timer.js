@@ -46,7 +46,6 @@ function translateTime(dif) {
 function setTime() {
   var dif = new Date().getTime() - startTime;
   let timeTracker = getterDOM("tracker");
-  
   timeTracker.innerHTML = translateTime(dif).minString + ":" + translateTime(dif).secString;
   setTimeout(setTime, 1000);
 }
@@ -56,4 +55,5 @@ module.exports = {
   timerRunning: timerRunning,
   updateCounter: updateCounter,
   translateTime: translateTime,
+  setTime: setTime,
 }
