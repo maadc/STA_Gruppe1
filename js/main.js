@@ -4,6 +4,7 @@ let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
+let playSound = require("./sound").playSound;
 let ballMoving = false;
 
 window.onload = () => {
@@ -17,6 +18,7 @@ window.onload = () => {
             if (e.keyCode == 32) {
                 ballMoving = true;
                 startCounter();
+                playSound("soundStart");
                 setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
                 document.getElementById("starttext").innerHTML = "";
             }
@@ -24,6 +26,7 @@ window.onload = () => {
         spielfeld.onclick = function () {
             ballMoving = true;
             startCounter();
+            playSound("soundStart");
             setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
             document.getElementById("starttext").innerHTML = "";
         }
@@ -43,17 +46,20 @@ window.onload = () => {
             //collision with right pong bar
             let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
             ballJS.moveBall(newAngle, frametime);
+            playSound("soundAbprallen");
             return;
         } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbars.left.object.offsetLeft, pongbars.left.object.offsetTop, pongbars.left.width, pongbars.left.height)) {
             //collision with left pong bar
             let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
             ballJS.moveBall(newAngle, frametime);
+            playSound("soundAbprallen");
             return;
         } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
             //touches the right border
             counter.countPointRight();
             ballMoving = false;
             setTimeout(setBallMovingTrue, 1000);
+            playSound("soundPunkt");
             ballJS.ballReset();
             return;
         } else if (ball.position.left <= ball.object.offsetWidth) {
@@ -61,6 +67,7 @@ window.onload = () => {
             counter.countPointLeft();
             ballMoving = false;
             setTimeout(setBallMovingTrue, 1000);
+            playSound("soundPunkt");
             ballJS.ballReset();
             return;
         } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {

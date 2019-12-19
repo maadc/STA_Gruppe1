@@ -6,8 +6,12 @@ module.exports = (Kommando) => {
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
     let tracker = document.getElementById("tracker");
-    let punktestandLinks = document.getElementById ("punktestandLinks");
+    let punktestandLinks = document.getElementById("punktestandLinks");
     let punktestandRechts = document.getElementById ("punktestandRechts");
+    let soundAbprallen = document.getElementById("soundAbprallen");
+    let soundStart = document.getElementById("soundStart");
+    let soundPunkt = document.getElementById("soundPunkt");
+    let soundHintergrund = document.getElementById("soundHintergrund");
   
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
@@ -38,9 +42,24 @@ module.exports = (Kommando) => {
 
     } else if (Kommando==="tracker") {
         return tracker;
+
     } else if (Kommando==="punktestandLinks") {
         return punktestandLinks;
+
     } else if (Kommando ==="punktestandRechts") {
         return punktestandRechts;
+
+    } else if (Kommando ==="soundAbprallen") {
+        return soundAbprallen;
+
+    } else if (Kommando ==="soundStart") {
+        return soundStart;
+
+    } else if (Kommando ==="soundPunkt") {
+        return soundPunkt;
+
+    } else if (Kommando ==="soundHintergrund") {
+        return soundHintergrund;
+        
     }
 }
