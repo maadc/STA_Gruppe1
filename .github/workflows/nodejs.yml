@@ -1,4 +1,4 @@
-name: Node CI
+name: NodeCI - npm run bundle + test
 
 on: [push]
 
@@ -20,7 +20,8 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm ci
-        npm run bundle --if-present
         npm test
+        npm run bundle --if-present
+        
       env:
         CI: true
