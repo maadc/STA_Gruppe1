@@ -7,11 +7,13 @@
     "browserify": "^16.5.0"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "jest": "^24.9.0",
     "jsdom": "^15.2.1"
   },
   "scripts": {
     "test": "jest",
+    "jslint": "./node_modules/.bin/eslint js/*js",
     "bundle": "npx browserify js/main.js -o dist/bundle.js"
   },
   "repository": {
