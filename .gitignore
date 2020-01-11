@@ -1,4 +1,12 @@
+# execlute:
 /node_modules
-dist/bundle.js
-/coverage
 /.vscode
+
+# the distrebution bundle
+dist/bundle.js
+
+# jest code-coverage
+/coverage
+
+# stryker-cli mutant report 
+/reports
