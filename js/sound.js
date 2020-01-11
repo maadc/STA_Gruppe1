@@ -7,10 +7,9 @@ function playSound (Kommando) {
         getterDOM("soundPunkt").play();
     } else if (Kommando === "soundStart") {
         getterDOM("soundStart").play();
-    } else if (Kommando === "soundHintergrund") {
-        getterDOM("soundHintergrund").play();
     }
 }
+
 
 module.exports = {
     playSound: playSound,
