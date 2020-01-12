@@ -6,7 +6,7 @@ let setterDOM = require("../setterDOM.js");
 const calculatePosition = require('../pongbar.js').calculatePosition;
 
 describe("function: calculatePosition", () =>{
-    test("obererRand", () => {
+    test("top = -10", () => {
         let pongbar = {
             position: {
                 top: -10,
@@ -14,7 +14,17 @@ describe("function: calculatePosition", () =>{
             height: 250,
             speed: 2,
         }
-        expect(calculatePosition (true ,pongbar)).toBe(0);
+        expect(calculatePosition(true ,pongbar)).toBe(0);
+    })
+    test("top = 0", () => {
+        let pongbar = {
+            position: {
+                top: 0,
+            },
+            height: 250,
+            speed: 2,
+        }
+        expect(calculatePosition(true ,pongbar)).toBe(0);
     })
 
     test("untererRand", () =>{
@@ -24,6 +34,19 @@ describe("function: calculatePosition", () =>{
         let pongbar = {
             position: {
                 top: 1000,
+            },
+            height: 250,
+            speed: 2,
+        }
+        expect (calculatePosition (false, pongbar)).toBe(250);
+    })
+    test("pongbar is at the bottom", () =>{
+        //simulate that the gamefield is 500px height.
+        getterDOM.mockImplementation(() => 500);
+
+        let pongbar = {
+            position: {
+                top: 500,
             },
             height: 250,
             speed: 2,

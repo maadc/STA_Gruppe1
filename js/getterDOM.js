@@ -1,4 +1,4 @@
-module.exports = (Kommando) => {
+module.exports = (kommando) => {
 
     let spielfeld = document.getElementById("spielfeld");
     let pongbar_right = document.getElementById("pongbar_right");
@@ -8,48 +8,32 @@ module.exports = (Kommando) => {
     let tracker = document.getElementById("tracker");
     let punktestandLinks = document.getElementById("punktestandLinks");
     let punktestandRechts = document.getElementById ("punktestandRechts");
+
     let soundAbprallen = document.getElementById("soundAbprallen");
     let soundStart = document.getElementById("soundStart");
     let soundPunkt = document.getElementById("soundPunkt");
     let soundHintergrund = document.getElementById("soundHintergrund");
+
+    switch(kommando){
+        case "spielfeld": return spielfeld;
+        case "spielfeld.offsetHeight": return spielfeld.offsetHeight;
+        case "spielfeld.offsetWidth": return spielfeld.offsetWidth;
+        
+        case "pongbar_right": return pongbar_right;
+        case "pongbar_right.style.top": return pongbar_right.style.top;
+
+        case "pongbar_left": return pongbar_left;
+        case "pongbar_left.style.top": return pongbar_left.style.top;
+
+        case "ball": return ball;
+        case "speed": return speed;
+        case "tracker": return tracker;
+        case "punktestandLinks": return punktestandLinks;
+        case "punktestandRechts": return punktestandRechts;
+
+    }
   
-    if (Kommando === "spielfeld.offsetHeight"){
-        return spielfeld.offsetHeight;
-
-    } else if (Kommando === "spielfeld.offsetWidth") {
-        return spielfeld.offsetWidth;
-
-    } else if (Kommando === "spielfeld") {
-        return spielfeld;
-
-    } else if (Kommando === "pongbar_right") {
-        return pongbar_right;
-
-    } else if (Kommando==="pongbar_left") {
-        return pongbar_left;
-
-    } else if (Kommando === "pongbar_right.style.top") {
-        return pongbar_right.style.top;
-
-    } else if (Kommando==="pongbar_left.style.top") {
-        return pongbar_left.style.top;
-
-    } else if  (Kommando==="ball") {
-        return ball;
-
-    } else if (Kommando==="speed") {
-        return speed;
-
-    } else if (Kommando==="tracker") {
-        return tracker;
-
-    } else if (Kommando==="punktestandLinks") {
-        return punktestandLinks;
-
-    } else if (Kommando ==="punktestandRechts") {
-        return punktestandRechts;
-
-    } else if (Kommando ==="soundAbprallen") {
+    if (Kommando ==="soundAbprallen") {
         return soundAbprallen;
 
     } else if (Kommando ==="soundStart") {

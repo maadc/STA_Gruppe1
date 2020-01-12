@@ -62,6 +62,15 @@ module.exports = {
 }
 },{"./calculation.js":2,"./getterDOM.js":4,"./setterDOM.js":7}],2:[function(require,module,exports){
 function collision(aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight) {
+    let array = [aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight];
+
+    for(const e of array){
+        if (typeof e != "number"){
+            return undefined;
+        }
+        
+    }
+    
     if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
         (bX >= aX && bX <= aX + aWidth && aY >= bY && aY <= bY + bHeight) ||
         (bX >= aX && bX <= aX + aWidth && bY >= aY && bY <= aY + aHeight) ||
@@ -116,9 +125,9 @@ function getDirection(directAngle) {
 
 function getAngle(x, y) {
     //Umrechnung von einem Vektor in den dazugehörigen Winkel
-    if ((x === 0 && y === 0) || (x === 1 && y === 1)) {
+    if ((x === 0 && y === 0) ||( x+y > 1)) {
         //keine Bewegung === keine Richung
-        return;
+        return undefined ;
     }
     //wir können nicht durch 0 teilen, aber durch annähernd 0
     if (y === 0) {
@@ -189,7 +198,7 @@ function countPointLeft() {
     
 }
 },{"./getterDOM.js":4}],4:[function(require,module,exports){
-module.exports = (Kommando) => {
+module.exports = (kommando) => {
 
     let spielfeld = document.getElementById("spielfeld");
     let pongbar_right = document.getElementById("pongbar_right");
@@ -199,6 +208,25 @@ module.exports = (Kommando) => {
     let tracker = document.getElementById("tracker");
     let punktestandLinks = document.getElementById("punktestandLinks");
     let punktestandRechts = document.getElementById ("punktestandRechts");
+<<<<<<< HEAD
+
+    switch(kommando){
+        case "spielfeld": return spielfeld;
+        case "spielfeld.offsetHeight": return spielfeld.offsetHeight;
+        case "spielfeld.offsetWidth": return spielfeld.offsetWidth;
+        
+        case "pongbar_right": return pongbar_right;
+        case "pongbar_right.style.top": return pongbar_right.style.top;
+
+        case "pongbar_left": return pongbar_left;
+        case "pongbar_left.style.top": return pongbar_left.style.top;
+
+        case "ball": return ball;
+        case "speed": return speed;
+        case "tracker": return tracker;
+        case "punktestandLinks": return punktestandLinks;
+        case "punktestandRechts": return punktestandRechts;
+=======
     let soundAbprallen = document.getElementById("soundAbprallen");
     let soundStart = document.getElementById("soundStart");
     let soundPunkt = document.getElementById("soundPunkt");
@@ -252,6 +280,7 @@ module.exports = (Kommando) => {
     } else if (Kommando ==="soundHintergrund") {
         return soundHintergrund;
         
+>>>>>>> master
     }
 }
 },{}],5:[function(require,module,exports){
@@ -261,15 +290,25 @@ let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
+<<<<<<< HEAD
+let getterDOM = require("./getterDOM.js");
+let setterDOM = require("./setterDOM.js");
+=======
 let playSound = require("./sound").playSound;
 let ballMoving = false;
+>>>>>>> master
 
-window.onload = () => {
-    let frametimeBefore = Date.now();
-    let frametime; // in ms
-    let spielfeld = document.getElementById("spielfeld");
-    let ball = ballJS.ball;
 
+<<<<<<< HEAD
+let frametimeBefore = Date.now();
+let frametime; // in ms
+let spielfeld = getterDOM("spielfeld");
+let ballMoving = false;
+
+function go() {
+    document.onkeydown = function (e) {
+        if (e.keyCode == 32) {
+=======
     function go() {
         document.onkeydown = function (e) {
             if (e.keyCode == 32) {
@@ -282,23 +321,74 @@ window.onload = () => {
             }
         }
         spielfeld.onclick = function () {
+>>>>>>> master
             ballMoving = true;
             startCounter();
             playSound("soundStart");
             playSound("soundHintergrund");
             setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
-            document.getElementById("starttext").innerHTML = "";
-        }
-        if (ballMoving === true) {
-            ballLogic(frametime);
+            setterDOM("starttext", "innerHTML", "")
         }
     }
-
-    function setBallMovingTrue() {
+    getterDOM("spielfeld").onclick = function () {
         ballMoving = true;
-        return ballMoving;
+        startCounter();
+        setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
+        setterDOM("starttext", "innerHTML", "")
     }
+    if (ballMoving === true) {
+        ballLogic(frametime);
+    }
+}
 
+<<<<<<< HEAD
+function setBallMovingTrue() {
+    ballMoving = true;
+    return ballMoving;
+}
+
+function ballLogic(frametime) {
+    let ball = ballJS.ball;
+    if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbars.right.object.offsetLeft, pongbars.right.object.offsetTop, pongbars.right.width, pongbars.right.height)) {
+        //26 because the balls cooardinates start at the bottom right, insteat of the bottom left??
+        //collision with right pong bar
+        let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
+        ballJS.moveBall(newAngle, frametime);
+        return "collision with right pongbar";
+    } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbars.left.object.offsetLeft, pongbars.left.object.offsetTop, pongbars.left.width, pongbars.left.height)) {
+        //collision with left pong bar
+        let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
+        ballJS.moveBall(newAngle, frametime);
+        return "collision with left pongbar";
+    } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
+        //touches the right border
+        counter.countPointRight();
+        ballMoving = false;
+        setTimeout(setBallMovingTrue, 1000);
+        ballJS.ballReset();
+        return "touches with right border";
+    } else if (ball.position.left <= ball.object.offsetWidth) {
+        //touches the left border
+        counter.countPointLeft();
+        ballMoving = false;
+        setTimeout(setBallMovingTrue, 1000);
+        ballJS.ballReset();
+        return "touches with left border";
+    } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
+        //touches the top border
+        let newAngle = calculation.getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
+        ballJS.moveBall(newAngle, frametime);
+        return "touches with top border";
+    } else if (ball.position.bottom <= 0) {
+        //touches the bottom border
+        let newAngle = calculation.getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
+        ballJS.moveBall(newAngle, frametime);
+        return "touches with bottom border";
+    } else if (ball.position.left < spielfeld.offsetWidth) {
+        //ball is in game
+        ballJS.moveBall(ball.position.angle, frametime);
+        return "ball is still in game";
+=======
     function ballLogic(frametime) {
         if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbars.right.object.offsetLeft, pongbars.right.object.offsetTop, pongbars.right.width, pongbars.right.height)) {
             //26 because the balls cooardinates start at the bottom right, insteat of the bottom left??
@@ -344,25 +434,40 @@ window.onload = () => {
             ballJS.moveBall(ball.position.angle, frametime);
             return;
         }
+>>>>>>> master
     }
+}
 
-    function gameLoop() {
-        //in dem Loop sollen alle regelmäßigen Events aufgerufen werden.
+function gameLoop() {
+    //in dem Loop sollen alle regelmäßigen Events aufgerufen werden.
 
-        let now = Date.now(); //gibt eine bestimmte Anzahl an Millisekunden aus. 
-        frametime = (now - frametimeBefore) * 0.001;
-        // Abhängigkeit von Frametime ist wichtig, weil selbst bei geringer Prozessorgeschwindigkeit
-        // das Spiel nicht schneller laufen soll, als der Spieler es spielen kann. 
-        // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
+    let now = Date.now(); //gibt eine bestimmte Anzahl an Millisekunden aus. 
+    frametime = (now - frametimeBefore) * 0.001;
+    // Abhängigkeit von Frametime ist wichtig, weil selbst bei geringer Prozessorgeschwindigkeit
+    // das Spiel nicht schneller laufen soll, als der Spieler es spielen kann. 
+    // gleichzeitig bestimmt die frametime die Spielgeschwindigkeit.
 
-        go();
-        pongbars.checkPressedKeys(pongbars.pressedKeys);
+    go();
+    pongbars.checkPressedKeys(pongbars.pressedKeys);
 
-        frametimeBefore = now;
-    }
+    frametimeBefore = now;
+}
+
+window.onload = () => {
     setInterval(gameLoop, 0);
 }
+<<<<<<< HEAD
+
+
+module.exports = {
+    ballMoving: ballMoving,
+    go: go,
+    setBallMovingTrue: setBallMovingTrue,
+}
+},{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./getterDOM.js":4,"./pongbar.js":6,"./setterDOM.js":7,"./timer.js":8}],6:[function(require,module,exports){
+=======
 },{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":6,"./sound":8,"./timer.js":9}],6:[function(require,module,exports){
+>>>>>>> master
 let getterDOM = require("./getterDOM.js");
 let setterDOM = require("./setterDOM.js");
 var pressedKeys = {};
@@ -482,33 +587,62 @@ module.exports = {
     right: pongbar_right
 }
 },{"./getterDOM.js":4,"./setterDOM.js":7}],7:[function(require,module,exports){
-
-module.exports = (object,parameter, value) => {
+module.exports = (object, parameter, value) => {
     let ball = document.getElementById("ball");
     let pongbar_right = document.getElementById("pongbar_right");
     let pongbar_left = document.getElementById("pongbar_left");
+    let starttext = document.getElementById("starttext")
 
-    if (object === "ball"){
-        if(parameter === "style_left"){
-            ball.style.left = value;
+    if (object === "ball") {
+        if (parameter === "style_left") {
+            if (typeof value === "number") {
+                ball.style.left = value + "px";
+            } else {
+                ball.style.left = value;
+            }
+            return ball.style.left;
         }
-        if(parameter === "style_bottom"){
-            ball.style.bottom = value;
+        
+        if (parameter === "style_bottom") {
+            if (typeof value === "number") {
+                ball.style.bottom = value + "px";
+            } else {
+                ball.style.bottom = value;
+            }
+            return ball.style.bottom;
         }
     }
 
-    if (object === "pongbar_left"){
-        if (parameter === "style_top"){
-            pongbar_left.style.top = value;
+    if (object === "pongbar_left") {
+        if (parameter === "style_top") {
+            if (typeof value === "number") {
+                pongbar_left.style.top = value + "px";
+            } else {
+                pongbar_left.style.top = value;
+            }
+            return pongbar_left.style.top;
         }
     }
 
-    if (object === "pongbar_right"){
-        if (parameter === "style_top"){
-            pongbar_right.style.top = value;
+    if (object === "pongbar_right") {
+        if (parameter === "style_top") {
+            if (typeof value === "number") {
+                pongbar_right.style.top = value + "px";
+            } else {
+                pongbar_right.style.top = value;
+            }
+            return pongbar_right.style.top;
         }
     }
-   
+
+    if (object === "starttext" && parameter === "innerHTML"){
+        if (typeof value != "string"){
+            return undefined;
+        }
+        starttext.innerHTML = value;
+        return starttext.innerHTML;
+    }
+
 }
 },{}],8:[function(require,module,exports){
 let getterDOM = require("./getterDOM.js");

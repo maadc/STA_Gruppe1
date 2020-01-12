@@ -1,4 +1,13 @@
 function collision(aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight) {
+    let array = [aX, aY, aWidth, aHeight, bX, bY, bWidth, bHeight];
+
+    for(const e of array){
+        if (typeof e != "number"){
+            return undefined;
+        }
+        
+    }
+    
     if ((aX >= bX && aX <= bX + bWidth && aY >= bY && aY <= bY + bHeight) ||
         (bX >= aX && bX <= aX + aWidth && aY >= bY && aY <= bY + bHeight) ||
         (bX >= aX && bX <= aX + aWidth && bY >= aY && bY <= aY + aHeight) ||
@@ -53,9 +62,9 @@ function getDirection(directAngle) {
 
 function getAngle(x, y) {
     //Umrechnung von einem Vektor in den dazugehörigen Winkel
-    if ((x === 0 && y === 0) || (x === 1 && y === 1)) {
+    if ((x === 0 && y === 0) ||( x+y > 1)) {
         //keine Bewegung === keine Richung
-        return;
+        return undefined ;
     }
     //wir können nicht durch 0 teilen, aber durch annähernd 0
     if (y === 0) {
