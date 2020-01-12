@@ -1,11 +1,12 @@
 module.exports = function(config) {
   config.set({
-    mutate:["js/*"],
+
     mutator: "javascript",
     packageManager: "npm",
-    reporters: ["html", "clear-text", "progress"],
+    reporters: ["html", "clear-text", "progress", "dashboard"],
     testRunner: "jest",
     transpilers: [],
-    coverageAnalysis: "off"
+    coverageAnalysis: "off",
+    mutate: ["js/ball.js"] 
   });
 };
