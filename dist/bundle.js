@@ -202,6 +202,7 @@ module.exports = (Kommando) => {
     let soundAbprallen = document.getElementById("soundAbprallen");
     let soundStart = document.getElementById("soundStart");
     let soundPunkt = document.getElementById("soundPunkt");
+    let soundHintergrund = document.getElementById("soundHintergrund");
   
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
@@ -275,6 +276,7 @@ window.onload = () => {
                 ballMoving = true;
                 startCounter();
                 playSound("soundStart");
+                playSound("soundHintergrund");
                 setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
                 document.getElementById("starttext").innerHTML = "";
             }
@@ -283,6 +285,7 @@ window.onload = () => {
             ballMoving = true;
             startCounter();
             playSound("soundStart");
+            playSound("soundHintergrund");
             setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
             document.getElementById("starttext").innerHTML = "";
         }
@@ -517,6 +520,8 @@ function playSound (Kommando) {
         getterDOM("soundPunkt").play();
     } else if (Kommando === "soundStart") {
         getterDOM("soundStart").play();
+    } else if (Kommando === "soundHintergrund") {
+        getterDOM("soundHintergrund").play();
     }
 }
 

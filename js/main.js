@@ -19,6 +19,7 @@ window.onload = () => {
                 ballMoving = true;
                 startCounter();
                 playSound("soundStart");
+                playSound("soundHintergrund");
                 setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
                 document.getElementById("starttext").innerHTML = "";
             }
@@ -27,6 +28,7 @@ window.onload = () => {
             ballMoving = true;
             startCounter();
             playSound("soundStart");
+            playSound("soundHintergrund");
             setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
             document.getElementById("starttext").innerHTML = "";
         }

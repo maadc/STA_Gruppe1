@@ -11,6 +11,7 @@ module.exports = (Kommando) => {
     let soundAbprallen = document.getElementById("soundAbprallen");
     let soundStart = document.getElementById("soundStart");
     let soundPunkt = document.getElementById("soundPunkt");
+    let soundHintergrund = document.getElementById("soundHintergrund");
   
     if (Kommando === "spielfeld.offsetHeight"){
         return spielfeld.offsetHeight;
