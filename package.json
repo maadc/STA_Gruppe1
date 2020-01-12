@@ -8,6 +8,7 @@
     "stryker-cli": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "@stryker-mutator/core": "^2.4.0",
     "@stryker-mutator/html-reporter": "^2.4.0",
     "@stryker-mutator/javascript-mutator": "^2.4.0",
@@ -17,6 +18,7 @@
   },
   "scripts": {
     "test": "jest",
+    "jslint": "./node_modules/.bin/eslint js/*js",
     "bundle": "npx browserify js/main.js -o dist/bundle.js"
   },
   "repository": {

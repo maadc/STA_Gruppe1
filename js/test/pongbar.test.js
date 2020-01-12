@@ -91,7 +91,8 @@ describe("function: checkedPressedKeys", () => {
 
         checkPressedKeys(keysDown);
         expect(pongbar_right.position.top).toBe(predictedPostionRight);
-        //expect(pongbar_left.position.top).toBe(predictedPostionLeft);
+        // mysterious test is false...
+        //expect(pongbar_left.position.top).toEqual(predictedPostionLeft);
     })
     test("Arrow-Key DOWN + W-Key", () =>{
         let keysDown = {40:true, 87: true};
