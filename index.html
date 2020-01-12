@@ -1,5 +1,5 @@
 <head>
-<!DOCTYPE html>
+    <!DOCTYPE html>
     <html lang="de">
     <meta charset="UTF-8">
     <title>Studienarbeit Gruppe 1</title>
@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <h1>STUDIENARBEIT GRUPPE 1 - PONG</h1> 
+        <h1>STUDIENARBEIT GRUPPE 1 - PONG</h1>
     </header>
     <main class="container">
             <div class="gradient-border" id="spielfeld">  
@@ -20,9 +20,24 @@
             <div id="punktestandLinks">0</div>
             <div id="punktestandRechts">0</div>
             <div id="ball"></div>
-            <div id="geschwindigkeit"> <inline id="speedtext">Speed: </inline><inline id="speed">500</inline></div>
+            <div id="geschwindigkeit">
+                <inline id="speedtext">Speed: </inline>
+                <inline id="speed">500</inline>
+            </div>
             <div id="starttext">Press Space To Start</div>
         </div>
+        <audio id="soundAbprallen" preload="auto" >
+            <source src="../sound/soundAbprallen.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="soundPunkt" preload="auto">
+            <source src="../sound/soundPunkt.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="soundStart" preload="auto">
+            <source src="../sound/soundStart.mp3" type="audio/mpeg" />
+        </audio>
+        <audio loop id="soundHintergrund" preload="auto">
+            <source src="../sound/soundHintergrund.mp3" type="audio/mpeg" />
+        </audio>
     </main>
     <script language="javascript" type="text/javascript" src="dist/bundle.js"></script>
 </body>
