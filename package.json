@@ -33,7 +33,9 @@
     "url": "https://github.com/maadc/studienarbeit_gruppe1/issues"
   },
   "homepage": "https://github.com/maadc/studienarbeit_gruppe1#readme",
-  "jest":  {
-    "setupFilesAfterEnv": ["jest-extended"]
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ]
   }
 }
