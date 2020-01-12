@@ -56,6 +56,5 @@ module.exports = {
     ballReset: ballReset,
     moveBall: moveBall,
     speedIncrease: speedIncrease,
-    saveBallValues: saveBallValues,
     ballSlowdown: ballSlowdown,
 }

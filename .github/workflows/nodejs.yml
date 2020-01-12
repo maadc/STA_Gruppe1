@@ -1,4 +1,4 @@
-name: Node CI
+name: NodeCI - npm run bundle + test
 
 on: [push]
 
@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -20,7 +20,9 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm ci
-        npm run build --if-present
         npm test
+        npm run jslint
+        npm run bundle --if-present
+        
       env:
         CI: true

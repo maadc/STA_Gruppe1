@@ -6,8 +6,13 @@ module.exports = (kommando) => {
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
     let tracker = document.getElementById("tracker");
-    let punktestandLinks = document.getElementById ("punktestandLinks");
+    let punktestandLinks = document.getElementById("punktestandLinks");
     let punktestandRechts = document.getElementById ("punktestandRechts");
+
+    let soundAbprallen = document.getElementById("soundAbprallen");
+    let soundStart = document.getElementById("soundStart");
+    let soundPunkt = document.getElementById("soundPunkt");
+    let soundHintergrund = document.getElementById("soundHintergrund");
 
     switch(kommando){
         case "spielfeld": return spielfeld;
@@ -25,5 +30,20 @@ module.exports = (kommando) => {
         case "tracker": return tracker;
         case "punktestandLinks": return punktestandLinks;
         case "punktestandRechts": return punktestandRechts;
+
+    }
+  
+    if (Kommando ==="soundAbprallen") {
+        return soundAbprallen;
+
+    } else if (Kommando ==="soundStart") {
+        return soundStart;
+
+    } else if (Kommando ==="soundPunkt") {
+        return soundPunkt;
+
+    } else if (Kommando ==="soundHintergrund") {
+        return soundHintergrund;
+        
     }
 }

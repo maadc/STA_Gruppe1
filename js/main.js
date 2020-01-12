@@ -18,6 +18,8 @@ function go() {
         if (e.keyCode == 32) {
             ballMoving = true;
             startCounter();
+            playSound("soundStart");
+            playSound("soundHintergrund");
             setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
             setterDOM("starttext", "innerHTML", "")
         }

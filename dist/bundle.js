@@ -206,8 +206,9 @@ module.exports = (kommando) => {
     let ball = document.getElementById("ball");
     let speed = document.getElementById("speed");
     let tracker = document.getElementById("tracker");
-    let punktestandLinks = document.getElementById ("punktestandLinks");
+    let punktestandLinks = document.getElementById("punktestandLinks");
     let punktestandRechts = document.getElementById ("punktestandRechts");
+<<<<<<< HEAD
 
     switch(kommando){
         case "spielfeld": return spielfeld;
@@ -225,6 +226,61 @@ module.exports = (kommando) => {
         case "tracker": return tracker;
         case "punktestandLinks": return punktestandLinks;
         case "punktestandRechts": return punktestandRechts;
+=======
+    let soundAbprallen = document.getElementById("soundAbprallen");
+    let soundStart = document.getElementById("soundStart");
+    let soundPunkt = document.getElementById("soundPunkt");
+    let soundHintergrund = document.getElementById("soundHintergrund");
+  
+    if (Kommando === "spielfeld.offsetHeight"){
+        return spielfeld.offsetHeight;
+
+    } else if (Kommando === "spielfeld.offsetWidth") {
+        return spielfeld.offsetWidth;
+
+    } else if (Kommando === "spielfeld") {
+        return spielfeld;
+
+    } else if (Kommando === "pongbar_right") {
+        return pongbar_right;
+
+    } else if (Kommando==="pongbar_left") {
+        return pongbar_left;
+
+    } else if (Kommando === "pongbar_right.style.top") {
+        return pongbar_right.style.top;
+
+    } else if (Kommando==="pongbar_left.style.top") {
+        return pongbar_left.style.top;
+
+    } else if  (Kommando==="ball") {
+        return ball;
+
+    } else if (Kommando==="speed") {
+        return speed;
+
+    } else if (Kommando==="tracker") {
+        return tracker;
+
+    } else if (Kommando==="punktestandLinks") {
+        return punktestandLinks;
+
+    } else if (Kommando ==="punktestandRechts") {
+        return punktestandRechts;
+
+    } else if (Kommando ==="soundAbprallen") {
+        return soundAbprallen;
+
+    } else if (Kommando ==="soundStart") {
+        return soundStart;
+
+    } else if (Kommando ==="soundPunkt") {
+        return soundPunkt;
+
+    } else if (Kommando ==="soundHintergrund") {
+        return soundHintergrund;
+        
+>>>>>>> master
     }
 }
 },{}],5:[function(require,module,exports){
@@ -234,10 +290,16 @@ let counter = require("./counter.js");
 let calculation = require("./calculation.js");
 let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
+<<<<<<< HEAD
 let getterDOM = require("./getterDOM.js");
 let setterDOM = require("./setterDOM.js");
+=======
+let playSound = require("./sound").playSound;
+let ballMoving = false;
+>>>>>>> master
 
 
+<<<<<<< HEAD
 let frametimeBefore = Date.now();
 let frametime; // in ms
 let spielfeld = getterDOM("spielfeld");
@@ -246,8 +308,24 @@ let ballMoving = false;
 function go() {
     document.onkeydown = function (e) {
         if (e.keyCode == 32) {
+=======
+    function go() {
+        document.onkeydown = function (e) {
+            if (e.keyCode == 32) {
+                ballMoving = true;
+                startCounter();
+                playSound("soundStart");
+                playSound("soundHintergrund");
+                setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
+                document.getElementById("starttext").innerHTML = "";
+            }
+        }
+        spielfeld.onclick = function () {
+>>>>>>> master
             ballMoving = true;
             startCounter();
+            playSound("soundStart");
+            playSound("soundHintergrund");
             setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
             setterDOM("starttext", "innerHTML", "")
         }
@@ -263,6 +341,7 @@ function go() {
     }
 }
 
+<<<<<<< HEAD
 function setBallMovingTrue() {
     ballMoving = true;
     return ballMoving;
@@ -309,6 +388,53 @@ function ballLogic(frametime) {
         //ball is in game
         ballJS.moveBall(ball.position.angle, frametime);
         return "ball is still in game";
+=======
+    function ballLogic(frametime) {
+        if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbars.right.object.offsetLeft, pongbars.right.object.offsetTop, pongbars.right.width, pongbars.right.height)) {
+            //26 because the balls cooardinates start at the bottom right, insteat of the bottom left??
+            //collision with right pong bar
+            let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
+            ballJS.moveBall(newAngle, frametime);
+            playSound("soundAbprallen");
+            return;
+        } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbars.left.object.offsetLeft, pongbars.left.object.offsetTop, pongbars.left.width, pongbars.left.height)) {
+            //collision with left pong bar
+            let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
+            ballJS.moveBall(newAngle, frametime);
+            playSound("soundAbprallen");
+            return;
+        } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
+            //touches the right border
+            counter.countPointRight();
+            ballMoving = false;
+            setTimeout(setBallMovingTrue, 1000);
+            playSound("soundPunkt");
+            ballJS.ballReset();
+            return;
+        } else if (ball.position.left <= ball.object.offsetWidth) {
+            //touches the left border
+            counter.countPointLeft();
+            ballMoving = false;
+            setTimeout(setBallMovingTrue, 1000);
+            playSound("soundPunkt");
+            ballJS.ballReset();
+            return;
+        } else if (ball.position.bottom >= spielfeld.offsetHeight - ball.object.offsetHeight) {
+            //touches the top border
+            let newAngle = calculation.getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
+            ballJS.moveBall(newAngle, frametime);
+            return;
+        } else if (ball.position.bottom <= 0) {
+            //touches the bottom border
+            let newAngle = calculation.getAngle(calculation.getDirection(ball.position.angle).x, -calculation.getDirection(ball.position.angle).y)
+            ballJS.moveBall(newAngle, frametime);
+            return;
+        } else if (ball.position.left < spielfeld.offsetWidth) {
+            //ball is in game
+            ballJS.moveBall(ball.position.angle, frametime);
+            return;
+        }
+>>>>>>> master
     }
 }
 
@@ -330,6 +456,7 @@ function gameLoop() {
 window.onload = () => {
     setInterval(gameLoop, 0);
 }
+<<<<<<< HEAD
 
 
 module.exports = {
@@ -338,6 +465,9 @@ module.exports = {
     setBallMovingTrue: setBallMovingTrue,
 }
 },{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./getterDOM.js":4,"./pongbar.js":6,"./setterDOM.js":7,"./timer.js":8}],6:[function(require,module,exports){
+=======
+},{"./ball.js":1,"./calculation.js":2,"./counter.js":3,"./pongbar.js":6,"./sound":8,"./timer.js":9}],6:[function(require,module,exports){
+>>>>>>> master
 let getterDOM = require("./getterDOM.js");
 let setterDOM = require("./setterDOM.js");
 var pressedKeys = {};
@@ -515,6 +645,25 @@ module.exports = (object, parameter, value) => {
 
 }
 },{}],8:[function(require,module,exports){
+let getterDOM = require("./getterDOM.js");
+
+function playSound (Kommando) {
+    if (Kommando === "soundAbprallen") {
+        getterDOM("soundAbprallen").play();
+    } else if (Kommando === "soundPunkt") {
+        getterDOM("soundPunkt").play();
+    } else if (Kommando === "soundStart") {
+        getterDOM("soundStart").play();
+    } else if (Kommando === "soundHintergrund") {
+        getterDOM("soundHintergrund").play();
+    }
+}
+
+
+module.exports = {
+    playSound: playSound,
+}
+},{"./getterDOM.js":4}],9:[function(require,module,exports){
 //Timer-Funktionen
 let startTime;
 var timerRunning = false;
