@@ -33,6 +33,10 @@ describe('function: translateTime', () => {
         expect(translateTime(1000)).toEqual({ "minString": "00", "secString": "01" });
     })
 
+    test("sec should be +10", () => {
+        expect(translateTime(10000)).toEqual({ "minString": "00", "secString": "10" });
+    })
+
     test("min should be +1", () => {
         expect(translateTime(60000)).toEqual({ "minString": "01", "secString": "00" });
     })
