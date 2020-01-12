@@ -31,19 +31,10 @@ module.exports = (kommando) => {
         case "punktestandLinks": return punktestandLinks;
         case "punktestandRechts": return punktestandRechts;
 
+        case "soundAbprallen": return soundAbprallen;
+        case "soundStart": return soundStart;
+        case "soundPunkt": return soundPunkt;
+        case "soundHintergrund": return soundHintergrund;
     }
   
-    if (Kommando ==="soundAbprallen") {
-        return soundAbprallen;
-
-    } else if (Kommando ==="soundStart") {
-        return soundStart;
-
-    } else if (Kommando ==="soundPunkt") {
-        return soundPunkt;
-
-    } else if (Kommando ==="soundHintergrund") {
-        return soundHintergrund;
-        
-    }
 }

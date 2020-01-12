@@ -1,13 +1,13 @@
 let getterDOM = require("./getterDOM.js");
 
-function playSound (Kommando) {
-    if (Kommando === "soundAbprallen") {
+function playSound (kommando) {
+    if (kommando === "soundAbprallen") {
         getterDOM("soundAbprallen").play();
-    } else if (Kommando === "soundPunkt") {
+    } else if (kommando === "soundPunkt") {
         getterDOM("soundPunkt").play();
-    } else if (Kommando === "soundStart") {
+    } else if (kommando === "soundStart") {
         getterDOM("soundStart").play();
-    } else if (Kommando === "soundHintergrund") {
+    } else if (kommando === "soundHintergrund") {
         getterDOM("soundHintergrund").play();
     }
 }

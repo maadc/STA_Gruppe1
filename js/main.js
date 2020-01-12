@@ -6,6 +6,7 @@ let pongbars = require("./pongbar.js");
 let ballJS = require("./ball.js");
 let getterDOM = require("./getterDOM.js");
 let setterDOM = require("./setterDOM.js");
+let playSound = require("./sound.js").playSound;
 
 
 let frametimeBefore = Date.now();
@@ -27,6 +28,8 @@ function go() {
     getterDOM("spielfeld").onclick = function () {
         ballMoving = true;
         startCounter();
+        playSound("soundStart");
+        playSound("soundHintergrund");
         setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
         setterDOM("starttext", "innerHTML", "")
     }
