@@ -6,6 +6,6 @@ module.exports = function(config) {
     testRunner: "jest",
     transpilers: [],
     coverageAnalysis: "off",
-    mutate: ["js/ball.js"] 
+    mutate: ["js/*.js"] 
   });
 };
