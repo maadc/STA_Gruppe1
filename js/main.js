@@ -50,16 +50,19 @@ function ballLogic(frametime) {
         //collision with right pong bar
         let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
         ballJS.moveBall(newAngle, frametime);
+        playSound("soundAbprallen");
         return "collision with right pongbar";
     } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbars.left.object.offsetLeft, pongbars.left.object.offsetTop, pongbars.left.width, pongbars.left.height)) {
         //collision with left pong bar
         let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
         ballJS.moveBall(newAngle, frametime);
+        playSound("soundAbprallen");
         return "collision with left pongbar";
     } else if (ball.position.left >= spielfeld.offsetWidth - ball.object.offsetWidth) {
         //touches the right border
         counter.countPointRight();
         ballMoving = false;
+        playSound("soundPunkt");
         setTimeout(setBallMovingTrue, 1000);
         ballJS.ballReset();
         return "touches with right border";
@@ -67,6 +70,7 @@ function ballLogic(frametime) {
         //touches the left border
         counter.countPointLeft();
         ballMoving = false;
+        playSound("soundPunkt");
         setTimeout(setBallMovingTrue, 1000);
         ballJS.ballReset();
         return "touches with left border";
