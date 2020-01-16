@@ -2,7 +2,7 @@
 /node_modules
 /.vscode
 
-# the distrebution bundle
+# the distribution bundle
 dist/bundle.js
 
 # jest code-coverage
@@ -10,3 +10,6 @@ dist/bundle.js
 
 # stryker-cli mutant report 
 /reports
+
+#stryker temp files
+/.stryker-tmp
