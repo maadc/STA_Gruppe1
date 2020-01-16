@@ -19,19 +19,15 @@ describe("function: playSound", () => {
     `; 
 
     test("soundAbprallen", () => {
-        let soundAbprallen = getterDOM("soundAbprallen");
-        expect(playSound("soundAbprallen")).toBe(soundAbprallen)
+        expect(playSound("soundAbprallen")).toBe("soundAbprallen")
     })
     test("soundStart", () => {
-        let soundStart = getterDOM("soundStart");
-        expect(playSound("soundStart")).toBe(soundStart)
+        expect(playSound("soundStart")).toBe("soundStart")
     })
     test("soundHintergrund", () => {
-        let soundHintergrund = getterDOM("soundHintergrund");
-        expect(playSound("soundHintergrund")).toBe(soundHintergrund)
+        expect(playSound("soundHintergrund")).toBe("soundHintergrund")
     })
     test("soundPunkt", () => {
-        let soundPunkt = getterDOM("soundPunkt");
-        expect(playSound("soundPunkt")).toBe(soundPunkt)
+        expect(playSound("soundPunkt")).toBe("soundPunkt")
     })
 })
