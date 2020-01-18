@@ -41,12 +41,12 @@ header {
 
 #pongbar_left {
     left: 20px;
-    top:250px;
+    top: calc(50% - 125px);
 }
 
 #pongbar_right {
-    right:20px;
-    top:250px;
+    right: 20px;
+    top: calc(50% - 125px);
 }
 
 #tracker {

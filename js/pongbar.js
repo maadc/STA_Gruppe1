@@ -6,7 +6,7 @@ let pongbar_right = {
     object: getterDOM("pongbar_right"),
     position: {
         right: 20, //in px
-        top: 250, //in px
+        top: (getterDOM("spielfeld.offsetHeight") / 2) - 125, //in px
     },
     height: 250, //in px
     width: 20, //in px
@@ -17,7 +17,7 @@ let pongbar_left = {
     object: getterDOM("pongbar_left"),
     position: {
         left: 20, //in px
-        top: 250, //in px
+        top: (getterDOM("spielfeld.offsetHeight") / 2) - 125, //in px
     },
     height: 250, //in px    
     width: 20, //in px
@@ -95,8 +95,9 @@ function calculatePosition(directionUp, pongbar) {
     //Unterer Rand
     else if ((pongbarHeight + position) > getterDOM("spielfeld.offsetHeight")) {
         position = getterDOM("spielfeld.offsetHeight") - pongbarHeight;
-    }
+    }    
     return position;
+
 }
 
 function setPongbarPosition(pongbar, position) {
