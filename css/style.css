@@ -27,7 +27,6 @@ header {
     min-width: 700px;
     width: 70vw;
     height: 90%;
-    /* border: 4px solid#F8090A; */
     background-color: rgb(49, 49, 49);;
 }
 
@@ -110,20 +109,20 @@ header {
 /**** BORDER ****/
 
   .gradient-border {
-    --borderWidth: 3px;
+    --border-width: 3px;
     background: #1D1F20;
     position: relative;
-    border-radius: var(--borderWidth);
+    border-radius: var(--border-width);
   }
   .gradient-border:after {
     content: '';
     position: absolute;
-    top: calc(-1 * var(--borderWidth));
-    left: calc(-1 * var(--borderWidth));
-    height: calc(100% + var(--borderWidth) * 2);
-    width: calc(100% + var(--borderWidth) * 2);
+    top: calc(-1 * var(--border-width));
+    left: calc(-1 * var(--border-width));
+    height: calc(100% + var(--border-width) * 2);
+    width: calc(100% + var(--border-width) * 2);
     background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
-    border-radius: calc(2 * var(--borderWidth));
+    border-radius: calc(2 * var(--border-width));
     z-index: -1;
     animation: animatedgradient 3s ease alternate infinite;
     background-size: 300% 300%;
