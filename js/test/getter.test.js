@@ -13,23 +13,35 @@ describe("function: getterDOM", () => {
             <div id="geschwindigkeit"> <inline id="speedtext">Speed: </inline><inline id="speed">500</inline></div>
             <div id="starttext">Press Space To Start</div>
         </div>
-    `; 
+        <audio id="soundAbprallen" preload="auto" >
+            <source src="../sound/soundAbprallen.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="soundPunkt" preload="auto">
+            <source src="../sound/soundPunkt.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="soundStart" preload="auto">
+            <source src="../sound/soundStart.mp3" type="audio/mpeg" />
+        </audio>
+        <audio loop id="soundHintergrund" preload="auto">
+            <source src="../sound/soundHintergrund.mp3" type="audio/mpeg" />
+        </audio>
+    `;
 
     describe("spielfeld abfragen", () => {
         test("spielfeld", () => {
             expect(getterDOM("spielfeld").id).toBe("spielfeld")
         })
-    
+
         test("spielfeld.offsetHeight", () => {
             expect(getterDOM("spielfeld.offsetHeight")).toBeNumber();
         })
-    
+
         test("spielfeld.offsetWidth", () => {
             expect(getterDOM("spielfeld.offsetWidth")).toBeNumber();
         })
     })
 
-    describe("pongbar left", () =>{
+    describe("pongbar left", () => {
         test("pongbar_left", () => {
             expect(getterDOM("pongbar_left").id).toBe("pongbar_left")
         })
@@ -38,7 +50,7 @@ describe("function: getterDOM", () => {
         })
     })
 
-    describe("pongbar right", () =>{
+    describe("pongbar right", () => {
         test("pongbar_right", () => {
             expect(getterDOM("pongbar_right").id).toBe("pongbar_right")
         })
@@ -46,25 +58,48 @@ describe("function: getterDOM", () => {
             expect(getterDOM("pongbar_right.style.top")).toBeString();
         })
     })
-    
+
     test("ball", () => {
         expect(getterDOM("ball").id).toBe("ball")
     })
+    
     test("speed", () => {
         expect(getterDOM("speed").id).toBe("speed")
     })
+
     test("tracker", () => {
         expect(getterDOM("tracker").id).toBe("tracker")
     })
+
     test("punktestandLinks", () => {
         expect(getterDOM("punktestandLinks").id).toBe("punktestandLinks")
     })
+
     test("punktestandRechts", () => {
         expect(getterDOM("punktestandRechts").id).toBe("punktestandRechts")
     })
+
     describe("object is not in getter", () => {
         test("error", () => {
             expect(getterDOM("error")).toBe(undefined);
         })
     })
+
+    describe('audio-tests', () => {
+        test('should get soundAbprallen', () => {
+            expect(getterDOM("soundAbprallen").id).toBe("soundAbprallen")
+        });
+
+        test('should get soundStart', () => {
+            expect(getterDOM("soundStart").id).toBe("soundStart")
+        });
+
+        test('should get soundPunkt', () => {
+            expect(getterDOM("soundPunkt").id).toBe("soundPunkt")
+        });
+
+        test('should get soundAbprallen', () => {
+            expect(getterDOM("soundHintergrund").id).toBe("soundHintergrund")
+        });
+    });
 })

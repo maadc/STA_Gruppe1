@@ -1,22 +1,26 @@
 let getterDOM = require("./getterDOM.js");
 
-function playSound (kommando) {
+function playSound(kommando) {
     switch (kommando) {
-        case "soundAbprallen": 
-            getterDOM("soundAbprallen").play();
-            return "soundAbprallen";
+        case "soundAbprallen":
+            return play(getterDOM("soundAbprallen"));
+
         case "soundPunkt":
-            getterDOM("soundPunkt").play();
-            return "soundPunkt";
-        case "soundStart" :
-            getterDOM("soundStart").play();
-            return "soundStart";
-        case "soundHintergrund" :
-            getterDOM("soundHintergrund").play();
-            return "soundHintergrund";
+            return play(getterDOM("soundPunkt"));
+
+        case "soundStart":
+            return play(getterDOM("soundStart"));
+            
+        case "soundHintergrund":
+            return play(getterDOM("soundHintergrund"));
     }
+}
+
+function play(sound) {
+    return sound.play();
 }
 
 module.exports = {
     playSound: playSound,
+    play: play,
 }

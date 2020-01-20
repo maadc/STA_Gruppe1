@@ -50,6 +50,7 @@ describe("function: setterDOM", () => {
             expect(setterDOM("pongbar_right", "style_top", "400px")).toBe("400px");
         })
     });
+    
     describe('starttext', () => {
         test('string', () => {
             expect(setterDOM("starttext", "innerHTML", "start")).toBe("start");

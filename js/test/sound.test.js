@@ -1,40 +1,63 @@
 let playSound = require("../sound.js");
+
+jest.mock("../getterDOM.js");
 let getterDOM = require("../getterDOM.js");
 
 describe("function: playSound", () => {
-    //simuliere die HTML-Struktur aus unserer index.html
-    document.body.innerHTML = `
-    <audio id="soundAbprallen" preload="auto" >
-        <source src="../sound/soundAbprallen.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="soundPunkt" preload="auto">
-        <source src="../sound/soundPunkt.mp3" type="audio/mpeg" />
-    </audio>
-    <audio id="soundStart" preload="auto">
-        <source src="../sound/soundStart.mp3" type="audio/mpeg" />
-    </audio>
-    <audio loop id="soundHintergrund" preload="auto">
-        <source src="../sound/soundHintergrund.mp3" type="audio/mpeg" />
-    </audio> 
-    `; 
-
     test("soundAbprallen", () => {
-        const spy = jest.spyOn(playSound, 'play');
-        
-       playSound.playSound("soundAbprallen");
-      
-        expect(spy).toHaveBeenCalled();
-      
-        spy.mockRestore();
-        //expect(playSound("soundAbprallen")).toBe("soundAbprallen")
+        const object = {
+            play: () => {
+                return "soundAbprallen called"
+            }
+        }
+        getterDOM.mockImplementation(() => object);
+
+        expect( playSound.playSound("soundAbprallen") ).toBe("soundAbprallen called");
     })
-    test.skip("soundStart", () => {
-        expect(playSound.playSound("soundStart")).toBe("soundStart")
+    
+    test("soundStart", () => {
+        const object = {
+            play: () => {
+                return "soundStart called"
+            }
+        }
+        getterDOM.mockImplementation(() => object);
+
+        expect( playSound.playSound("soundStart") ).toBe("soundStart called");
     })
-    test.skip("soundHintergrund", () => {
-        expect(playSound("soundHintergrund")).toBe("soundHintergrund")
+    
+    test("soundHintergrund", () => {
+        const object = {
+            play: () => {
+                return "soundHintergrund called"
+            }
+        }
+        getterDOM.mockImplementation(() => object);
+
+        expect( playSound.playSound("soundHintergrund") ).toBe("soundHintergrund called");
     })
-    test.skip("soundPunkt", () => {
-        expect(playSound("soundPunkt")).toBe("soundPunkt")
-    })
+
+    test("soundPunkt", () => {
+        const object = {
+            play: () => {
+                return "soundPunkt called"
+            }
+        }
+        getterDOM.mockImplementation(() => object);
+
+        expect( playSound.playSound("soundPunkt") ).toBe("soundPunkt called");
+    }) 
 })
+
+describe('function: play', () => {
+    test('play() should return the function play()', () => {
+            const object = {
+                play: () => {
+                    return "play() called"
+                }
+            }
+            getterDOM.mockImplementation(() => object);
+            
+            expect(playSound.play(object)).toBe("play() called");
+    });
+});
