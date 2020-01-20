@@ -262,7 +262,8 @@ function go() {
             startCounter();
             playSound("soundStart");
             playSound("soundHintergrund");
-            setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
+            // Increases the speed of the ball every 0.2 seconds
+            setInterval(ballJS.speedIncrease, 200); 
             setterDOM("starttext", "innerHTML", "")
         }
     }
@@ -271,7 +272,8 @@ function go() {
         startCounter();
         playSound("soundStart");
         playSound("soundHintergrund");
-        setInterval(ballJS.speedIncrease, 200); // Increases the speed of the ball every 0.2 seconds
+        // Increases the speed of the ball every 0.2 seconds
+        setInterval(ballJS.speedIncrease, 200); 
         setterDOM("starttext", "innerHTML", "")
     }
     if (ballMoving === true) {
@@ -286,14 +288,16 @@ function setBallMovingTrue() {
 
 function ballLogic(frametime) {
     let ball = ballJS.ball;
-    if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, pongbars.right.object.offsetLeft, pongbars.right.object.offsetTop, pongbars.right.width, pongbars.right.height)) {
+    if (calculation.collision(ball.object.offsetLeft - 26, ball.object.offsetTop, ball.radius, ball.radius, 
+        pongbars.right.object.offsetLeft, pongbars.right.object.offsetTop, pongbars.right.width, pongbars.right.height)) {
         //26 because the balls cooardinates start at the bottom right, insteat of the bottom left??
         //collision with right pong bar
         let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
         ballJS.moveBall(newAngle, frametime);
         playSound("soundAbprallen");
         return "collision with right pongbar";
-    } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, pongbars.left.object.offsetLeft, pongbars.left.object.offsetTop, pongbars.left.width, pongbars.left.height)) {
+    } else if (calculation.collision(ball.object.offsetLeft, ball.object.offsetTop, ball.radius, ball.radius, 
+        pongbars.left.object.offsetLeft, pongbars.left.object.offsetTop, pongbars.left.width, pongbars.left.height)) {
         //collision with left pong bar
         let newAngle = calculation.getAngle(-calculation.getDirection(ball.position.angle).x, calculation.getDirection(ball.position.angle).y)
         ballJS.moveBall(newAngle, frametime);
@@ -538,18 +542,19 @@ module.exports = (object, parameter, value) => {
 let getterDOM = require("./getterDOM.js");
 
 function playSound (kommando) {
-    if (kommando === "soundAbprallen") {
-        getterDOM("soundAbprallen").play();
-        return "soundAbprallen";
-    } else if (kommando === "soundPunkt") {
-        getterDOM("soundPunkt").play();
-        return "soundPunkt";
-    } else if (kommando === "soundStart") {
-        getterDOM("soundStart").play();
-        return "soundStart";
-    } else if (kommando === "soundHintergrund") {
-        getterDOM("soundHintergrund").play();
-        return "soundHintergrund";
+    switch (kommando) {
+        case "soundAbprallen": 
+            getterDOM("soundAbprallen").play();
+            return "soundAbprallen";
+        case "soundPunkt":
+            getterDOM("soundPunkt").play();
+            return "soundPunkt";
+        case "soundStart" :
+            getterDOM("soundStart").play();
+            return "soundStart";
+        case "soundHintergrund" :
+            getterDOM("soundHintergrund").play();
+            return "soundHintergrund";
     }
 }
 
