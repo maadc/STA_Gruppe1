@@ -254,12 +254,14 @@ let frametimeBefore = Date.now();
 let frametime; // in ms
 let spielfeld = getterDOM("spielfeld");
 let ballMoving = false;
+let timerRunning = false;
 
 function go() {
     document.onkeydown = function (e) {
         if (e.keyCode == 32) {
             ballMoving = true;
-            startCounter();
+            startCounter(timerRunning);
+            timerRunning = true;
             playSound("soundStart");
             playSound("soundHintergrund");
             // Increases the speed of the ball every 0.2 seconds
@@ -269,7 +271,8 @@ function go() {
     }
     getterDOM("spielfeld").onclick = function () {
         ballMoving = true;
-        startCounter();
+        startCounter(timerRunning);
+        timerRunning = true;
         playSound("soundStart");
         playSound("soundHintergrund");
         // Increases the speed of the ball every 0.2 seconds
@@ -542,42 +545,45 @@ module.exports = (object, parameter, value) => {
 },{}],8:[function(require,module,exports){
 let getterDOM = require("./getterDOM.js");
 
-function playSound (kommando) {
+function playSound(kommando) {
     switch (kommando) {
-        case "soundAbprallen": 
-            getterDOM("soundAbprallen").play();
-            return "soundAbprallen";
+        case "soundAbprallen":
+            return play(getterDOM("soundAbprallen"));
+
         case "soundPunkt":
-            getterDOM("soundPunkt").play();
-            return "soundPunkt";
-        case "soundStart" :
-            getterDOM("soundStart").play();
-            return "soundStart";
-        case "soundHintergrund" :
-            getterDOM("soundHintergrund").play();
-            return "soundHintergrund";
+            return play(getterDOM("soundPunkt"));
+
+        case "soundStart":
+            return play(getterDOM("soundStart"));
+            
+        case "soundHintergrund":
+            return play(getterDOM("soundHintergrund"));
     }
 }
 
+function play(sound) {
+    return sound.play();
+}
 
 module.exports = {
     playSound: playSound,
+    play: play,
 }
 },{"./getterDOM.js":4}],9:[function(require,module,exports){
 //Timer-Funktionen
 let startTime;
-var timerRunning = false;
 let getterDOM = require("./getterDOM.js");
 
 //ruft die Funktion timeLoop() auf wenn timerRunning false ist
 //ändert Variable start, setzt timerRunning auf true und returned timerRunning
-function startCounter() {
-  if (timerRunning == false) {
+function startCounter(timerRunning) {
+  if (timerRunning === false) {
     startTime = new Date().getTime();
     timeLoop();
     timerRunning = true;
     return timerRunning;
   }
+  return undefined
 }
 
 //berechnet die Variablen min und sec
@@ -632,7 +638,6 @@ function timeLoop(){
 
 module.exports = {
   startCounter: startCounter,
-  timerRunning: timerRunning,
   updateCounter: updateCounter,
   translateTime: translateTime,
   setTime: setTime,
