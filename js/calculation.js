@@ -97,9 +97,15 @@ function round(n) {
 
 function calcRandomAngle() { //Zufälliger Winkel, der senkrechte Winkel ausschließt.
    let randomAngle; 
-    do
+    do {
         randomAngle = Math.floor(Math.random() * 360);
-    while (randomAngle < 30 || (randomAngle > 160 && randomAngle < 200) || randomAngle > 330);
+        console.log("error:"+randomAngle);
+    }
+    while (randomAngle < 30 || 
+        (randomAngle > 150 && randomAngle < 210) || 
+        (randomAngle > 80 && randomAngle < 100) || 
+        (randomAngle > 260 && randomAngle < 280) || 
+        randomAngle > 330);
     return randomAngle;
 }
 
