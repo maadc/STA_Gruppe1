@@ -1,14 +1,13 @@
 jest.mock("../getterDOM.js");
 let getterDOM = require("../getterDOM.js");
-let startCounter = require("../timer.js").startCounter;
+
+let timer = require("../timer.js");
 let updateCounter = require("../timer.js").updateCounter;
 let translateTime = require("../timer.js").translateTime;
 let setTime = require("../timer.js").setTime;
 
-test("Function: timerRunning", () => {
-    getterDOM.mockImplementation(() => document.createElement("tracker"))
-    expect(startCounter()).toBe(true);
-})
+getterDOM.mockImplementation(() => document.createElement("tracker"))
+
 
 describe('function: updateCounter', () => {
     test("sec should be +1", () => {
@@ -61,4 +60,13 @@ describe('function: setTimer', () => {
         let dif = 605000
         expect(setTime(dif)).toBe("10:05")
     })
+});
+
+describe('function: startCounter', () => {
+    test('if timerRunning != false', () => {
+        expect(timer.startCounter(true)).toBe(undefined)
+    });
+    test('if timerRunning = false', () => {
+        expect(timer.startCounter(false)).toBe(true)
+    });
 });

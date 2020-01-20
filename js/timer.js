@@ -1,17 +1,17 @@
 //Timer-Funktionen
 let startTime;
-var timerRunning = false;
 let getterDOM = require("./getterDOM.js");
 
 //ruft die Funktion timeLoop() auf wenn timerRunning false ist
 //ändert Variable start, setzt timerRunning auf true und returned timerRunning
-function startCounter() {
-  if (timerRunning == false) {
+function startCounter(timerRunning) {
+  if (timerRunning === false) {
     startTime = new Date().getTime();
     timeLoop();
     timerRunning = true;
     return timerRunning;
   }
+  return undefined
 }
 
 //berechnet die Variablen min und sec
@@ -66,7 +66,6 @@ function timeLoop(){
 
 module.exports = {
   startCounter: startCounter,
-  timerRunning: timerRunning,
   updateCounter: updateCounter,
   translateTime: translateTime,
   setTime: setTime,

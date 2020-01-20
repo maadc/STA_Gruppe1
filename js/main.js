@@ -13,12 +13,14 @@ let frametimeBefore = Date.now();
 let frametime; // in ms
 let spielfeld = getterDOM("spielfeld");
 let ballMoving = false;
+let timerRunning = false;
 
 function go() {
     document.onkeydown = function (e) {
         if (e.keyCode == 32) {
             ballMoving = true;
-            startCounter();
+            startCounter(timerRunning);
+            timerRunning = true;
             playSound("soundStart");
             playSound("soundHintergrund");
             // Increases the speed of the ball every 0.2 seconds
@@ -28,7 +30,8 @@ function go() {
     }
     getterDOM("spielfeld").onclick = function () {
         ballMoving = true;
-        startCounter();
+        startCounter(timerRunning);
+        timerRunning = true;
         playSound("soundStart");
         playSound("soundHintergrund");
         // Increases the speed of the ball every 0.2 seconds
