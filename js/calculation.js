@@ -99,7 +99,6 @@ function calcRandomAngle() { //Zufälliger Winkel, der senkrechte Winkel ausschl
    let randomAngle; 
     do {
         randomAngle = Math.floor(Math.random() * 360);
-        console.log("error:"+randomAngle);
     }
     while (randomAngle < 30 || 
         (randomAngle > 150 && randomAngle < 210) || 
