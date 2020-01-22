@@ -71,7 +71,7 @@ function checkPressedKeys(keysDown) {
 
 
 function calculatePosition(directionUp, pongbar) {
-    /*  CalculatePosition berechnet die neue Position der Pongbar
+    /*  CalculatePosition berechnet die Bewegungsrichtung der Pongbars
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
@@ -101,6 +101,9 @@ function calculatePosition(directionUp, pongbar) {
 }
 
 function setPongbarPosition(pongbar, position) {
+     /*  
+     setPongbarPosition berechnet die Position der Pongbars
+    */
     if (pongbar == pongbar_left) {
         setterDOM("pongbar_left", "style_top", position);
     } else {
