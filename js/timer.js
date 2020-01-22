@@ -8,6 +8,7 @@ function startCounter(timerRunning) {
   if (timerRunning === false) {
     startTime = new Date().getTime();
     timeLoop();
+    timerRunning = true;
     return timerRunning;
   }
   return undefined

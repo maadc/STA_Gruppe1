@@ -161,7 +161,6 @@ function calcRandomAngle() { //Zufälliger Winkel, der senkrechte Winkel ausschl
    let randomAngle; 
     do {
         randomAngle = Math.floor(Math.random() * 360);
-        console.log("error:"+randomAngle);
     }
     while (randomAngle < 30 || 
         (randomAngle > 150 && randomAngle < 210) || 
@@ -444,7 +443,7 @@ function checkPressedKeys(keysDown) {
 
 
 function calculatePosition(directionUp, pongbar) {
-    /*  CalculatePosition berechnet die neue Position der Pongbar
+    /*  CalculatePosition berechnet die Bewegungsrichtung der Pongbars
         Wenn directionUp = true  :  Pongbar bewegt sich nach OBEN
         Wenn directionUp = false :  Pongbar bewegt sich nach UNTEN
     */
@@ -474,6 +473,9 @@ function calculatePosition(directionUp, pongbar) {
 }
 
 function setPongbarPosition(pongbar, position) {
+     /*  
+     setPongbarPosition berechnet die Position der Pongbars
+    */
     if (pongbar == pongbar_left) {
         setterDOM("pongbar_left", "style_top", position);
     } else {
@@ -586,6 +588,7 @@ function startCounter(timerRunning) {
   if (timerRunning === false) {
     startTime = new Date().getTime();
     timeLoop();
+    timerRunning = true;
     return timerRunning;
   }
   return undefined
