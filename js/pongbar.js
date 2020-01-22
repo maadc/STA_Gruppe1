@@ -102,7 +102,7 @@ function calculatePosition(directionUp, pongbar) {
 
 function setPongbarPosition(pongbar, position) {
      /*  
-     setPongbarPosition berechnet die Position der Pongbars
+     setPongbarPosition setzt die Position der Pongbars
     */
     if (pongbar == pongbar_left) {
         setterDOM("pongbar_left", "style_top", position);
